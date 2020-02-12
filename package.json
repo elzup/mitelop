@@ -5,6 +5,7 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
+    "lint": "eslint --ext .ts,.tsx .",
     "type-check": "tsc"
   },
   "dependencies": {
@@ -17,6 +18,8 @@
     "@types/node": "^13.7.0",
     "@types/react": "^16.9.19",
     "@types/react-dom": "^16.9.5",
+    "eslint": "^6.8.0",
+    "eslint-config-nzap": "^1.4.6",
     "typescript": "3.7.5"
   },
   "license": "ISC"
