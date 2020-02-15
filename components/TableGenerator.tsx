@@ -1,11 +1,11 @@
-import { useState } from 'react'
 import styled from 'styled-components'
+import { useLocalStorage } from 'react-use'
 
 type Props = {
   onSubmit: (titles: string[]) => void
 }
 function TableGenerator(props: Props) {
-  const [titles, setTitles] = useState<string[]>([])
+  const [titles, setTitles] = useLocalStorage<string[]>('titles-form', [])
 
   return (
     <Style>
@@ -20,6 +20,7 @@ function TableGenerator(props: Props) {
         <textarea
           id="firstName"
           name="firstName"
+          value={titles.join('\n')}
           onChange={e => setTitles(e.target.value.split('\n'))}
         />
         <button>作成</button>

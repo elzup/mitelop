@@ -9,7 +9,7 @@ type WindowOptions = {
   width?: number
 }
 
-function windowOpen({ url, height, width, name = '_blank' }: WindowOptions) {
+function _windowOpen({ url, height, width, name = '_blank' }: WindowOptions) {
   const option =
     (height ? `height=${height}` : '') + (width ? `width=${width}` : '')
 
