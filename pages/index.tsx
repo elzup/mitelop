@@ -25,7 +25,7 @@ const IndexPage: NextPage = () => {
             window.open('/about', '_blank', 'width=200,height=200')
           }}
         >
-          About
+          テーブル
         </a>
       </p>
     </Layout>
