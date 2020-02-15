@@ -1,5 +1,6 @@
 import { NextPage } from 'next'
 import Layout from '../components/Layout'
+import TableGenerator from '../components/TableGenerator'
 
 type WindowOptions = {
   url: string
@@ -19,15 +20,15 @@ const IndexPage: NextPage = () => {
   return (
     <Layout title="Home | Next.js + TypeScript Example">
       <h1>Mitelop</h1>
-      <p>
-        <a
-          onClick={() => {
-            window.open('/about', '_blank', 'width=200,height=200')
-          }}
-        >
-          テーブル
-        </a>
-      </p>
+      <TableGenerator
+        onSubmit={titles => {
+          window.open(
+            '/table?titles=' + titles.join(','),
+            '_blank',
+            'width=400,height=400'
+          )
+        }}
+      />
     </Layout>
   )
 }

@@ -1,11 +1,16 @@
 import styled from 'styled-components'
 import { useState } from 'react'
 
+import { useLocalStorage } from 'react-use'
+
 type Props = {
   titles: string[]
 }
 function Table({ titles }: Props) {
-  const [checks, setChecks] = useState<Record<string, boolean>>({})
+  const [_checks, setChecks] = useLocalStorage<Record<string, boolean>>(
+    'titles',
+    {}
+  )
 
   return (
     <Style>
