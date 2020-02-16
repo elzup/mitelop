@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
+    "export": "yarn build && next start",
     "start": "next start",
     "lint": "eslint --ext .ts,.tsx .",
     "type-check": "tsc"
