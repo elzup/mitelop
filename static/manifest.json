@@ -3,7 +3,7 @@
   "name": "Mitelop",
   "icons": [
     {
-      "src": "/images/icons-4x.png",
+      "src": "/static/images/icon-4x.png",
       "type": "image/png",
       "sizes": "192x192"
     }
