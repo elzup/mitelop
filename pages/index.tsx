@@ -18,7 +18,7 @@ function _windowOpen({ url, height, width, name = '_blank' }: WindowOptions) {
 
 const IndexPage: NextPage = () => {
   return (
-    <Layout title="Home | Next.js + TypeScript Example">
+    <Layout title="Widget makeing tool | Mitelop">
       <h1>Mitelop</h1>
       <TableGenerator
         onSubmit={titles => {

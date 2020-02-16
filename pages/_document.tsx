@@ -1,16 +1,21 @@
 import NextDocument, { Html, Head, Main, NextScript } from 'next/document'
 import { ServerStyleSheet as StyledComponentSheets } from 'styled-components'
+import { ServerStyleSheets as MaterialUiServerStyleSheets } from '@material-ui/styles'
 import React from 'react'
 
 class Document extends NextDocument<{}> {
   static async getInitialProps(ctx) {
-    const sheet = new StyledComponentSheets()
+    const styledComponentSheets = new StyledComponentSheets()
+    const materialUiSheets = new MaterialUiServerStyleSheets()
     const originalRenderPage = ctx.renderPage
 
     try {
       ctx.renderPage = () =>
         originalRenderPage({
-          enhanceApp: App => props => sheet.collectStyles(<App {...props} />),
+          enhanceApp: App => props =>
+            styledComponentSheets.collectStyles(
+              materialUiSheets.collect(<App {...props} />)
+            ),
         })
 
       const initialProps = await NextDocument.getInitialProps(ctx)
@@ -20,12 +25,14 @@ class Document extends NextDocument<{}> {
         styles: (
           <>
             {initialProps.styles}
-            {sheet.getStyleElement()}
+            {materialUiSheets.getStyleElement()}
+
+            {styledComponentSheets.getStyleElement()}
           </>
         ),
       }
     } finally {
-      sheet.seal()
+      styledComponentSheets.seal()
     }
   }
 
