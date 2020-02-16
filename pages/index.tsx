@@ -3,13 +3,15 @@ import Layout from '../components/Layout'
 import TableGenerator from '../components/TableGenerator'
 
 type WindowOptions = {
-  url: string
   name?: string
   height?: number
   width?: number
 }
 
-function _windowOpen({ url, height, width, name = '_blank' }: WindowOptions) {
+function windowOpen(
+  url: string,
+  { height, width, name = '_blank' }: WindowOptions
+) {
   const option =
     (height ? `height=${height}` : '') + (width ? `width=${width}` : '')
 
@@ -22,11 +24,11 @@ const IndexPage: NextPage = () => {
       <h1>Mitelop</h1>
       <TableGenerator
         onSubmit={titles => {
-          window.open(
-            '/table?titles=' + titles.join(','),
-            '_blank',
-            'width=400,height=400'
-          )
+          windowOpen('/table?titles=' + titles.join(','), {
+            name: '_blank',
+            width: 400,
+            height: 400,
+          })
         }}
       />
     </Layout>

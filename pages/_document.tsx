@@ -44,6 +44,14 @@ class Document extends NextDocument<{}> {
             name="viewport"
             content="width=device-width, initial-scale=1, shrink-to-fit=no"
           />
+          <link rel="shortcut icon" href="/images/icon.png" />
+          <link
+            rel="icon"
+            type="image/png"
+            href="/images/icon-4x.png"
+            sizes="192x192"
+          />
+
           <link rel="manifest" href="/manifest.json" />
         </Head>
         <body>
