@@ -1,6 +1,9 @@
 {
   "short_name": "Mitelop",
   "name": "Mitelop",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#ffffff",
   "icons": [
     {
       "src": "/static/images/icon-4x.png",

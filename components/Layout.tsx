@@ -16,25 +16,15 @@ const Layout: React.FunctionComponent<Props> = ({
       <meta charSet="utf-8" />
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
-    <header>
-      <nav>
-        <Link href="/">
-          <a>Home</a>
-        </Link>{' '}
-        |{' '}
-        <Link href="/about">
-          <a>About</a>
-        </Link>{' '}
-        |{' '}
-        <Link href="/users">
-          <a>Users List</a>
-        </Link>
-      </nav>
-    </header>
+    <header></header>
     {children}
     <footer>
       <hr />
-      <span>I'm here to stay (Footer)</span>
+      <nav>
+        <Link href="/">
+          <a>Home</a>
+        </Link>
+      </nav>
     </footer>
   </div>
 )
