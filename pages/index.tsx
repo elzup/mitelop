@@ -1,22 +1,7 @@
 import { NextPage } from 'next'
 import Layout from '../components/Layout'
 import TableGenerator from '../components/TableGenerator'
-
-type WindowOptions = {
-  name?: string
-  height?: number
-  width?: number
-}
-
-function windowOpen(
-  url: string,
-  { height, width, name = '_blank' }: WindowOptions
-) {
-  const option =
-    (height ? `height=${height}` : '') + (width ? `width=${width}` : '')
-
-  window.open(url, name, option)
-}
+import { windowOpen } from '../utils/browser'
 
 const IndexPage: NextPage = () => {
   return (
