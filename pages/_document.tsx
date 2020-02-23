@@ -53,6 +53,10 @@ class Document extends NextDocument<{}> {
           />
 
           <link rel="manifest" href="/static/manifest.json" />
+          <link
+            href="https://unpkg.com/sanitize.css/forms.css"
+            rel="stylesheet"
+          />
         </Head>
         <body>
           <Main />

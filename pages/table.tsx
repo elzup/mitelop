@@ -13,7 +13,7 @@ const IndexPage: NextPage = () => {
   const titles = getOne(query['titles']).split(',')
 
   return (
-    <Layout title="Table List">
+    <Layout title="Table List" reset>
       <Table titles={titles} />
     </Layout>
   )

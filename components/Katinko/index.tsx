@@ -15,6 +15,7 @@ function Katinko() {
 }
 
 const Style = styled.div`
+  display: grid;
   &[data-status='off'] {
     background: white;
     background: green;

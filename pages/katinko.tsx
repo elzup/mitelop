@@ -4,7 +4,7 @@ import Katinko from '../components/Katinko'
 
 const KatinkoPage: NextPage = () => {
   return (
-    <Layout title="Table List">
+    <Layout title="Katinko" reset>
       <Katinko />
     </Layout>
   )
