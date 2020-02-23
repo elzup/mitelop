@@ -1,19 +1,23 @@
 import styled from 'styled-components'
 import { useLocalStorage } from 'react-use'
+import { Typography } from '@material-ui/core'
+import { windowOpen } from '../../utils/browser'
+import Table from '.'
 
-type Props = {
-  onSubmit: (titles: string[]) => void
-}
-function TableGenerator(props: Props) {
+function TableGenerator() {
   const [titles, setTitles] = useLocalStorage<string[]>('titles-form', [])
 
   return (
     <Style>
+      <Typography variant="h5">テーブル</Typography>
       <form
         onSubmit={e => {
           e.preventDefault()
-
-          props.onSubmit(titles)
+          windowOpen('/table?titles=' + titles.join(','), {
+            name: '_blank',
+            width: 400,
+            height: 400,
+          })
         }}
       >
         <label htmlFor="firstName">項目一覧(改行区切り)</label>
@@ -25,6 +29,7 @@ function TableGenerator(props: Props) {
         />
         <button>作成</button>
       </form>
+      <Table titles={titles} />
     </Style>
   )
 }
