@@ -1,35 +1,27 @@
 import styled from 'styled-components'
+import { useState } from 'react'
 
-import { useLocalStorage } from 'react-use'
+type Status = 'on' | 'off'
 
-type Props = {
-  titles: string[]
-}
-function Table({ titles }: Props) {
-  const [_checks, setChecks] = useLocalStorage<Record<string, boolean>>(
-    'titles',
-    {}
-  )
+function Katinko() {
+  const [status, setStatus] = useState<Status>('off')
 
   return (
-    <Style>
-      <ul>
-        {titles.map((title, i) => (
-          <li key={i}>
-            <div>
-              <input
-                type="checkbox"
-                onChange={() => setChecks(v => ({ ...v, [title]: !v[title] }))}
-              />
-              <span>{title}</span>
-            </div>
-          </li>
-        ))}
-      </ul>
+    <Style data-status={status}>
+      <button onClick={() => setStatus('on')}>ON</button>
+      <button onClick={() => setStatus('off')}>OFF</button>
     </Style>
   )
 }
 
-const Style = styled.div``
+const Style = styled.div`
+  &[data-status='off'] {
+    background: white;
+    background: green;
+  }
+  &[data-status='on'] {
+    background: red;
+  }
+`
 
-export default Table
+export default Katinko

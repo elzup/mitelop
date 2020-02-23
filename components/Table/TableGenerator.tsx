@@ -2,9 +2,8 @@ import styled from 'styled-components'
 import { useLocalStorage } from 'react-use'
 import { Typography } from '@material-ui/core'
 import { windowOpen } from '../../utils/browser'
+import { isDev } from '../../utils/env'
 import Table from '.'
-
-const isDev = process.env.NODE_ENV === 'development'
 
 function TableGenerator() {
   const [titles, setTitles] = useLocalStorage<string[]>('titles-form', [])
