@@ -8,8 +8,10 @@ export function windowOpen(
   url: string,
   { height, width, name = '_blank' }: WindowOptions
 ) {
-  const option =
-    (height ? `height=${height}` : '') + (width ? `width=${width}` : '')
+  const options: string[] = []
 
-  window.open(url, name, option)
+  if (height) options.push(`height=${height}`)
+  if (width) options.push(`width=${height}`)
+
+  window.open(url, name, options.join(','))
 }

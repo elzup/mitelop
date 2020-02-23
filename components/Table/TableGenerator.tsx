@@ -4,6 +4,8 @@ import { Typography } from '@material-ui/core'
 import { windowOpen } from '../../utils/browser'
 import Table from '.'
 
+const isDev = process.env.NODE_ENV === 'development'
+
 function TableGenerator() {
   const [titles, setTitles] = useLocalStorage<string[]>('titles-form', [])
 
@@ -14,8 +16,8 @@ function TableGenerator() {
         onSubmit={e => {
           e.preventDefault()
           windowOpen('/table?titles=' + titles.join(','), {
-            name: '_blank',
-            width: 400,
+            name: isDev ? 'replace' : '_blank',
+            width: 300,
             height: 400,
           })
         }}
