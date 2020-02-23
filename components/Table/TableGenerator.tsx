@@ -4,6 +4,7 @@ import { Typography } from '@material-ui/core'
 import { windowOpen } from '../../utils/browser'
 import { isDev } from '../../utils/env'
 import Table from '.'
+import { Preview } from '..'
 
 function TableGenerator() {
   const [titles, setTitles] = useLocalStorage<string[]>('titles-form', [])
@@ -30,7 +31,9 @@ function TableGenerator() {
         />
         <button>作成</button>
       </form>
-      <Table titles={titles} />
+      <Preview>
+        <Table titles={titles} />
+      </Preview>
     </Style>
   )
 }

@@ -2,6 +2,8 @@ import styled from 'styled-components'
 import { Typography } from '@material-ui/core'
 import { windowOpen } from '../../utils/browser'
 import { isDev } from '../../utils/env'
+import Katinko from '.'
+import { Preview } from '..'
 
 function KatinkoGenerator() {
   return (
@@ -18,8 +20,11 @@ function KatinkoGenerator() {
           })
         }}
       >
-        <button>作成</button>
+        <button type="submit">作成</button>
       </form>
+      <Preview>
+        <Katinko />
+      </Preview>
     </Style>
   )
 }
