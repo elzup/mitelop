@@ -16,6 +16,10 @@ function Katinko() {
 
 const Style = styled.div`
   display: grid;
+  grid-template-columns: 1fr 1fr;
+  button {
+    min-height: 100px;
+  }
   &[data-status='off'] {
     background: white;
     background: green;
