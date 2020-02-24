@@ -5,6 +5,7 @@ import Slider from '@material-ui/core/Slider'
 import { windowOpen } from '../../utils/browser'
 import { isDev } from '../../utils/env'
 import { Size } from '../../types'
+import SizeForm from '../SizeForm'
 import Table from '.'
 import { Preview } from '..'
 
@@ -36,35 +37,7 @@ function TableGenerator() {
             value={titles.join('\n')}
             onChange={e => setTitles(e.target.value.split('\n'))}
           />
-
-          <Typography gutterBottom>ウィジェット幅: {size.width}</Typography>
-          <Slider
-            defaultValue={size.width}
-            onChange={(e, width) => {
-              if (typeof width === 'object') return
-              setSize(size => ({ ...size, width }))
-            }}
-            aria-labelledby="discrete-slider"
-            valueLabelDisplay="auto"
-            step={10}
-            marks
-            min={100}
-            max={1000}
-          />
-          <Typography gutterBottom>ウィジェット高さ: {size.height}</Typography>
-          <Slider
-            defaultValue={size.height}
-            onChange={(e, height) => {
-              if (typeof height === 'object') return
-              setSize(size => ({ ...size, height }))
-            }}
-            aria-labelledby="discrete-slider"
-            valueLabelDisplay="auto"
-            step={10}
-            marks
-            min={100}
-            max={1000}
-          />
+          <SizeForm size={size} setSize={setSize} />
           <Button>作成</Button>
         </form>
         <Preview style={{ width: size.width, height: size.height }}>

@@ -1,11 +1,19 @@
 import styled from 'styled-components'
 import { Typography } from '@material-ui/core'
+import { useLocalStorage } from 'react-use'
 import { windowOpen } from '../../utils/browser'
 import { isDev } from '../../utils/env'
+import SizeForm from '../SizeForm'
+import { Size } from '../../types'
 import Katinko from '.'
 import { Preview } from '..'
 
 function KatinkoGenerator() {
+  const [size, setSize] = useLocalStorage<Size>('katinko-form-size', {
+    width: 400,
+    height: 300,
+  })
+
   return (
     <Style>
       <Typography variant="h5">カチンコ</Typography>
@@ -21,9 +29,10 @@ function KatinkoGenerator() {
             })
           }}
         >
+          <SizeForm size={size} setSize={setSize} />
           <button type="submit">作成</button>
         </form>
-        <Preview>
+        <Preview style={{ width: size.width, height: size.height }}>
           <Katinko />
         </Preview>
       </div>
@@ -36,7 +45,6 @@ const Style = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
     form {
-      display: grid;
       max-width: 400px;
     }
   }
