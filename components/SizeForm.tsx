@@ -14,7 +14,7 @@ function SizeForm({ size: { width, height }, setSize }: Props) {
         defaultValue={width}
         onChange={(e, width) => {
           if (typeof width === 'object') return
-          setSize(size => ({ ...size, height }))
+          setSize(size => ({ ...size, width }))
         }}
         aria-labelledby="discrete-slider"
         valueLabelDisplay="auto"
