@@ -11,7 +11,7 @@ function SizeForm({ size: { width, height }, setSize }: Props) {
     <>
       <Typography gutterBottom>ウィジェット幅: {width}</Typography>
       <Slider
-        defaultValue={width}
+        value={width}
         onChange={(e, width) => {
           if (typeof width === 'object') return
           setSize(size => ({ ...size, width }))
@@ -25,7 +25,7 @@ function SizeForm({ size: { width, height }, setSize }: Props) {
       />
       <Typography gutterBottom>ウィジェット高さ: {height}</Typography>
       <Slider
-        defaultValue={height}
+        value={height}
         onChange={(e, height) => {
           if (typeof height === 'object') return
           setSize(size => ({ ...size, height }))

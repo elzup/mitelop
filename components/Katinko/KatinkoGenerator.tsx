@@ -24,17 +24,18 @@ function KatinkoGenerator() {
             e.preventDefault()
             windowOpen('/katinko', {
               name: isDev ? 'replace' : '_blank',
-              width: 300,
-              height: 400,
+              width: size.width,
+              height: size.height,
             })
           }}
         >
           <SizeForm size={size} setSize={setSize} />
           <button type="submit">作成</button>
         </form>
-        <Preview style={{ width: size.width, height: size.height }}>
-          <Katinko />
-        </Preview>
+        <iframe
+          src="/katinko"
+          style={{ width: size.width, height: size.height }}
+        />
       </div>
     </Style>
   )

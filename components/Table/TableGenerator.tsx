@@ -15,6 +15,7 @@ function TableGenerator() {
     width: 400,
     height: 300,
   })
+  const url = '/table?titles=' + titles.join(',')
 
   return (
     <Style>
@@ -23,7 +24,7 @@ function TableGenerator() {
         <form
           onSubmit={e => {
             e.preventDefault()
-            windowOpen('/table?titles=' + titles.join(','), {
+            windowOpen(url, {
               name: isDev ? 'replace' : '_blank',
               width: size.width,
               height: size.height,
@@ -40,9 +41,7 @@ function TableGenerator() {
           <SizeForm size={size} setSize={setSize} />
           <Button>作成</Button>
         </form>
-        <Preview style={{ width: size.width, height: size.height }}>
-          <Table titles={titles} />
-        </Preview>
+        <iframe src={url} style={{ width: size.width, height: size.height }} />
       </div>
     </Style>
   )
