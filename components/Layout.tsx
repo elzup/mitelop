@@ -28,14 +28,16 @@ const Layout: React.FunctionComponent<Props> = ({
     </Head>
     <header></header>
     {children}
-    <footer>
-      <hr />
-      <nav>
-        <Link href="/">
-          <a>Home</a>
-        </Link>
-      </nav>
-    </footer>
+    {!reset && (
+      <footer>
+        <hr />
+        <nav>
+          <Link href="/">
+            <a>Home</a>
+          </Link>
+        </nav>
+      </footer>
+    )}
   </div>
 )
 

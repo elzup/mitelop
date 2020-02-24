@@ -10,29 +10,35 @@ function KatinkoGenerator() {
     <Style>
       <Typography variant="h5">カチンコ</Typography>
       <Typography variant="caption">編集点を記録するウィジェット</Typography>
-      <form
-        onSubmit={e => {
-          e.preventDefault()
-          windowOpen('/katinko', {
-            name: isDev ? 'replace' : '_blank',
-            width: 300,
-            height: 400,
-          })
-        }}
-      >
-        <button type="submit">作成</button>
-      </form>
-      <Preview>
-        <Katinko />
-      </Preview>
+      <div>
+        <form
+          onSubmit={e => {
+            e.preventDefault()
+            windowOpen('/katinko', {
+              name: isDev ? 'replace' : '_blank',
+              width: 300,
+              height: 400,
+            })
+          }}
+        >
+          <button type="submit">作成</button>
+        </form>
+        <Preview>
+          <Katinko />
+        </Preview>
+      </div>
     </Style>
   )
 }
 
 const Style = styled.div`
-  form {
+  > div {
     display: grid;
-    max-width: 400px;
+    grid-template-columns: 1fr 1fr;
+    form {
+      display: grid;
+      max-width: 400px;
+    }
   }
 `
 

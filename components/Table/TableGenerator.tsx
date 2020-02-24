@@ -12,36 +12,42 @@ function TableGenerator() {
   return (
     <Style>
       <Typography variant="h5">テーブル</Typography>
-      <form
-        onSubmit={e => {
-          e.preventDefault()
-          windowOpen('/table?titles=' + titles.join(','), {
-            name: isDev ? 'replace' : '_blank',
-            width: 300,
-            height: 400,
-          })
-        }}
-      >
-        <label htmlFor="firstName">項目一覧(改行区切り)</label>
-        <textarea
-          id="firstName"
-          name="firstName"
-          value={titles.join('\n')}
-          onChange={e => setTitles(e.target.value.split('\n'))}
-        />
-        <button>作成</button>
-      </form>
-      <Preview>
-        <Table titles={titles} />
-      </Preview>
+      <div>
+        <form
+          onSubmit={e => {
+            e.preventDefault()
+            windowOpen('/table?titles=' + titles.join(','), {
+              name: isDev ? 'replace' : '_blank',
+              width: 300,
+              height: 400,
+            })
+          }}
+        >
+          <label htmlFor="firstName">項目一覧(改行区切り)</label>
+          <textarea
+            id="firstName"
+            name="firstName"
+            value={titles.join('\n')}
+            onChange={e => setTitles(e.target.value.split('\n'))}
+          />
+          <button>作成</button>
+        </form>
+        <Preview>
+          <Table titles={titles} />
+        </Preview>
+      </div>
     </Style>
   )
 }
 
 const Style = styled.div`
-  form {
+  > div {
     display: grid;
-    max-width: 400px;
+    grid-template-columns: 1fr 1fr;
+    form {
+      display: grid;
+      max-width: 400px;
+    }
   }
 `
 
