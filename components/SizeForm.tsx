@@ -1,5 +1,6 @@
-import { Typography, Slider } from '@material-ui/core'
+import { Typography, TextField } from '@material-ui/core'
 import { Dispatch, SetStateAction } from 'react'
+import Slider from 'rc-slider'
 import { Size } from '../types'
 
 type Props = {
@@ -10,32 +11,31 @@ function SizeForm({ size: { width, height }, setSize }: Props) {
   return (
     <>
       <Typography gutterBottom>ウィジェット幅: {width}</Typography>
-      <Slider
+      <TextField
+        type="number"
         value={width}
-        onChange={(e, width) => {
-          if (typeof width === 'object') return
-          setSize(size => ({ ...size, width }))
+        onChange={({ target: { value } }) => {
+          if (!value) return
+          setSize(size => ({ ...size, width: Number(value) }))
         }}
-        aria-labelledby="discrete-slider"
-        valueLabelDisplay="auto"
-        step={10}
-        marks
-        min={20}
-        max={1000}
+        inputProps={{
+          min: 20,
+          max: 1000,
+        }}
       />
+
       <Typography gutterBottom>ウィジェット高さ: {height}</Typography>
-      <Slider
+      <TextField
+        type="number"
         value={height}
-        onChange={(e, height) => {
-          if (typeof height === 'object') return
-          setSize(size => ({ ...size, height }))
+        onChange={({ target: { value } }) => {
+          if (!value) return
+          setSize(size => ({ ...size, height: Number(value) }))
         }}
-        aria-labelledby="discrete-slider"
-        valueLabelDisplay="auto"
-        step={10}
-        marks
-        min={20}
-        max={1000}
+        inputProps={{
+          min: 20,
+          max: 1000,
+        }}
       />
     </>
   )
