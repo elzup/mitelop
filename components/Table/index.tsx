@@ -30,6 +30,9 @@ function Table({ titles }: Props) {
   )
 }
 
-const Style = styled.div``
+const Style = styled.div`
+  height: 100vh;
+  width: 100vw;
+`
 
 export default Table

@@ -23,8 +23,8 @@ function Katinko() {
 const Style = styled.div`
   display: grid;
   grid-template-rows: 1fr max-content;
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
   &[data-status='off'] {
     background: white;
     background: green;
