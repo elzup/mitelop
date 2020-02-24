@@ -7,9 +7,11 @@ import KatinkoGenerator from '../components/Katinko/KatinkoGenerator'
 const IndexPage: NextPage = () => {
   return (
     <Layout title="Widget makeing tool | Mitelop">
-      <Typography variant="h4">Mitelop</Typography>
-      <TableGenerator />
-      <KatinkoGenerator />
+      <div style={{ margin: '8px' }}>
+        <Typography variant="h4">Mitelop</Typography>
+        <TableGenerator />
+        <KatinkoGenerator />
+      </div>
     </Layout>
   )
 }

@@ -8,10 +8,7 @@ type Props = {
   title?: string
 }
 
-const GlobalStyle = createGlobalStyle<{ reset: boolean }>`
-  body {
-    margin: ${props => (props.reset ? '0' : '8px')};
-  }
+const GlobalStyle = createGlobalStyle`
 `
 
 const Layout: React.FunctionComponent<Props> = ({
@@ -20,7 +17,7 @@ const Layout: React.FunctionComponent<Props> = ({
   title = 'This is the default title',
 }) => (
   <div>
-    <GlobalStyle reset={reset} />
+    <GlobalStyle />
     <Head>
       <title>{title}</title>
       <meta charSet="utf-8" />
