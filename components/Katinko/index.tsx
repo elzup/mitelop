@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { useState } from 'react'
+import { Button } from '@material-ui/core'
 
 type Status = 'on' | 'off'
 
@@ -8,24 +9,33 @@ function Katinko() {
 
   return (
     <Style data-status={status}>
-      <button onClick={() => setStatus('on')}>ON</button>
-      <button onClick={() => setStatus('off')}>OFF</button>
+      <div onClick={() => setStatus(v => (v === 'on' ? 'off' : 'on'))}>
+        {status}
+      </div>
+      <div className="footer">
+        <Button onClick={() => setStatus('on')}>ON</Button>
+        <Button onClick={() => setStatus('off')}>OFF</Button>
+      </div>
     </Style>
   )
 }
 
 const Style = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  button {
-    min-height: 100px;
-  }
+  grid-template-rows: 1fr max-content;
+  height: 100%;
+  width: 100%;
   &[data-status='off'] {
     background: white;
     background: green;
   }
   &[data-status='on'] {
     background: red;
+  }
+  .footer {
+    display: grid;
+    grid-auto-flow: column;
+    background: gray;
   }
 `
 
