@@ -1,20 +1,16 @@
 import styled from 'styled-components'
 import { useLocalStorage } from 'react-use'
 import { Typography, Button } from '@material-ui/core'
-import Slider from '@material-ui/core/Slider'
+import { useState } from 'react'
+import { Resizable } from 're-resizable'
 import { windowOpen } from '../../utils/browser'
 import { isDev } from '../../utils/env'
 import { Size } from '../../types'
-import SizeForm from '../SizeForm'
-import Table from '.'
 import { Preview } from '..'
 
 function TableGenerator() {
   const [titles, setTitles] = useLocalStorage<string[]>('titles-form', [])
-  const [size, setSize] = useLocalStorage<Size>('table-form-size', {
-    width: 400,
-    height: 300,
-  })
+  const [size, setSize] = useState<Size>({ width: 400, height: 300 })
   const url = '/table?titles=' + titles.join(',')
 
   return (
@@ -38,10 +34,21 @@ function TableGenerator() {
             value={titles.join('\n')}
             onChange={e => setTitles(e.target.value.split('\n'))}
           />
-          <SizeForm size={size} setSize={setSize} />
           <Button>作成</Button>
         </form>
-        <iframe src={url} style={{ width: size.width, height: size.height }} />
+        <Preview>
+          <Resizable
+            defaultSize={size}
+            onResizeStop={(e, dr, ref, d) => {
+              setSize(size => ({
+                height: size.height + d.height,
+                width: size.width + d.width,
+              }))
+            }}
+          >
+            <iframe src={url} />
+          </Resizable>
+        </Preview>
       </div>
     </Style>
   )

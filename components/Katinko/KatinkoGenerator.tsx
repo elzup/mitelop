@@ -1,18 +1,14 @@
 import styled from 'styled-components'
 import { Typography } from '@material-ui/core'
-import { useLocalStorage } from 'react-use'
+import { Resizable } from 're-resizable'
+import { useState } from 'react'
 import { windowOpen } from '../../utils/browser'
 import { isDev } from '../../utils/env'
-import SizeForm from '../SizeForm'
 import { Size } from '../../types'
-import Katinko from '.'
 import { Preview } from '..'
 
 function KatinkoGenerator() {
-  const [size, setSize] = useLocalStorage<Size>('katinko-form-size', {
-    width: 400,
-    height: 300,
-  })
+  const [size, setSize] = useState<Size>({ width: 400, height: 300 })
 
   return (
     <Style>
@@ -29,13 +25,21 @@ function KatinkoGenerator() {
             })
           }}
         >
-          <SizeForm size={size} setSize={setSize} />
           <button type="submit">作成</button>
         </form>
-        <iframe
-          src="/katinko"
-          style={{ width: size.width, height: size.height }}
-        />
+        <Preview>
+          <Resizable
+            defaultSize={size}
+            onResizeStop={(e, dr, ref, d) => {
+              setSize(size => ({
+                height: size.height + d.height,
+                width: size.width + d.width,
+              }))
+            }}
+          >
+            <iframe src="/katinko" />
+          </Resizable>
+        </Preview>
       </div>
     </Style>
   )

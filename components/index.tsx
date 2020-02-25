@@ -1,6 +1,11 @@
 import styled from 'styled-components'
 
 export const Preview = styled.div`
-  border: solid blue 1px;
-  max-width: 50vw;
+  > div {
+    border: solid blue 4px;
+  }
+  iframe {
+    width: 100%;
+    height: 100%;
+  }
 `
