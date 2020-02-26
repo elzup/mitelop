@@ -6,7 +6,7 @@ import { Resizable } from 're-resizable'
 import { windowOpen } from '../../utils/browser'
 import { isDev } from '../../utils/env'
 import { Size } from '../../types'
-import { Preview } from '..'
+import PreviewResizable from '../PreviewResizable'
 
 function TableGenerator() {
   const [titles, setTitles] = useLocalStorage<string[]>('titles-form', [])
@@ -36,19 +36,7 @@ function TableGenerator() {
           />
           <Button>作成</Button>
         </form>
-        <Preview>
-          <Resizable
-            defaultSize={size}
-            onResizeStop={(e, dr, ref, d) => {
-              setSize(size => ({
-                height: size.height + d.height,
-                width: size.width + d.width,
-              }))
-            }}
-          >
-            <iframe src={url} />
-          </Resizable>
-        </Preview>
+        <PreviewResizable url={url} size={size} onChangeSize={setSize} />
       </div>
     </Style>
   )

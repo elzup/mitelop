@@ -1,11 +1,10 @@
 import styled from 'styled-components'
 import { Typography } from '@material-ui/core'
-import { Resizable } from 're-resizable'
 import { useState } from 'react'
 import { windowOpen } from '../../utils/browser'
 import { isDev } from '../../utils/env'
 import { Size } from '../../types'
-import { Preview } from '..'
+import PreviewResizable from '../PreviewResizable'
 
 function KatinkoGenerator() {
   const [size, setSize] = useState<Size>({ width: 400, height: 300 })
@@ -18,6 +17,8 @@ function KatinkoGenerator() {
         <form
           onSubmit={e => {
             e.preventDefault()
+            console.log(size)
+
             windowOpen('/katinko', {
               name: isDev ? 'replace' : '_blank',
               width: size.width,
@@ -27,19 +28,7 @@ function KatinkoGenerator() {
         >
           <button type="submit">作成</button>
         </form>
-        <Preview>
-          <Resizable
-            defaultSize={size}
-            onResizeStop={(e, dr, ref, d) => {
-              setSize(size => ({
-                height: size.height + d.height,
-                width: size.width + d.width,
-              }))
-            }}
-          >
-            <iframe src="/katinko" />
-          </Resizable>
-        </Preview>
+        <PreviewResizable url="/katinko" size={size} onChangeSize={setSize} />
       </div>
     </Style>
   )
