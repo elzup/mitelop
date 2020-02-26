@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Typography } from '@material-ui/core'
+import { Typography, Button } from '@material-ui/core'
 import { useState } from 'react'
 import { windowOpen } from '../../utils/browser'
 import { isDev } from '../../utils/env'
@@ -14,20 +14,18 @@ function KatinkoGenerator() {
       <Typography variant="h5">カチンコ</Typography>
       <Typography variant="caption">編集点を記録するウィジェット</Typography>
       <div>
-        <form
-          onSubmit={e => {
-            e.preventDefault()
-            console.log(size)
-
-            windowOpen('/katinko', {
-              name: isDev ? 'replace' : '_blank',
-              width: size.width,
-              height: size.height,
-            })
-          }}
-        >
-          <button type="submit">作成</button>
-        </form>
+        <div>
+          <Button
+            onClick={() => {
+              windowOpen('/katinko', {
+                name: isDev ? 'replace' : '_blank',
+                ...size,
+              })
+            }}
+          >
+            作成
+          </Button>
+        </div>
         <PreviewResizable url="/katinko" size={size} onChangeSize={setSize} />
       </div>
     </Style>

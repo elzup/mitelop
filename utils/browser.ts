@@ -11,7 +11,7 @@ export function windowOpen(
   const options: string[] = []
 
   if (height) options.push(`height=${height}`)
-  if (width) options.push(`width=${height}`)
+  if (width) options.push(`width=${width}`)
 
   window.open(url, name, options.join(','))
 }

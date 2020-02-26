@@ -17,16 +17,7 @@ function TableGenerator() {
     <Style>
       <Typography variant="h5">テーブル</Typography>
       <div>
-        <form
-          onSubmit={e => {
-            e.preventDefault()
-            windowOpen(url, {
-              name: isDev ? 'replace' : '_blank',
-              width: size.width,
-              height: size.height,
-            })
-          }}
-        >
+        <div>
           <Typography gutterBottom>項目一覧(改行区切り)</Typography>
           <textarea
             name="titles"
@@ -34,8 +25,14 @@ function TableGenerator() {
             value={titles.join('\n')}
             onChange={e => setTitles(e.target.value.split('\n'))}
           />
-          <Button>作成</Button>
-        </form>
+          <Button
+            onClick={() => {
+              windowOpen(url, { name: isDev ? 'replace' : '_blank', ...size })
+            }}
+          >
+            作成
+          </Button>
+        </div>
         <PreviewResizable url={url} size={size} onChangeSize={setSize} />
       </div>
     </Style>
@@ -46,7 +43,7 @@ const Style = styled.div`
   > div {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    form {
+    > div {
       max-width: 400px;
     }
   }
