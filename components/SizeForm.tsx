@@ -1,6 +1,5 @@
 import { Typography, TextField } from '@material-ui/core'
 import { Dispatch, SetStateAction } from 'react'
-import Slider from 'rc-slider'
 import { Size } from '../types'
 
 type Props = {

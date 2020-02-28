@@ -36,7 +36,7 @@ const Style = styled.div`
   > div {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    form {
+    > div {
       max-width: 400px;
     }
   }
