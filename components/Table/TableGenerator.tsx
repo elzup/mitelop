@@ -10,7 +10,7 @@ import { GeneratorFrame } from '..'
 function TableGenerator() {
   const [titles, setTitles] = useLocalStorage<string[]>('titles-form', [])
   const [size, setSize] = useState<Size>({ width: 400, height: 300 })
-  const url = '/table?titles=' + titles.join(',')
+  const url = '/table?titles=' + titles.filter(v => v !== '').join(',')
 
   return (
     <GeneratorFrame>
