@@ -1,11 +1,11 @@
-import styled from 'styled-components'
 import { useLocalStorage } from 'react-use'
-import { Typography, Button } from '@material-ui/core'
+import { Typography, Button, TextField } from '@material-ui/core'
 import { useState } from 'react'
 import { windowOpen } from '../../utils/browser'
 import { isDev } from '../../utils/env'
 import { Size } from '../../types'
 import PreviewResizable from '../PreviewResizable'
+import { GeneratorFrame } from '..'
 
 function TableGenerator() {
   const [titles, setTitles] = useLocalStorage<string[]>('titles-form', [])
@@ -13,16 +13,16 @@ function TableGenerator() {
   const url = '/table?titles=' + titles.join(',')
 
   return (
-    <Style>
+    <GeneratorFrame>
       <Typography variant="h5">テーブル</Typography>
       <div>
         <div>
           <Typography gutterBottom>項目一覧(改行区切り)</Typography>
-          <textarea
-            name="titles"
-            style={{ width: '100%' }}
+          <TextField
             value={titles.join('\n')}
+            multiline
             onChange={e => setTitles(e.target.value.split('\n'))}
+            fullWidth
           />
           <Button
             onClick={() => {
@@ -34,18 +34,8 @@ function TableGenerator() {
         </div>
         <PreviewResizable url={url} size={size} onChangeSize={setSize} />
       </div>
-    </Style>
+    </GeneratorFrame>
   )
 }
-
-const Style = styled.div`
-  > div {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    > div {
-      max-width: 400px;
-    }
-  }
-`
 
 export default TableGenerator
