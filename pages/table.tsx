@@ -11,10 +11,11 @@ const getOne = (v: string | string[] | undefined): string => {
 const IndexPage: NextPage = () => {
   const { query } = useRouter()
   const titles = getOne(query['titles']).split(',')
+  const row = !!getOne(query['row'])
 
   return (
     <Layout title="Table List" reset>
-      <Table titles={titles} />
+      <Table titles={titles} row={row} />
     </Layout>
   )
 }

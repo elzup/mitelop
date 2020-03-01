@@ -10,6 +10,7 @@ import { GeneratorFrame } from '..'
 function TableGenerator() {
   const [titles, setTitles] = useLocalStorage<string[]>('titles-form', [])
   const [size, setSize] = useState<Size>({ width: 400, height: 300 })
+  const [size2, setSize2] = useState<Size>({ width: 750, height: 100 })
   const url = '/table?titles=' + titles.filter(v => v !== '').join(',')
 
   return (
@@ -33,6 +34,11 @@ function TableGenerator() {
           </Button>
         </div>
         <PreviewResizable url={url} size={size} onChangeSize={setSize} />
+        <PreviewResizable
+          url={url + '&row=1'}
+          size={size2}
+          onChangeSize={setSize2}
+        />
       </div>
     </GeneratorFrame>
   )
