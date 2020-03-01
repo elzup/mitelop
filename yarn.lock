@@ -1940,7 +1940,7 @@ babel-plugin-dynamic-import-node@^2.3.0:
   dependencies:
     object.assign "^4.1.0"
 
-"babel-plugin-styled-components@>= 1", babel-plugin-styled-components@^1.10.7:
+babel-plugin-styled-components@1.10.7, "babel-plugin-styled-components@>= 1":
   version "1.10.7"
   resolved "https://registry.yarnpkg.com/babel-plugin-styled-components/-/babel-plugin-styled-components-1.10.7.tgz#3494e77914e9989b33cc2d7b3b29527a949d635c"
   integrity sha512-MBMHGcIA22996n9hZRf/UJLVVgkEOITuR2SvjHLb5dSTUyR4ZRGn+ngITapes36FI3WLxZHfRhkA1ffHxihOrg==
@@ -5084,7 +5084,7 @@ neo-async@^2.5.0, neo-async@^2.6.0, neo-async@^2.6.1:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.1.tgz#ac27ada66167fa8849a6addd837f6b189ad2081c"
   integrity sha512-iyam8fBuCUpWeKPGpaNMetEocMt364qkCsfL9JuhjXX6dRnguRVOfk2GZaDpPjcOKiiXCPINZC1GczQ7iTq3Zw==
 
-next-pwa@^2.2.0:
+next-pwa@2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/next-pwa/-/next-pwa-2.2.0.tgz#fcc7f53b251054737c3ba2bcdb0e11e77b89bf64"
   integrity sha512-TjCkyEhVxaL/cMJMYZBPtNxlyqh6mzhkhe4bpzOxmo4KFIiUIP7P/hVEHRvw/2Yj3v9KkMXP7VIFtKeGZPrA3Q==
@@ -6258,7 +6258,7 @@ raw-body@2.4.0:
     iconv-lite "0.4.24"
     unpipe "1.0.0"
 
-re-resizable@^6.2.0:
+re-resizable@6.2.0:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/re-resizable/-/re-resizable-6.2.0.tgz#7b42aee4df6de4e1f602c78828052d41f642bc94"
   integrity sha512-3bi0yTzub/obnqoTPs9C8A1ecrgt5OSWlKdHDJ6gBPiEiEIG5LO0PqbwWTpABfzAzdE4kldOG2MQDQEaJJNYkQ==
