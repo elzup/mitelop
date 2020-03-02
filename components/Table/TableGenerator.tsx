@@ -10,8 +10,9 @@ import { GeneratorFrame } from '..'
 function TableGenerator() {
   const [titles, setTitles] = useLocalStorage<string[]>('titles-form', [])
   const [size, setSize] = useState<Size>({ width: 400, height: 300 })
-  const [size2, setSize2] = useState<Size>({ width: 750, height: 100 })
+  const [sizeR, setSizeR] = useState<Size>({ width: 750, height: 100 })
   const url = '/table?titles=' + titles.filter(v => v !== '').join(',')
+  const urlR = url + '&row=1'
 
   return (
     <GeneratorFrame>
@@ -30,15 +31,18 @@ function TableGenerator() {
               windowOpen(url, { name: isDev ? 'replace' : '_blank', ...size })
             }}
           >
-            作成
+            作成1
+          </Button>
+          <Button
+            onClick={() => {
+              windowOpen(urlR, { name: isDev ? 'replace' : '_blank', ...sizeR })
+            }}
+          >
+            作成2
           </Button>
         </div>
         <PreviewResizable url={url} size={size} onChangeSize={setSize} />
-        <PreviewResizable
-          url={url + '&row=1'}
-          size={size2}
-          onChangeSize={setSize2}
-        />
+        <PreviewResizable url={urlR} size={sizeR} onChangeSize={setSizeR} />
       </div>
     </GeneratorFrame>
   )
