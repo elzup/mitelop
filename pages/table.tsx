@@ -1,17 +1,13 @@
 import { NextPage } from 'next'
-import { useRouter } from 'next/router'
+import { useQueryParam, NumberParam, StringParam } from 'use-query-params'
 import Layout from '../components/Layout'
 import Table from '../components/Table'
 
-const getOne = (v: string | string[] | undefined): string => {
-  if (!v) return ''
-  return typeof v === 'object' ? v[0] : v
-}
-
 const IndexPage: NextPage = () => {
-  const { query } = useRouter()
-  const titles = getOne(query['titles']).split(',')
-  const row = !!getOne(query['row'])
+  const titlesParam = useQueryParam('title', StringParam)[0] || ''
+  const rowParam = useQueryParam('row', NumberParam)[0]
+  const titles = titlesParam?.split(',')
+  const row = !!rowParam
 
   return (
     <Layout title="Table List" reset>
