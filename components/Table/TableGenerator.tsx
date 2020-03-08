@@ -31,18 +31,21 @@ function TableGenerator() {
               windowOpen(url, { name: isDev ? 'replace' : '_blank', ...size })
             }}
           >
-            作成1
+            作成
           </Button>
+        </div>
+        <PreviewResizable url={url} size={size} onChangeSize={setSize} />
+        <div>
+          <PreviewResizable url={urlR} size={sizeR} onChangeSize={setSizeR} />
+
           <Button
             onClick={() => {
               windowOpen(urlR, { name: isDev ? 'replace' : '_blank', ...sizeR })
             }}
           >
-            作成2
+            作成
           </Button>
         </div>
-        <PreviewResizable url={url} size={size} onChangeSize={setSize} />
-        <PreviewResizable url={urlR} size={sizeR} onChangeSize={setSizeR} />
       </div>
     </GeneratorFrame>
   )

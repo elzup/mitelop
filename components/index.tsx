@@ -2,10 +2,16 @@ import styled from 'styled-components'
 
 export const Preview = styled.div`
   > div {
-    border-right: double #2b0065 12px;
-    border-bottom: double #2b0065 12px;
+    border-right: dashed;
+    border-bottom: dashed;
+    border-width: 4px;
+    border-top: solid 20px;
+    border-left: solid 4px;
+    border-color: #2b0065;
+    border-radius: 8px;
   }
   iframe {
+    border: solid 2px white;
     width: 100%;
     height: 100%;
   }
