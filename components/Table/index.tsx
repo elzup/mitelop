@@ -43,9 +43,13 @@ const Style = styled.div`
   }
   li {
     font-size: 30px;
+    padding-left: 8px;
     border: solid 1px #444;
     &[data-checked='true'] {
       background: green;
+    }
+    span {
+      vertical-align: middle;
     }
   }
   &[data-row='true'] {
