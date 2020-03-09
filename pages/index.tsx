@@ -4,6 +4,7 @@ import Layout from '../components/Layout'
 import TableGenerator from '../components/Table/TableGenerator'
 import KatinkoGenerator from '../components/Katinko/KatinkoGenerator'
 import ClockGenerator from '../components/Clock/ClockGenerator'
+import StopwatchGenerator from '../components/Stopwatch/StopwatchGenerator'
 
 const IndexPage: NextPage = () => {
   return (
@@ -13,6 +14,7 @@ const IndexPage: NextPage = () => {
         <TableGenerator />
         <KatinkoGenerator />
         <ClockGenerator />
+        <StopwatchGenerator />
       </div>
     </Layout>
   )
