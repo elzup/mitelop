@@ -12,23 +12,31 @@ const timeToStr = (t: number) => {
 
   if (h > 0) return `${h}:${pad2(m)}:${pad2(s)}`
   if (m > 0) return `${m}:${pad2(s)}`
-  return `${pad2(s)}`
+  return `${s}`
 }
 
 function Stopwatch() {
-  const [status, time, setStart, setPause, setReset] = useStopwatch()
+  const sw = useStopwatch()
   const [timeStr, setTimeStr] = useState<string>('0')
 
   useEffect(() => {
-    setTimeStr(timeToStr(time))
-  }, [time])
+    setTimeStr(timeToStr(sw.time))
+  }, [+sw.time])
 
   return (
     <Style>
       <div />
       <div className="frame">
-        <span className="time">{time}</span>
-        <button onClick={set}>Stop</button>
+        <span className="time">{timeStr}</span>
+        {sw.status === 'init' && (
+          <button onClick={() => sw.actions.setStart()}>Start</button>
+        )}
+        {sw.status === 'run' && (
+          <button onClick={() => sw.actions.setPause()}>Stop</button>
+        )}
+        {sw.status === 'pause' && (
+          <button onClick={() => sw.actions.setResume()}>Resume</button>
+        )}
       </div>
       <div />
     </Style>
