@@ -6,9 +6,12 @@ import { useStopwatch } from './useStopwatch'
 const pad2 = (n: number) => `${n}`.padStart(2, '0')
 
 const timeToStr = (t: number) => {
-  const h = Math.floor((t / 60) * 60 * 1000)
-  const m = Math.floor(((t % h) / 60) * 1000)
-  const s = Math.floor(t / 1000)
+  const SEC = 1000
+  const MIN = 60 * SEC
+  const HOU = 60 * MIN
+  const h = Math.floor(t / HOU)
+  const m = Math.floor((t % HOU) / MIN)
+  const s = Math.floor((t % MIN) / SEC)
 
   if (h > 0) return `${h}:${pad2(m)}:${pad2(s)}`
   if (m > 0) return `${m}:${pad2(s)}`
