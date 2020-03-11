@@ -1,21 +1,34 @@
 import styled from 'styled-components'
 import { useSeconds } from 'use-seconds'
+import { useEffect, useState } from 'react'
+import { useStopwatch } from './useStopwatch'
 
 const pad2 = (n: number) => `${n}`.padStart(2, '0')
-const dateStr = (t: Date) =>
-  `${t.getFullYear()}-${pad2(t.getMonth() + 1)}-${pad2(t.getDate())}`
-const timeStr = (t: Date) =>
-  [t.getHours(), t.getMinutes(), t.getSeconds()].map(pad2).join(':')
+
+const timeToStr = (t: number) => {
+  const h = Math.floor((t / 60) * 60 * 1000)
+  const m = Math.floor(((t % h) / 60) * 1000)
+  const s = Math.floor(t / 1000)
+
+  if (h > 0) return `${h}:${pad2(m)}:${pad2(s)}`
+  if (m > 0) return `${m}:${pad2(s)}`
+  return `${pad2(s)}`
+}
 
 function Stopwatch() {
-  const [time] = useSeconds()
+  const [status, time, setStart, setPause, setReset] = useStopwatch()
+  const [timeStr, setTimeStr] = useState<string>('0')
+
+  useEffect(() => {
+    setTimeStr(timeToStr(time))
+  }, [time])
 
   return (
     <Style>
       <div />
       <div className="frame">
-        <span className="date">{dateStr(time)}</span>
-        <span className="time">{timeStr(time)}</span>
+        <span className="time">{time}</span>
+        <button onClick={set}>Stop</button>
       </div>
       <div />
     </Style>

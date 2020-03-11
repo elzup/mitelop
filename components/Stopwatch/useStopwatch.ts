@@ -1,24 +1,45 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
-type StopwatchStatus = 'init' | 'run' | 'pause'
+type Stopwatch =
+  | { status: 'init' }
+  | { status: 'run'; startTime: number }
+  | { status: 'pause'; time: number }
 
 export function useStopwatch() {
-  const [status, setStatus] = useState<StopwatchStatus>('init')
+  const [stopwatch, setStopwatch] = useState<Stopwatch>({ status: 'init' })
   const [time, setTime] = useState<number>(0)
-  const [startTime, setStartTime] = useState<Date | null>(null)
 
-  const setStart = () => {
-    setStatus('run')
-    setStartTime(new Date())
-  }
-  const setPause = () => {
-    setStatus('pause')
-  }
-  const setReset = () => {
-    setStatus('init')
-    setTime(+new Date() - startTime)
-    setStartTime(null)
+  const startRun = (offset = 0) => {
+    const startTime = +new Date() - offset
+
+    setStopwatch({ status: 'run', startTime })
   }
 
-  return [status, time, setStart, setPause, setReset]
+  switch (stopwatch.status) {
+    case 'init':
+      return [
+        stopwatch.status,
+        {
+          setStart: () => startRun(),
+        },
+      ] as const
+    case 'run':
+      return [
+        status,
+        {
+          setPause: () => {
+            setStopwatch({ status: 'pause', time: +new Date() })
+          },
+        },
+      ] as const
+    case 'pause':
+      return [
+        stopwatch.status,
+        {
+          setResume: () => startRun(-stopwatch.time),
+        },
+      ] as const
+    default:
+      throw new Error('broken stopwatch')
+  }
 }
