@@ -18,7 +18,7 @@ export function useStopwatch(): UseStopwatch {
   const [time, setTime] = useState<number>(0)
 
   const startRun = (offset = 0) => {
-    const startTime = +new Date() - offset
+    const startTime = +new Date() + offset
 
     setStopwatch({ status: 'run', startTime })
   }
