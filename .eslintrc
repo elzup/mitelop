@@ -1,5 +1,5 @@
 {
-  "extends": ["nzap", "nzap/typescript", "nzap/react"],
+  "extends": ["nzap", "nzap/typescript", "nzap/react", "nzap/jest"],
 
   "rules": {
     "react/react-in-jsx-scope": 0,

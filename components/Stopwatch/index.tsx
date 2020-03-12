@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { useSeconds } from 'use-seconds'
 import { useEffect, useState } from 'react'
 import { useStopwatch } from './useStopwatch'
 
