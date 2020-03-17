@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useSeconds } from 'use-seconds'
 
 type StopwatchState =
   | { status: 'init' }
@@ -13,31 +14,18 @@ type UseStopwatch =
       actions: { setResume: () => void; setReset: () => void }
       time: number
     }
+
 export function useStopwatch(): UseStopwatch {
   const [sw, setStopwatch] = useState<StopwatchState>({ status: 'init' })
-  const [time, setTime] = useState<number>(0)
+  const [diff, setDiff] = useState<number>(0)
+  const [now] = useSeconds(diff)
 
   const startRun = (offset = 0) => {
     const startTime = +new Date() + offset
 
+    setDiff(startTime % 1000)
     setStopwatch({ status: 'run', startTime })
   }
-
-  useEffect(() => {
-    let p: number | null = null
-
-    if (sw.status === 'run') {
-      p = setInterval(() => {
-        setTime(+new Date() - sw.startTime)
-      }, 1000)
-    }
-
-    return () => {
-      if (p !== null) {
-        clearInterval(p)
-      }
-    }
-  }, [sw.status])
 
   switch (sw.status) {
     case 'init':
@@ -56,7 +44,7 @@ export function useStopwatch(): UseStopwatch {
             setStopwatch({ status: 'pause', time: +new Date() - sw.startTime })
           },
         },
-        time,
+        time: +now - sw.startTime,
       }
     }
     case 'pause': {

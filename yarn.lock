@@ -9454,10 +9454,10 @@ url@0.11.0, url@^0.11.0:
     punycode "1.3.2"
     querystring "0.2.0"
 
-use-seconds@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/use-seconds/-/use-seconds-1.1.1.tgz#8695f60ecbddd35578dc6289782a2edfa763f2e1"
-  integrity sha512-vJ0T90yLPDIaOKvw2gNQeg+TZUDIiF6xF9JtE6w+MyVeW4YIuluzaSr/a4SjOaJUhRTDUH/WvkDzicz3HUffyA==
+use-seconds@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/use-seconds/-/use-seconds-1.2.0.tgz#e8f6ad77a4168eb5187dd6792d156edbc5e4d9bc"
+  integrity sha512-LwAyusSCLOzlYxbW6dn+NIlswW/xLRTEBy/LrRFLgtmT2g1VTYVRp2Eb0dILvGPQiePg856dCz/UCm4xLEBZvA==
 
 use-subscription@1.1.1:
   version "1.1.1"

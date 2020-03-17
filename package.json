@@ -21,7 +21,7 @@
     "react-dom": "16.13.0",
     "react-use": "13.27.0",
     "styled-components": "5.0.1",
-    "use-seconds": "^1.1.1"
+    "use-seconds": "^1.2.0"
   },
   "devDependencies": {
     "@testing-library/react-hooks": "^3.2.1",
