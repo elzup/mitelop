@@ -1,10 +1,8 @@
 import styled from 'styled-components'
 import { useEffect, useState } from 'react'
 import { useStopwatch } from './useStopwatch'
-import { useVirtualMs } from './useVirtualMs'
 
 const pad2 = (n: number) => `${n}`.padStart(2, '0')
-const pad3 = (n: number) => `${n}`.padStart(3, '0')
 
 const timeToStr = (t: number) => {
   const SEC = 1000
@@ -22,8 +20,6 @@ const timeToStr = (t: number) => {
 function Stopwatch() {
   const sw = useStopwatch()
   const [timeStr, setTimeStr] = useState<string>('0')
-  const vms = useVirtualMs(sw.time % 1000)
-  const ms = sw.status === 'run' ? vms : pad3(sw.time % 1000)
 
   useEffect(() => {
     setTimeStr(timeToStr(sw.time))
@@ -33,9 +29,7 @@ function Stopwatch() {
     <Style>
       <div />
       <div className="frame">
-        <span className="time">
-          {timeStr}.{ms}
-        </span>
+        <span className="time">{timeStr}</span>
         {sw.status === 'init' && (
           <button onClick={() => sw.actions.setStart()}>Start</button>
         )}
