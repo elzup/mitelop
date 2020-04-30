@@ -19,7 +19,7 @@
     "re-resizable": "6.3.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "react-use": "13.27.1",
+    "react-use": "14.2.0",
     "styled-components": "5.1.0",
     "use-seconds": "1.4.0"
   },
