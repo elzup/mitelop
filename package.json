@@ -35,7 +35,7 @@
     "eslint-config-nzap": "1.4.6",
     "jest": "25.5.2",
     "jest-date-mock": "1.0.8",
-    "prettier": "1.19.1",
+    "prettier": "2.0.5",
     "react-test-renderer": "16.13.1",
     "ts-jest": "25.4.0",
     "typescript": "3.8.3"
