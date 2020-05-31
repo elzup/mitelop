@@ -1,4 +1,3 @@
-import { useLocalStorage } from 'react-use'
 import { Typography, Button, TextField } from '@material-ui/core'
 import { useState } from 'react'
 import { windowOpen } from '../../utils/browser'
@@ -6,12 +5,13 @@ import { isDev } from '../../utils/env'
 import { Size } from '../../types'
 import PreviewResizable from '../PreviewResizable'
 import { GeneratorFrame } from '..'
+import { useLocalStorage } from '../../utils/useLocalStorage'
 
 function TableGenerator() {
   const [titles, setTitles] = useLocalStorage<string[]>('titles-form', [])
   const [size, setSize] = useState<Size>({ width: 400, height: 300 })
   const [sizeR, setSizeR] = useState<Size>({ width: 750, height: 100 })
-  const url = '/table?titles=' + titles.filter(v => v !== '').join(',')
+  const url = '/table?titles=' + titles.filter((v) => v !== '').join(',')
   const urlR = url + '&row=1'
 
   return (
@@ -23,7 +23,7 @@ function TableGenerator() {
           <TextField
             value={titles.join('\n')}
             multiline
-            onChange={e => setTitles(e.target.value.split('\n'))}
+            onChange={(e) => setTitles(e.target.value.split('\n'))}
             fullWidth
           />
           <Button

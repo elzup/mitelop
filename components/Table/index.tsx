@@ -1,6 +1,5 @@
 import styled from 'styled-components'
-
-import { useLocalStorage } from 'react-use'
+import { useLocalStorage } from '../../utils/useLocalStorage'
 
 type Props = {
   titles: string[]
@@ -18,7 +17,7 @@ function Table({ titles, row }: Props) {
         {titles.map((title, i) => (
           <li
             key={i}
-            onClick={() => setChecks(v => ({ ...v, [title]: !v[title] }))}
+            onClick={() => setChecks((v) => ({ ...v, [title]: !v[title] }))}
             data-checked={checks[title]}
           >
             <div>

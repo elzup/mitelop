@@ -12,7 +12,7 @@ function Katinko() {
     <Style data-status={status} data-clipping={clipping}>
       <div
         className="panel"
-        onClick={() => setStatus(v => (v === 'on' ? 'off' : 'on'))}
+        onClick={() => setStatus((v) => (v === 'on' ? 'off' : 'on'))}
       >
         <div className="st">{status}</div>
         <div className="cl">{clipping}</div>
