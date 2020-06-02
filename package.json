@@ -2,7 +2,7 @@
   "name": "mitelop",
   "version": "1.0.0",
   "scripts": {
-    "dev": "next",
+    "dev": "next -H localhost.mitelop",
     "test": "jest",
     "build": "next build",
     "export": "yarn build && next export",

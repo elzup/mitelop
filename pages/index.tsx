@@ -1,21 +1,13 @@
 import { NextPage } from 'next'
-import { Typography } from '@material-ui/core'
+import dynamic from 'next/dynamic'
 import Layout from '../components/Layout'
-import TableGenerator from '../components/Table/TableGenerator'
-import KatinkoGenerator from '../components/Katinko/KatinkoGenerator'
-import ClockGenerator from '../components/Clock/ClockGenerator'
-import StopwatchGenerator from '../components/Stopwatch/StopwatchGenerator'
+
+const TopPage = dynamic(() => import('../components/TopPage'), { ssr: false })
 
 const IndexPage: NextPage = () => {
   return (
     <Layout title="Widget makeing tool | Mitelop">
-      <div style={{ margin: '8px' }}>
-        <Typography variant="h4">Mitelop</Typography>
-        <TableGenerator />
-        <KatinkoGenerator />
-        <ClockGenerator />
-        <StopwatchGenerator />
-      </div>
+      <TopPage />
     </Layout>
   )
 }
