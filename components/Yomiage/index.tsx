@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect, useRef } from 'react'
 import { iwindow } from '../../utils/browser'
+import { useLocalStorage } from '../../utils/useLocalStorage'
 
 const synth = window.speechSynthesis
 
@@ -33,8 +34,8 @@ function speak(text: string, rate: number, pitch: number) {
 function Yomiage() {
   const [text, setText] = useState<string>('')
   const [isStart, setIsStart] = useState<boolean>(false)
-  const [pitch, setPitch] = useState<number>(1.5)
-  const [rate, setRate] = useState<number>(0.8)
+  const [pitch, setPitch] = useLocalStorage<number>('speech-pitch', 1.0)
+  const [rate, setRate] = useLocalStorage<number>('speech-rate', 1.1)
   const [errorCount, setErrorCount] = useState<number>(0)
   const recognitionRef = useRef<Recognition>()
 
