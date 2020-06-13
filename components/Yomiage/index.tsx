@@ -12,8 +12,11 @@ type Recognition = {
   stop: () => void
   start: () => void
   onend: () => void
-  onerror: (e: object) => void
+  onerror: (e: RecognitionError) => void
   onresult: (e: any) => void
+}
+type RecognitionError = {
+  error: 'no-speech' | 'other'
 }
 
 function speak(text: string, rate: number, pitch: number) {
@@ -32,6 +35,7 @@ function Yomiage() {
   const [isStart, setIsStart] = useState<boolean>(false)
   const [pitch, setPitch] = useState<number>(1.5)
   const [rate, setRate] = useState<number>(0.8)
+  const [errorCount, setErrorCount] = useState<number>(0)
   const recognitionRef = useRef<Recognition>()
 
   useEffect(() => {
@@ -42,10 +46,16 @@ function Yomiage() {
     recognition.interimResults = false
     recognition.maxAlternatives = 1
     recognition.continuous = false
-    recognition.onerror = (e: unknown) => {
+    recognition.onerror = (e: RecognitionError) => {
+      setErrorCount((e) => e + 1)
       if (recognitionRef.current) {
-        recognitionRef.current.onend = () => {
-          // only rewrite
+        if (e.error === 'no-speech' && errorCount < 3) {
+          recognitionRef.current.start()
+          return
+        } else {
+          recognitionRef.current.onend = () => {
+            // only rewrite
+          }
         }
       }
       console.error(e)
@@ -64,6 +74,7 @@ function Yomiage() {
     if (!recognition) return
 
     recognition.onresult = function (event: any) {
+      setErrorCount(0)
       const text = event.results[event.resultIndex][0].transcript
 
       setText(text)
@@ -72,7 +83,7 @@ function Yomiage() {
   }, [!recognitionRef.current, pitch, rate])
   return (
     <div className="App">
-      pitch
+      Speed
       <input
         style={{ width: '30%' }}
         type="number"
@@ -100,6 +111,7 @@ function Yomiage() {
         <button
           onClick={() => {
             setIsStart(true)
+            setErrorCount(0)
             if (recognitionRef.current) {
               recognitionRef.current.start()
               recognitionRef.current.onend = () =>
