@@ -15,3 +15,18 @@ export function windowOpen(
 
   window.open(url, name, options.filter(Boolean).join(','))
 }
+
+type IWindow = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  webkitSpeechRecognition: any
+  // webkitSpeechRecognition: WebkitSpeechRecognition
+} & Window
+
+// class WebkitSpeechRecognition {
+//   volume: number
+//   constructor() {
+//     this.volume = 0
+//   }
+// }
+
+export const iwindow = (window as unknown) as IWindow
