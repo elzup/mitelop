@@ -6,7 +6,7 @@ const Yomiage = dynamic(() => import('../components/Yomiage'), { ssr: false })
 
 const IndexPage: NextPage = () => {
   return (
-    <Layout title="Yomiage">
+    <Layout title="Yomiage" reset>
       <Yomiage />
     </Layout>
   )
