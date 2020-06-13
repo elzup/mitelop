@@ -17,6 +17,7 @@ function TableGenerator() {
   return (
     <GeneratorFrame>
       <Typography variant="h5">テーブル</Typography>
+      <Typography variant="caption">タスクリスト・進捗リスト</Typography>
       <div>
         <div>
           <Typography gutterBottom>項目一覧(改行区切り)</Typography>
