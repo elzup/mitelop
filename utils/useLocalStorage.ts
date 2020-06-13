@@ -1,5 +1,10 @@
 import { Dispatch, SetStateAction, useState } from 'react'
 
+export const useTitleCheckLocalStorage = () =>
+  useLocalStorage<Record<string, boolean>>('titles', {})
+export const useTitleLocalStorage = () =>
+  useLocalStorage<string[]>('titles-form', [])
+
 export function useLocalStorage<T = unknown>(
   key: string,
   initialValue: T

@@ -1,15 +1,12 @@
 import styled from 'styled-components'
-import { useLocalStorage } from '../../utils/useLocalStorage'
+import { useTitleCheckLocalStorage } from '../../utils/useLocalStorage'
 
 type Props = {
   titles: string[]
   row: boolean
 }
 function Table({ titles, row }: Props) {
-  const [checks, setChecks] = useLocalStorage<Record<string, boolean>>(
-    'titles',
-    {}
-  )
+  const [checks, setChecks] = useTitleCheckLocalStorage()
 
   return (
     <Style data-row={row}>

@@ -18,7 +18,7 @@ class Document extends NextDocument<{}> {
     try {
       ctx.renderPage = () =>
         originalRenderPage({
-          enhanceApp: App => props =>
+          enhanceApp: (App) => (props) =>
             styledComponentSheets.collectStyles(
               materialUiSheets.collect(<App {...props} />)
             ),

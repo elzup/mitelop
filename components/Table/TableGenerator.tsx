@@ -5,10 +5,10 @@ import { isDev } from '../../utils/env'
 import { Size } from '../../types'
 import PreviewResizable from '../PreviewResizable'
 import { GeneratorFrame } from '..'
-import { useLocalStorage } from '../../utils/useLocalStorage'
+import { useTitleLocalStorage } from '../../utils/useLocalStorage'
 
 function TableGenerator() {
-  const [titles, setTitles] = useLocalStorage<string[]>('titles-form', [])
+  const [titles, setTitles] = useTitleLocalStorage()
   const [size, setSize] = useState<Size>({ width: 400, height: 300 })
   const [sizeR, setSizeR] = useState<Size>({ width: 750, height: 100 })
   const url = '/table?titles=' + titles.filter((v) => v !== '').join(',')
