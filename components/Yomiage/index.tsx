@@ -1,49 +1,77 @@
-import React, { useState } from 'react'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useState, useEffect, useRef } from 'react'
 import { iwindow } from '../../utils/browser'
 
 const synth = window.speechSynthesis
 
-// eslint-disable-next-line new-cap
-const recognition = new iwindow.webkitSpeechRecognition()
+type Recognition = {
+  lang: string
+  interimResults: boolean
+  maxAlternatives: number
+  continuous: boolean
+  stop: () => void
+  start: () => void
+  onend: () => void
+  onerror: (e: object) => void
+  onresult: (e: any) => void
+}
 
-recognition.lang = 'ja-JP'
-recognition.interimResults = false
-recognition.maxAlternatives = 1
-recognition.continuous = false
+function speak(text: string, rate: number, pitch: number) {
+  const utterThis = new SpeechSynthesisUtterance(text)
+
+  utterThis.volume = 1.0 // 音量: 0.0～1.0
+  utterThis.rate = rate // 速度: 0.1～10.0
+  utterThis.pitch = pitch // 音程: 0.0～2.0
+  utterThis.lang = 'ja-JP' // 言語
+
+  synth.speak(utterThis)
+}
 
 function Yomiage() {
   const [text, setText] = useState<string>('')
   const [isStart, setIsStart] = useState<boolean>(false)
   const [pitch, setPitch] = useState<number>(1.5)
   const [rate, setRate] = useState<number>(0.8)
+  const recognitionRef = useRef<Recognition>()
 
-  function speak(text: string) {
-    const utterThis = new SpeechSynthesisUtterance(text)
+  useEffect(() => {
+    // eslint-disable-next-line new-cap
+    const recognition = new iwindow.webkitSpeechRecognition()
 
-    utterThis.volume = 1.0 // 音量: 0.0～1.0
-    utterThis.rate = rate // 速度: 0.1～10.0
-    utterThis.pitch = pitch // 音程: 0.0～2.0
-    utterThis.lang = 'ja-JP' // 言語
-
-    synth.speak(utterThis)
-  }
-
-  React.useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    recognition.onresult = function (event: any) {
-      const text = event.results[event.resultIndex][0].transcript
-
-      setText(text)
-      speak(text)
+    recognition.lang = 'ja-JP'
+    recognition.interimResults = false
+    recognition.maxAlternatives = 1
+    recognition.continuous = false
+    recognition.onerror = (e: unknown) => {
+      if (recognitionRef.current) {
+        recognitionRef.current.onend = () => {
+          // only rewrite
+        }
+      }
+      console.error(e)
+      setIsStart(false)
     }
+    recognitionRef.current = recognition
 
     return () => {
       recognition.stop()
     }
   }, [])
+
+  useEffect(() => {
+    const recognition = recognitionRef.current
+
+    if (!recognition) return
+
+    recognition.onresult = function (event: any) {
+      const text = event.results[event.resultIndex][0].transcript
+
+      setText(text)
+      speak(text, pitch, rate)
+    }
+  }, [!recognitionRef.current, pitch, rate])
   return (
     <div className="App">
-      <h4>音声認識→合成音声</h4>
       pitch
       <input
         style={{ width: '30%' }}
@@ -72,16 +100,10 @@ function Yomiage() {
         <button
           onClick={() => {
             setIsStart(true)
-            recognition.start()
-            recognition.onerror = (e: unknown) => {
-              console.error(e)
-              setIsStart(false)
-            }
-            recognition.onend = () => {
-              console.log('reco restart')
-              if (!isStart) return
-
-              recognition.start()
+            if (recognitionRef.current) {
+              recognitionRef.current.start()
+              recognitionRef.current.onend = () =>
+                recognitionRef.current?.start()
             }
           }}
         >
@@ -92,7 +114,12 @@ function Yomiage() {
         <button
           onClick={() => {
             setIsStart(false)
-            recognition.stop()
+            if (recognitionRef.current) {
+              recognitionRef.current.stop()
+              recognitionRef.current.onend = () => {
+                // only rewrite
+              }
+            }
           }}
         >
           Stop
