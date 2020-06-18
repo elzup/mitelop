@@ -5,6 +5,7 @@ import KatinkoGenerator from '../Katinko/KatinkoGenerator'
 import StopwatchGenerator from '../Stopwatch/StopwatchGenerator'
 import TableGenerator from '../Table/TableGenerator'
 import YomiageGenerator from '../Yomiage/YomiageGenerator'
+import ItemsGenerator from '../Items/ItemGenerator'
 
 const TopPage = () => {
   const [selected, setSelected] = useState<number>(0)
@@ -22,6 +23,7 @@ const TopPage = () => {
         <Tab label="クロック" />
         <Tab label="ストップウォッチ" />
         <Tab label="読み上げ" />
+        <Tab label="その他" />
       </Tabs>
 
       {selected === 0 && <TableGenerator />}
@@ -29,6 +31,7 @@ const TopPage = () => {
       {selected === 2 && <ClockGenerator />}
       {selected === 3 && <StopwatchGenerator />}
       {selected === 4 && <YomiageGenerator />}
+      {selected === 5 && <ItemsGenerator />}
     </div>
   )
 }
