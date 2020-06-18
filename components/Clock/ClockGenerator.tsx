@@ -11,7 +11,7 @@ function ClockGenerator() {
 
   return (
     <GeneratorFrame>
-      <Typography variant="h5">タイマー</Typography>
+      <Typography variant="h5">クロック</Typography>
       <Typography variant="caption">時刻を表示する</Typography>
       <div>
         <div>
