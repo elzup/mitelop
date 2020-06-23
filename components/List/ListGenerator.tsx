@@ -7,11 +7,11 @@ import PreviewResizable from '../PreviewResizable'
 import { GeneratorFrame } from '..'
 import { useTitleLocalStorage } from '../../utils/useLocalStorage'
 
-function TableGenerator() {
+function ListGenerator() {
   const [titles, setTitles] = useTitleLocalStorage()
   const [size, setSize] = useState<Size>({ width: 400, height: 300 })
   const [sizeR, setSizeR] = useState<Size>({ width: 750, height: 100 })
-  const url = '/table?titles=' + titles.filter((v) => v !== '').join(',')
+  const url = '/list?titles=' + titles.filter((v) => v !== '').join(',')
   const urlR = url + '&row=1'
 
   return (
@@ -52,4 +52,4 @@ function TableGenerator() {
   )
 }
 
-export default TableGenerator
+export default ListGenerator

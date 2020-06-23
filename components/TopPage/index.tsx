@@ -3,7 +3,7 @@ import { useState } from 'react'
 import ClockGenerator from '../Clock/ClockGenerator'
 import KatinkoGenerator from '../Katinko/KatinkoGenerator'
 import StopwatchGenerator from '../Stopwatch/StopwatchGenerator'
-import TableGenerator from '../Table/TableGenerator'
+import ListGenerator from '../List/ListGenerator'
 import YomiageGenerator from '../Yomiage/YomiageGenerator'
 import ItemsGenerator from '../Items/ItemGenerator'
 
@@ -26,7 +26,7 @@ const TopPage = () => {
         <Tab label="その他" />
       </Tabs>
 
-      {selected === 0 && <TableGenerator />}
+      {selected === 0 && <ListGenerator />}
       {selected === 1 && <KatinkoGenerator />}
       {selected === 2 && <ClockGenerator />}
       {selected === 3 && <StopwatchGenerator />}

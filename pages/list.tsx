@@ -1,7 +1,7 @@
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import Layout from '../components/Layout'
-import Table from '../components/Table'
+import List from '../components/List'
 
 const getOne = (v: string | string[] | undefined): string => {
   if (!v) return ''
@@ -14,8 +14,8 @@ const IndexPage: NextPage = () => {
   const row = !!getOne(query['row'])
 
   return (
-    <Layout title="Table List" reset>
-      <Table titles={titles} row={row} />
+    <Layout title="List List" reset>
+      <List titles={titles} row={row} />
     </Layout>
   )
 }

@@ -2,7 +2,7 @@
 
 Widget makeing tool
 
-## Table
+## List
 
 - checkbox の TODO リストを作成
 

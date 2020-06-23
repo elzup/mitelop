@@ -5,7 +5,7 @@ type Props = {
   titles: string[]
   row: boolean
 }
-function Table({ titles, row }: Props) {
+function List({ titles, row }: Props) {
   const [checks, setChecks] = useTitleCheckLocalStorage()
 
   return (
@@ -57,4 +57,4 @@ const Style = styled.div`
   }
 `
 
-export default Table
+export default List
