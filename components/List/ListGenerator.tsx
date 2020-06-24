@@ -16,7 +16,7 @@ function ListGenerator() {
 
   return (
     <GeneratorFrame>
-      <Typography variant="h5">テーブル</Typography>
+      <Typography variant="h5">リスト</Typography>
       <Typography variant="caption">タスクリスト・進捗リスト</Typography>
       <div>
         <div>
