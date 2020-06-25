@@ -1,9 +1,39 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect, useRef } from 'react'
+import styled from 'styled-components'
 import { iwindow } from '../../utils/browser'
 import { useLocalStorage } from '../../utils/useLocalStorage'
 
 const synth = window.speechSynthesis
+
+const Style = styled.div`
+  display: grid;
+  height: 100vh;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 2fr;
+  grid-template-areas:
+    'ctlr ctls'
+    'btns btnp'
+    'text text';
+  .rate-control {
+    grid-area: 'ctlr';
+  }
+  .speed-control {
+    grid-area: 'ctls';
+  }
+  .start-button {
+    grid-area: 'btns';
+  }
+  .start-button {
+    grid-area: 'btns';
+  }
+  .stop-button {
+    grid-area: 'btnp';
+  }
+  h3 {
+    grid-area: 'text';
+  }
+`
 
 type Recognition = {
   lang: string
@@ -32,7 +62,7 @@ function speak(text: string, rate: number, pitch: number) {
 }
 
 function Yomiage() {
-  const [text, setText] = useState<string>('')
+  const [text, setText] = useState<string>('<認識テキストエリア>')
   const [isStart, setIsStart] = useState<boolean>(false)
   const [pitch, setPitch] = useLocalStorage<number>('speech-pitch', 1.0)
   const [rate, setRate] = useLocalStorage<number>('speech-rate', 1.1)
@@ -83,63 +113,64 @@ function Yomiage() {
     }
   }, [!recognitionRef.current, pitch, rate])
   return (
-    <div className="App">
-      Speed
-      <input
-        style={{ width: '30%' }}
-        type="number"
-        defaultValue={pitch}
-        min={0.1}
-        max={10.0}
-        onChange={(e) => {
-          setPitch(Number(e.target.value))
-        }}
-      />
-      <br />
-      rate
-      <input
-        type="number"
-        min={0}
-        style={{ width: '30%' }}
-        max={2.0}
-        defaultValue={rate}
-        onChange={(e) => {
-          setRate(Number(e.target.value))
-        }}
-      />
-      <br />
-      {!isStart && (
-        <button
-          onClick={() => {
-            setIsStart(true)
-            setErrorCount(0)
-            if (recognitionRef.current) {
-              recognitionRef.current.start()
-              recognitionRef.current.onend = () =>
-                recognitionRef.current?.start()
-            }
+    <Style>
+      <div className="speed-control">
+        Speed
+        <input
+          style={{ width: '30%' }}
+          type="number"
+          defaultValue={pitch}
+          min={0.1}
+          max={10.0}
+          onChange={(e) => {
+            setPitch(Number(e.target.value))
           }}
-        >
-          Start
-        </button>
-      )}
-      {isStart && (
-        <button
-          onClick={() => {
-            setIsStart(false)
-            if (recognitionRef.current) {
-              recognitionRef.current.stop()
-              recognitionRef.current.onend = () => {
-                // only rewrite
-              }
-            }
+        />
+      </div>
+      <div className="rate-control">
+        rate
+        <input
+          type="number"
+          min={0}
+          style={{ width: '30%' }}
+          max={2.0}
+          defaultValue={rate}
+          onChange={(e) => {
+            setRate(Number(e.target.value))
           }}
-        >
-          Stop
-        </button>
-      )}
+        />
+      </div>
+      <button
+        className="start-button"
+        disabled={isStart}
+        onClick={() => {
+          setIsStart(true)
+          setErrorCount(0)
+          if (recognitionRef.current) {
+            recognitionRef.current.start()
+            recognitionRef.current.onend = () => recognitionRef.current?.start()
+          }
+        }}
+      >
+        Start
+      </button>
+      <button
+        className="stop-button"
+        disabled={isStart}
+        onClick={() => {
+          setIsStart(false)
+          if (recognitionRef.current) {
+            recognitionRef.current.stop()
+            recognitionRef.current.onend = () => {
+              // only rewrite
+            }
+          }
+        }}
+      >
+        Stop
+      </button>
       <h3>{text}</h3>
-    </div>
+    </Style>
   )
 }
 
