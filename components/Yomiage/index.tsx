@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
+import { TextField } from '@material-ui/core'
 import { iwindow } from '../../utils/browser'
 import { useLocalStorage } from '../../utils/useLocalStorage'
 
@@ -17,12 +18,17 @@ const Style = styled.div`
     'text text';
   .rate-control {
     grid-area: 'ctlr';
+    padding: 8px;
   }
   .speed-control {
     grid-area: 'ctls';
+    padding: 8px;
   }
-  .start-button {
-    grid-area: 'btns';
+  button {
+    font-size: 10vw;
+    &[disabled] {
+      opacity: 0.1;
+    }
   }
   .start-button {
     grid-area: 'btns';
@@ -116,12 +122,10 @@ function Yomiage() {
     <Style>
       <div className="speed-control">
         Speed
-        <input
-          style={{ width: '30%' }}
+        <TextField
           type="number"
           defaultValue={pitch}
-          min={0.1}
-          max={10.0}
+          inputProps={{ min: 0.1, max: 10.0, step: 0.1 }}
           onChange={(e) => {
             setPitch(Number(e.target.value))
           }}
@@ -129,11 +133,9 @@ function Yomiage() {
       </div>
       <div className="rate-control">
         rate
-        <input
+        <TextField
           type="number"
-          min={0}
-          style={{ width: '30%' }}
-          max={2.0}
+          inputProps={{ min: 0, max: 2.0, step: 0.1 }}
           defaultValue={rate}
           onChange={(e) => {
             setRate(Number(e.target.value))
@@ -156,7 +158,7 @@ function Yomiage() {
       </button>
       <button
         className="stop-button"
-        disabled={isStart}
+        disabled={!isStart}
         onClick={() => {
           setIsStart(false)
           if (recognitionRef.current) {
