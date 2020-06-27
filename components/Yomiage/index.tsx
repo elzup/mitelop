@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
-import { TextField } from '@material-ui/core'
+import { TextField, Typography } from '@material-ui/core'
 import { iwindow } from '../../utils/browser'
 import { useLocalStorage } from '../../utils/useLocalStorage'
 
@@ -17,10 +17,12 @@ const Style = styled.div`
     'btns btnp'
     'text text';
   .rate-control {
+    display: flex;
     grid-area: 'ctlr';
     padding: 8px;
   }
   .speed-control {
+    display: flex;
     grid-area: 'ctls';
     padding: 8px;
   }
@@ -121,9 +123,11 @@ function Yomiage() {
   return (
     <Style>
       <div className="speed-control">
-        Speed
         <TextField
           type="number"
+          label="Speed"
+          fullWidth
+          size="small"
           defaultValue={pitch}
           inputProps={{ min: 0.1, max: 10.0, step: 0.1 }}
           onChange={(e) => {
@@ -132,9 +136,11 @@ function Yomiage() {
         />
       </div>
       <div className="rate-control">
-        rate
         <TextField
           type="number"
+          label="Rate"
+          size="small"
+          fullWidth
           inputProps={{ min: 0, max: 2.0, step: 0.1 }}
           defaultValue={rate}
           onChange={(e) => {
