@@ -6553,10 +6553,10 @@ neo-async@2.6.1, neo-async@^2.5.0, neo-async@^2.6.1:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.1.tgz#ac27ada66167fa8849a6addd837f6b189ad2081c"
   integrity sha512-iyam8fBuCUpWeKPGpaNMetEocMt364qkCsfL9JuhjXX6dRnguRVOfk2GZaDpPjcOKiiXCPINZC1GczQ7iTq3Zw==
 
-next-pwa@2.6.3:
-  version "2.6.3"
-  resolved "https://registry.yarnpkg.com/next-pwa/-/next-pwa-2.6.3.tgz#4c98155318c829142c1f9270704b62880945097b"
-  integrity sha512-WYjp7Yv736S6GwBG+FwC5E1OOVS2Y21Pr6STGLRfRxJc0SX55OlC/0E97iLddQck8KXKYQNrZAwct/M1Cwfodw==
+next-pwa@3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/next-pwa/-/next-pwa-3.0.2.tgz#cf9a733d55d8ec31c8408b725c531475a1387b7b"
+  integrity sha512-Ih2HEhTouG2oFDQoc++4ZjOAx1tUUie8ZcO4XkFTDVzjDe3gEtobmgja1Dw6ydPP/HAqzljZgRqjET94R6kGOA==
   dependencies:
     clean-webpack-plugin "^3.0.0"
     globby "^11.0.0"
