@@ -1,15 +1,15 @@
+import { ServerStyleSheets as MaterialUiServerStyleSheets } from '@material-ui/styles'
 import NextDocument, {
-  Html,
+  DocumentContext,
   Head,
+  Html,
   Main,
   NextScript,
-  DocumentContext,
 } from 'next/document'
-import { ServerStyleSheet as StyledComponentSheets } from 'styled-components'
-import { ServerStyleSheets as MaterialUiServerStyleSheets } from '@material-ui/styles'
 import React from 'react'
+import { ServerStyleSheet as StyledComponentSheets } from 'styled-components'
 
-class Document extends NextDocument<{}> {
+class Document extends NextDocument {
   static async getInitialProps(ctx: DocumentContext) {
     const styledComponentSheets = new StyledComponentSheets()
     const materialUiSheets = new MaterialUiServerStyleSheets()

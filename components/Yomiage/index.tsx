@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
-import { TextField, Typography } from '@material-ui/core'
+import { TextField } from '@material-ui/core'
 import { iwindow } from '../../utils/browser'
 import { useLocalStorage } from '../../utils/useLocalStorage'
 
