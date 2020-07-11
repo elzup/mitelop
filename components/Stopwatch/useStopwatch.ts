@@ -42,7 +42,7 @@ export function useStopwatch(): UseStopwatch {
       startRun(-sw.time)
     },
     reset: () => {
-      //
+      setStopwatch({ status: 'pause', time: 0 })
     },
     time,
   }

@@ -28,10 +28,10 @@ test('useStopwatch', () => {
     jest.advanceTimersByTime(1000)
   })
 
-  expect(result.current.status).toBe('init')
+  expect(result.current.status).toBe('pause')
 
   // @ts-ignore
-  result.current.actions.setStart()
+  result.current.run()
 
   expect(result.current.status).toBe('run')
 
@@ -41,8 +41,7 @@ test('useStopwatch', () => {
   })
   expect(result.current.time).toMatchInlineSnapshot(`10000`)
 
-  // @ts-ignore
-  result.current.actions.setPause()
+  result.current.pause()
 
   expect(result.current.status).toBe('pause')
 
@@ -51,8 +50,7 @@ test('useStopwatch', () => {
     jest.advanceTimersByTime(5000)
   })
 
-  // @ts-ignore
-  result.current.actions.setResume()
+  result.current.run()
 
   act(() => {
     advanceTo(new Date(date).setSeconds(20, 0))
@@ -61,9 +59,7 @@ test('useStopwatch', () => {
   expect(result.current.time).toMatchInlineSnapshot(`15000`)
   expect(result.current.status).toBe('run')
 
-  // @ts-ignore
-  result.current.actions.setPause()
-  // @ts-ignore
-  result.current.actions.setReset()
+  result.current.pause()
+  result.current.reset()
   expect(result.current.time).toMatchInlineSnapshot(`0`)
 })
