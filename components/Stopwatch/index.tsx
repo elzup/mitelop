@@ -4,17 +4,18 @@ import { useStopwatch } from './useStopwatch'
 
 const pad2 = (n: number) => `${n}`.padStart(2, '0')
 
-const timeToStr = (t: number) => {
+const timeToStr = (t: number, showUnder = false) => {
   const SEC = 1000
   const MIN = 60 * SEC
   const HOU = 60 * MIN
   const h = Math.floor(t / HOU)
   const m = Math.floor((t % HOU) / MIN)
   const s = Math.floor((t % MIN) / SEC)
+  const milli = showUnder ? `.${pad2(Math.floor((t % SEC) / 10))}` : ''
 
-  if (h > 0) return `${h}:${pad2(m)}:${pad2(s)}`
-  if (m > 0) return `${m}:${pad2(s)}`
-  return `${s}`
+  if (h > 0) return `${h}:${pad2(m)}:${pad2(s)}` + milli
+  if (m > 0) return `${m}:${pad2(s)}` + milli
+  return `${s}` + milli
 }
 
 function Stopwatch() {
@@ -22,7 +23,7 @@ function Stopwatch() {
   const [timeStr, setTimeStr] = useState<string>('0')
 
   useEffect(() => {
-    setTimeStr(timeToStr(sw.time))
+    setTimeStr(timeToStr(sw.time, sw.status === 'pause'))
   }, [+sw.time])
 
   return (
@@ -38,6 +39,7 @@ function Stopwatch() {
         {sw.status === 'run' && (
           <button onClick={() => sw.pause()}>Stop</button>
         )}
+        <button onClick={() => sw.reset()}>Reset</button>
       </div>
       <div />
     </Style>
