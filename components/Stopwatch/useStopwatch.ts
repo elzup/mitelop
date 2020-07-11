@@ -2,21 +2,22 @@ import { useState } from 'react'
 import { useSeconds } from 'use-seconds'
 
 type StopwatchState =
-  | { status: 'init' }
   | { status: 'run'; startTime: number }
   | { status: 'pause'; time: number }
 
-type UseStopwatch =
-  | { status: 'init'; actions: { setStart: () => void }; time: 0 }
-  | { status: 'run'; actions: { setPause: () => void }; time: number }
-  | {
-      status: 'pause'
-      actions: { setResume: () => void; setReset: () => void }
-      time: number
-    }
+type UseStopwatch = {
+  status: 'run' | 'pause'
+  pause: () => void
+  run: () => void
+  reset: () => void
+  time: number
+}
 
 export function useStopwatch(): UseStopwatch {
-  const [sw, setStopwatch] = useState<StopwatchState>({ status: 'init' })
+  const [sw, setStopwatch] = useState<StopwatchState>({
+    status: 'pause',
+    time: 0,
+  })
   const [diff, setDiff] = useState<number>(0)
   const [now] = useSeconds(diff)
 
@@ -27,37 +28,22 @@ export function useStopwatch(): UseStopwatch {
     setStopwatch({ status: 'run', startTime })
   }
 
-  switch (sw.status) {
-    case 'init':
-      return {
-        status: sw.status,
-        actions: {
-          setStart: () => startRun(),
-        },
-        time: 0,
-      }
-    case 'run': {
-      return {
-        status: sw.status,
-        actions: {
-          setPause: () => {
-            setStopwatch({ status: 'pause', time: +new Date() - sw.startTime })
-          },
-        },
-        time: +now - sw.startTime,
-      }
-    }
-    case 'pause': {
-      return {
-        status: sw.status,
-        actions: {
-          setResume: () => startRun(-sw.time),
-          setReset: () => setStopwatch({ status: 'init' }),
-        },
-        time: sw.time,
-      }
-    }
-    default:
-      throw new Error('broken stopwatch')
+  const time =
+    sw.status === 'pause' ? sw.time : Math.max(0, +now - sw.startTime)
+
+  return {
+    status: sw.status,
+    pause: () => {
+      if (sw.status === 'pause') return
+      setStopwatch({ status: 'pause', time: +new Date() - sw.startTime })
+    },
+    run: () => {
+      if (sw.status === 'run') return
+      startRun(-sw.time)
+    },
+    reset: () => {
+      //
+    },
+    time,
   }
 }
