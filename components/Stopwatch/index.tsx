@@ -30,14 +30,13 @@ function Stopwatch() {
       <div />
       <div className="frame">
         <span className="time">{timeStr}</span>
-        {sw.status === 'init' && (
-          <button onClick={() => sw.actions.setStart()}>Start</button>
+        {sw.status === 'pause' && (
+          <button onClick={() => sw.run()}>
+            {sw.time === 0 ? 'Start' : 'Resume'}
+          </button>
         )}
         {sw.status === 'run' && (
-          <button onClick={() => sw.actions.setPause()}>Stop</button>
-        )}
-        {sw.status === 'pause' && (
-          <button onClick={() => sw.actions.setResume()}>Resume</button>
+          <button onClick={() => sw.pause()}>Stop</button>
         )}
       </div>
       <div />
