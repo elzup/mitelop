@@ -6,7 +6,7 @@ import { Size } from '../../types'
 import PreviewResizable from '../PreviewResizable'
 import { GeneratorFrame } from '..'
 
-function ClockGenerator() {
+function StopwatchGenerator() {
   const [size, setSize] = useState<Size>({ width: 400, height: 300 })
 
   return (
@@ -32,4 +32,4 @@ function ClockGenerator() {
   )
 }
 
-export default ClockGenerator
+export default StopwatchGenerator
