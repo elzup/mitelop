@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useSeconds } from 'use-seconds'
 
 type TimerState =
@@ -6,19 +6,22 @@ type TimerState =
   | { status: 'pause'; time: number }
 
 type UseTimer = {
-  status: 'run' | 'pause' | 'end'
+  status: 'run' | 'pause'
+  start: (time: number) => void
   pause: () => void
   run: () => void
-  reset: () => void
   time: number
 }
 
+const initialTimer: TimerState = {
+  status: 'pause',
+  time: 0,
+}
+
 export function useTimer(): UseTimer {
-  const [sw, setTimer] = useState<TimerState>({
-    status: 'pause',
-    time: 0,
-  })
+  const [sw, setTimer] = useState<TimerState>(initialTimer)
   const [diff, setDiff] = useState<number>(0)
+  const [total, setTotal] = useState<number>(0)
   const [now] = useSeconds(diff)
 
   const startRun = (offset = 0) => {
@@ -29,10 +32,23 @@ export function useTimer(): UseTimer {
   }
 
   const time =
-    sw.status === 'pause' ? sw.time : Math.max(0, +now - sw.startTime)
+    total - (sw.status === 'pause' ? sw.time : Math.max(0, +now - sw.startTime))
+
+  useEffect(() => {
+    if (time <= 0) {
+      setTimer({
+        status: 'pause',
+        time: total,
+      })
+    }
+  }, [time])
 
   return {
     status: sw.status,
+    start: (time: number) => {
+      startRun(0)
+      setTotal(time)
+    },
     pause: () => {
       if (sw.status === 'pause') return
       setTimer({ status: 'pause', time: +new Date() - sw.startTime })
@@ -40,9 +56,6 @@ export function useTimer(): UseTimer {
     run: () => {
       if (sw.status === 'run') return
       startRun(-sw.time)
-    },
-    reset: () => {
-      setTimer({ status: 'pause', time: 0 })
     },
     time,
   }

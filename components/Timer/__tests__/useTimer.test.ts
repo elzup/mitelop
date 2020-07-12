@@ -30,8 +30,7 @@ test('useTimer', () => {
 
   expect(result.current.status).toBe('pause')
 
-  // @ts-ignore
-  result.current.run()
+  result.current.start(30000) // 30s
 
   expect(result.current.status).toBe('run')
 
@@ -39,7 +38,7 @@ test('useTimer', () => {
     advanceTo(new Date(date).setSeconds(10, 0))
     jest.advanceTimersByTime(10000)
   })
-  expect(result.current.time).toMatchInlineSnapshot(`10000`)
+  expect(result.current.time).toMatchInlineSnapshot(`20000`)
 
   result.current.pause()
 
@@ -59,7 +58,10 @@ test('useTimer', () => {
   expect(result.current.time).toMatchInlineSnapshot(`15000`)
   expect(result.current.status).toBe('run')
 
-  result.current.pause()
-  result.current.reset()
+  act(() => {
+    advanceTo(new Date(date).setSeconds(41, 0))
+    jest.advanceTimersByTime(21000)
+  })
+  expect(result.current.status).toBe('pause')
   expect(result.current.time).toMatchInlineSnapshot(`0`)
 })
