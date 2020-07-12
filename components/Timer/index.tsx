@@ -18,7 +18,7 @@ const timeToStr = (t: number, showUnder = false) => {
   return `${s}` + milli
 }
 
-function Timer() {
+function Timer({ total }: { total: number }) {
   const sw = useTimer()
   const [timeStr, setTimeStr] = useState<string>('0')
 
@@ -28,20 +28,17 @@ function Timer() {
 
   return (
     <Style>
-      <div />
       <div className="frame">
         <span className="time">{timeStr}</span>
         {sw.status === 'pause' && (
-          <button onClick={() => sw.run()}>
+          <button onClick={() => sw.start(total)}>
             {sw.time === 0 ? 'Start' : 'Resume'}
           </button>
         )}
         {sw.status === 'run' && (
           <button onClick={() => sw.pause()}>Stop</button>
         )}
-        <button onClick={() => sw.reset()}>Reset</button>
       </div>
-      <div />
     </Style>
   )
 }
