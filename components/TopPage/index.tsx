@@ -6,6 +6,7 @@ import StopwatchGenerator from '../Stopwatch/StopwatchGenerator'
 import ListGenerator from '../List/ListGenerator'
 import YomiageGenerator from '../Yomiage/YomiageGenerator'
 import ItemsGenerator from '../Items/ItemGenerator'
+import TimerGenerator from '../Timer/TimerGenerator'
 
 const TopPage = () => {
   const [selected, setSelected] = useState<number>(0)
@@ -15,6 +16,7 @@ const TopPage = () => {
       <Typography variant="h4">Mitelop</Typography>
       <Tabs
         value={selected}
+        style={{ width: '100%' }}
         onChange={(e, i) => setSelected(i)}
         aria-label="simple tabs example"
       >
@@ -22,6 +24,7 @@ const TopPage = () => {
         <Tab label="カチンコ" />
         <Tab label="クロック" />
         <Tab label="ストップウォッチ" />
+        <Tab label="タイマー" />
         <Tab label="読み上げ" />
         <Tab label="その他" />
       </Tabs>
@@ -30,8 +33,9 @@ const TopPage = () => {
       {selected === 1 && <KatinkoGenerator />}
       {selected === 2 && <ClockGenerator />}
       {selected === 3 && <StopwatchGenerator />}
-      {selected === 4 && <YomiageGenerator />}
-      {selected === 5 && <ItemsGenerator />}
+      {selected === 4 && <TimerGenerator />}
+      {selected === 5 && <YomiageGenerator />}
+      {selected === 6 && <ItemsGenerator />}
     </div>
   )
 }
