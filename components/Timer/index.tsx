@@ -29,14 +29,24 @@ function Timer({ total }: { total: number }) {
   return (
     <Style>
       <div className="frame">
-        <span className="time">{timeStr}</span>
+        {sw.status === 'init' && (
+          <div>
+            <span className="time">{total / 1000}</span>
+            <button onClick={() => sw.start(total)}>Start</button>
+          </div>
+        )}
         {sw.status === 'pause' && (
-          <button onClick={() => sw.start(total)}>
-            {sw.time === 0 ? 'Start' : 'Resume'}
-          </button>
+          <div>
+            <span className="time">{timeStr}</span>
+            <button onClick={() => sw.resume()}>Resume</button>
+            <button onClick={() => sw.resume()}>Reset</button>
+          </div>
         )}
         {sw.status === 'run' && (
-          <button onClick={() => sw.pause()}>Stop</button>
+          <div>
+            <span className="time">{timeStr}</span>
+            <button onClick={() => sw.pause()}>Pause</button>
+          </div>
         )}
       </div>
     </Style>

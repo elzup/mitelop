@@ -2,19 +2,20 @@ import { useState, useEffect } from 'react'
 import { useSeconds } from 'use-seconds'
 
 type TimerState =
+  | { status: 'init'; time: number }
   | { status: 'run'; startTime: number }
   | { status: 'pause'; time: number }
 
 type UseTimer = {
-  status: 'run' | 'pause'
+  status: 'run' | 'pause' | 'init'
   start: (time: number) => void
   pause: () => void
-  run: () => void
+  resume: () => void
   time: number
 }
 
 const initialTimer: TimerState = {
-  status: 'pause',
+  status: 'init',
   time: 0,
 }
 
@@ -32,15 +33,14 @@ export function useTimer(): UseTimer {
   }
 
   const time =
-    total - (sw.status === 'pause' ? sw.time : Math.max(0, +now - sw.startTime))
+    total - (sw.status !== 'run' ? sw.time : Math.max(0, +now - sw.startTime))
 
   useEffect(() => {
-    if (time <= 0) {
-      setTimer({
-        status: 'pause',
-        time: total,
-      })
-    }
+    if (time > 0 || sw.status === 'init') return
+    setTimer({
+      status: 'pause',
+      time: total,
+    })
   }, [time])
 
   return {
@@ -50,11 +50,11 @@ export function useTimer(): UseTimer {
       setTotal(time)
     },
     pause: () => {
-      if (sw.status === 'pause') return
+      if (sw.status !== 'run') return
       setTimer({ status: 'pause', time: +new Date() - sw.startTime })
     },
-    run: () => {
-      if (sw.status === 'run') return
+    resume: () => {
+      if (sw.status !== 'pause') return
       startRun(-sw.time)
     },
     time,
