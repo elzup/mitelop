@@ -39,13 +39,19 @@ function Timer({ total }: { total: number }) {
           <div>
             <span className="time">{timeStr}</span>
             <button onClick={() => sw.resume()}>Resume</button>
-            <button onClick={() => sw.resume()}>Reset</button>
+            <button onClick={() => sw.reset()}>Reset</button>
           </div>
         )}
         {sw.status === 'run' && (
           <div>
             <span className="time">{timeStr}</span>
             <button onClick={() => sw.pause()}>Pause</button>
+          </div>
+        )}
+        {sw.status === 'end' && (
+          <div>
+            <span className="time">{timeStr}</span>
+            <button onClick={() => sw.reset()}>Reset</button>
           </div>
         )}
       </div>

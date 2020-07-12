@@ -5,12 +5,14 @@ type TimerState =
   | { status: 'init'; time: number }
   | { status: 'run'; startTime: number }
   | { status: 'pause'; time: number }
+  | { status: 'end'; time: number }
 
 type UseTimer = {
-  status: 'run' | 'pause' | 'init'
+  status: 'run' | 'pause' | 'init' | 'end'
   start: (time: number) => void
   pause: () => void
   resume: () => void
+  reset: () => void
   time: number
 }
 
@@ -38,7 +40,7 @@ export function useTimer(): UseTimer {
   useEffect(() => {
     if (time > 0 || sw.status === 'init') return
     setTimer({
-      status: 'pause',
+      status: 'end',
       time: total,
     })
   }, [time])
@@ -56,6 +58,12 @@ export function useTimer(): UseTimer {
     resume: () => {
       if (sw.status !== 'pause') return
       startRun(-sw.time)
+    },
+    reset: () => {
+      setTimer({
+        status: 'init',
+        time: total,
+      })
     },
     time,
   }

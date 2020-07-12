@@ -62,6 +62,10 @@ test('useTimer', () => {
     advanceTo(new Date(date).setSeconds(41, 0))
     jest.advanceTimersByTime(21000)
   })
-  expect(result.current.status).toBe('pause')
+  expect(result.current.status).toBe('end')
+  expect(result.current.time).toMatchInlineSnapshot(`0`)
+
+  result.current.reset()
+  expect(result.current.status).toBe('init')
   expect(result.current.time).toMatchInlineSnapshot(`0`)
 })
