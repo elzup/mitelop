@@ -68,14 +68,17 @@ const Style = styled.div`
     align-items: center;
     justify-content: center;
     /* border: solid 0.5px gray; */
-    span {
-      text-align: center;
-      font-size: calc(100vw / 5);
-      line-height: 1.05em;
+    > div {
+      display: grid;
+      span {
+        text-align: center;
+        font-size: calc(100vw / 5);
+        line-height: 1.05em;
 
-      &.date {
-        text-align: unset;
-        font-size: calc(100vw / 5 / 3);
+        &.date {
+          text-align: unset;
+          font-size: calc(100vw / 5 / 3);
+        }
       }
     }
   }
