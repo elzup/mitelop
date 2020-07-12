@@ -23,8 +23,13 @@ function Timer({ total }: { total: number }) {
   const [timeStr, setTimeStr] = useState<string>('0')
 
   useEffect(() => {
-    setTimeStr(timeToStr(sw.time, sw.status === 'pause'))
-  }, [+sw.time])
+    setTimeStr(
+      timeToStr(
+        sw.time - (sw.status === 'run' ? 1000 : 0),
+        sw.status === 'pause'
+      )
+    )
+  }, [+sw.time, sw.status])
 
   return (
     <Style>
