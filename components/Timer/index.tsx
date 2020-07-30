@@ -30,14 +30,17 @@ function Timer({ total }: { total: number }) {
       )
     )
   }, [+sw.time, sw.status])
+  useEffect(() => {
+    sw.setTime(total)
+  }, [total])
 
   return (
     <Style>
       <div className="frame">
         {sw.status === 'init' && (
           <div>
-            <span className="time">{total / 1000}</span>
-            <button onClick={() => sw.start(total)}>Start</button>
+            <span className="time">{timeStr}</span>
+            <button onClick={() => sw.start()}>Start</button>
           </div>
         )}
         {sw.status === 'pause' && (

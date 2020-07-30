@@ -9,7 +9,8 @@ type TimerState =
 
 type UseTimer = {
   status: 'run' | 'pause' | 'init' | 'end'
-  start: (time: number) => void
+  start: (time?: number) => void
+  setTime: (time: number) => void
   pause: () => void
   resume: () => void
   reset: () => void
@@ -47,9 +48,12 @@ export function useTimer(): UseTimer {
 
   return {
     status: sw.status,
-    start: (time: number) => {
+    setTime: setTotal,
+    start: (time?: number) => {
+      if (time !== undefined) {
+        setTotal(time)
+      }
       startRun(0)
-      setTotal(time)
     },
     pause: () => {
       if (sw.status !== 'run') return
