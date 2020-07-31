@@ -35,10 +35,16 @@ test('useTimer', () => {
   expect(result.current.status).toBe('run')
 
   act(() => {
-    advanceTo(new Date(date).setSeconds(10, 0))
-    jest.advanceTimersByTime(10000)
+    advanceTo(new Date(date).setSeconds(0.5, 0))
+    jest.advanceTimersByTime(500)
   })
-  expect(result.current.time).toMatchInlineSnapshot(`20000`)
+  expect(result.current.time).toMatchInlineSnapshot(`30000`)
+
+  act(() => {
+    advanceTo(new Date(date).setSeconds(9.5, 0))
+    jest.advanceTimersByTime(9500)
+  })
+  expect(result.current.time).toMatchInlineSnapshot(`21000`)
 
   result.current.pause()
 
@@ -55,7 +61,7 @@ test('useTimer', () => {
     advanceTo(new Date(date).setSeconds(20, 0))
     jest.advanceTimersByTime(5000)
   })
-  expect(result.current.time).toMatchInlineSnapshot(`15000`)
+  expect(result.current.time).toMatchInlineSnapshot(`16000`)
   expect(result.current.status).toBe('run')
 
   act(() => {
