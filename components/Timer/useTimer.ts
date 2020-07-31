@@ -7,19 +7,36 @@ type TimerState =
   | { status: 'pause'; time: number }
   | { status: 'end'; time: number }
 
+type TimerStatus = 'run' | 'pause' | 'init' | 'end'
 type UseTimer = {
-  status: 'run' | 'pause' | 'init' | 'end'
+  status: TimerStatus
   start: (time?: number) => void
   setTime: (time: number) => void
   pause: () => void
   resume: () => void
   reset: () => void
   time: number
+  floorTime: number
 }
 
 const initialTimer: TimerState = {
   status: 'init',
   time: 0,
+}
+
+function calcTime(
+  sw: TimerState,
+  total: number,
+  now: number
+): [number, number] {
+  let time = 0
+
+  if (sw.status === 'run') {
+    time = total - Math.max(0, +now - sw.startTime)
+  } else {
+    time = total - sw.time
+  }
+  return [time, Math.max(0, time - 1000)]
 }
 
 export function useTimer(): UseTimer {
@@ -35,8 +52,7 @@ export function useTimer(): UseTimer {
     setTimer({ status: 'run', startTime })
   }
 
-  const time =
-    total - (sw.status !== 'run' ? sw.time : Math.max(0, +now - sw.startTime))
+  const [time, floorTime] = calcTime(sw, total, +now)
 
   useEffect(() => {
     if (time > 0 || sw.status === 'init') return
@@ -48,6 +64,7 @@ export function useTimer(): UseTimer {
 
   return {
     status: sw.status,
+    floorTime,
     setTime: setTotal,
     start: (time?: number) => {
       if (time !== undefined) {
