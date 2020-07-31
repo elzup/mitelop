@@ -17,6 +17,7 @@ type UseTimer = {
   reset: () => void
   time: number
   floorTime: number
+  progress: number
 }
 
 const initialTimer: TimerState = {
@@ -29,14 +30,15 @@ function calcTime(
   total: number,
   now: number
 ): [number, number] {
-  let time = 0
-
   if (sw.status === 'run') {
-    time = total - Math.max(0, +now - sw.startTime)
+    const time = total - Math.max(0, +now - sw.startTime)
+
+    return [time, Math.max(0, time - 1000)]
   } else {
-    time = total - sw.time
+    const time = total - sw.time
+
+    return [time, time]
   }
-  return [time, Math.max(0, time - 1000)]
 }
 
 export function useTimer(): UseTimer {
@@ -62,9 +64,12 @@ export function useTimer(): UseTimer {
     })
   }, [time])
 
+  const progress = (1 - floorTime / total) * 100
+
   return {
     status: sw.status,
     floorTime,
+    progress,
     setTime: setTotal,
     start: (time?: number) => {
       if (time !== undefined) {

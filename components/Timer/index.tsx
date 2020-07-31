@@ -24,23 +24,16 @@ function Timer({ total }: { total: number }) {
   const [timeStr, setTimeStr] = useState<string>('0')
 
   useEffect(() => {
-    setTimeStr(
-      timeToStr(
-        sw.time - (sw.status === 'run' ? 1000 : 0),
-        sw.status === 'pause'
-      )
-    )
+    setTimeStr(timeToStr(sw.floorTime, sw.status === 'pause'))
   }, [+sw.time, sw.status])
   useEffect(() => {
     sw.setTime(total)
   }, [total])
 
-  const progress = (1 - sw.time / total) * 100
-
   return (
     <Style>
       <div className="frame">
-        <LinearProgress variant="determinate" value={progress} />
+        <LinearProgress variant="determinate" value={sw.progress} />
         <span className="time">{timeStr}</span>
         <div className="controls">
           {sw.status === 'init' && (
