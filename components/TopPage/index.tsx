@@ -8,15 +8,26 @@ import YomiageGenerator from '../Yomiage/YomiageGenerator'
 import ItemsGenerator from '../Items/ItemGenerator'
 import TimerGenerator from '../Timer/TimerGenerator'
 
+const frames = [
+  ListGenerator,
+  KatinkoGenerator,
+  ClockGenerator,
+  StopwatchGenerator,
+  TimerGenerator,
+  YomiageGenerator,
+  ItemsGenerator,
+]
+
 const TopPage = () => {
   const [selected, setSelected] = useState<number>(0)
+  const Frame = frames[selected]
 
   return (
     <div style={{ margin: '8px' }}>
       <Typography variant="h4">Mitelop</Typography>
       <Tabs
         value={selected}
-        style={{ width: '100%' }}
+        style={{ maxWidth: '100vw' }}
         onChange={(e, i) => setSelected(i)}
         aria-label="simple tabs example"
       >
@@ -28,14 +39,7 @@ const TopPage = () => {
         <Tab label="読み上げ" />
         <Tab label="その他" />
       </Tabs>
-
-      {selected === 0 && <ListGenerator />}
-      {selected === 1 && <KatinkoGenerator />}
-      {selected === 2 && <ClockGenerator />}
-      {selected === 3 && <StopwatchGenerator />}
-      {selected === 4 && <TimerGenerator />}
-      {selected === 5 && <YomiageGenerator />}
-      {selected === 6 && <ItemsGenerator />}
+      <Frame />
     </div>
   )
 }
