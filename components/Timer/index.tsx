@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { useEffect, useState } from 'react'
+import { LinearProgress } from '@material-ui/core'
 import { useTimer } from './useTimer'
 
 const pad2 = (n: number) => `${n}`.padStart(2, '0')
@@ -34,34 +35,30 @@ function Timer({ total }: { total: number }) {
     sw.setTime(total)
   }, [total])
 
+  const progress = (1 - sw.time / total) * 100
+
   return (
     <Style>
       <div className="frame">
-        {sw.status === 'init' && (
-          <div>
-            <span className="time">{timeStr}</span>
+        <LinearProgress variant="determinate" value={progress} />
+        <span className="time">{timeStr}</span>
+        <div className="controls">
+          {sw.status === 'init' && (
             <button onClick={() => sw.start()}>Start</button>
-          </div>
-        )}
-        {sw.status === 'pause' && (
-          <div>
-            <span className="time">{timeStr}</span>
-            <button onClick={() => sw.resume()}>Resume</button>
-            <button onClick={() => sw.reset()}>Reset</button>
-          </div>
-        )}
-        {sw.status === 'run' && (
-          <div>
-            <span className="time">{timeStr}</span>
+          )}
+          {sw.status === 'pause' && (
+            <>
+              <button onClick={() => sw.resume()}>Resume</button>
+              <button onClick={() => sw.reset()}>Reset</button>
+            </>
+          )}
+          {sw.status === 'run' && (
             <button onClick={() => sw.pause()}>Pause</button>
-          </div>
-        )}
-        {sw.status === 'end' && (
-          <div>
-            <span className="time">{timeStr}</span>
+          )}
+          {sw.status === 'end' && (
             <button onClick={() => sw.reset()}>Reset</button>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </Style>
   )
@@ -76,17 +73,14 @@ const Style = styled.div`
     align-items: center;
     justify-content: center;
     /* border: solid 0.5px gray; */
-    > div {
-      display: grid;
-      span {
-        text-align: center;
-        font-size: calc(100vw / 5);
-        line-height: 1.05em;
+    span {
+      text-align: center;
+      font-size: calc(100vw / 5);
+      line-height: 1.05em;
 
-        &.date {
-          text-align: unset;
-          font-size: calc(100vw / 5 / 3);
-        }
+      &.date {
+        text-align: unset;
+        font-size: calc(100vw / 5 / 3);
       }
     }
   }
