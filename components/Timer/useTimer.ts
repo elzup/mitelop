@@ -88,7 +88,7 @@ export function useTimer(): UseTimer {
     reset: () => {
       setTimer({
         status: 'init',
-        time: total,
+        time: 0,
       })
     },
     time,

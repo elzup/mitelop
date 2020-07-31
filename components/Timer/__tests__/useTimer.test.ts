@@ -74,5 +74,5 @@ test('useTimer', () => {
 
   result.current.reset()
   expect(result.current.status).toBe('init')
-  expect(result.current.time).toMatchInlineSnapshot(`0`)
+  expect(result.current.time).toMatchInlineSnapshot(`30000`)
 })
