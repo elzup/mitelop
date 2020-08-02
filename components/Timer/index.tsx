@@ -1,8 +1,9 @@
 import { IconButton, LinearProgress } from '@material-ui/core'
 import PauseIcon from '@material-ui/icons/Pause'
 import PlayArrowIcon from '@material-ui/icons/PlayArrow'
+import RotateLeftIcon from '@material-ui/icons/RotateLeft'
 import StopIcon from '@material-ui/icons/Stop'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useHover } from '../hooks/useHover'
 import { useTimer } from './useTimer'
@@ -91,7 +92,7 @@ function Timer({ total }: { total: number }) {
               e.stopPropagation()
             }}
           >
-            <PlayArrowIcon />
+            <RotateLeftIcon />
           </IconButton>
         )}
       </div>

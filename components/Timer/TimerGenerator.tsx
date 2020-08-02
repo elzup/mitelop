@@ -7,7 +7,7 @@ import PreviewResizable from '../PreviewResizable'
 import { GeneratorFrame } from '..'
 
 function TimerGenerator() {
-  const [size, setSize] = useState<Size>({ width: 400, height: 300 })
+  const [size, setSize] = useState<Size>({ width: 400, height: 85 })
   const [total, setTotal] = useState<number>(10)
   const url = `/timer?total=${total * 1000}`
 
