@@ -33,7 +33,6 @@ function Timer({ total }: { total: number }) {
   return (
     <Style>
       <div className="frame">
-        <LinearProgress variant="determinate" value={sw.progress} />
         <span className="time">{timeStr}</span>
         <div className="controls">
           {sw.status === 'init' && (
@@ -52,6 +51,7 @@ function Timer({ total }: { total: number }) {
             <button onClick={() => sw.reset()}>Reset</button>
           )}
         </div>
+        <LinearProgress variant="determinate" value={sw.progress} />
       </div>
     </Style>
   )
@@ -59,23 +59,23 @@ function Timer({ total }: { total: number }) {
 
 const Style = styled.div`
   height: 100vh;
-  display: grid;
-  grid-template-rows: 1fr max-content 1fr;
+  width: 100vw;
+  .time {
+    text-align: center;
+    font-size: calc(100vh / 3);
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif, monospace;
+    margin: 5%;
+    line-height: 1.05em;
+    font-weight: bold;
+  }
   .frame {
+    display: grid;
+    height: 100%;
+    grid-template-columns: max-content max-content 1fr;
     display: grid;
     align-items: center;
     justify-content: center;
     /* border: solid 0.5px gray; */
-    span {
-      text-align: center;
-      font-size: calc(100vw / 5);
-      line-height: 1.05em;
-
-      &.date {
-        text-align: unset;
-        font-size: calc(100vw / 5 / 3);
-      }
-    }
   }
 `
 
