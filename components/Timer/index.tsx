@@ -1,6 +1,10 @@
+import { IconButton, LinearProgress } from '@material-ui/core'
+import PauseIcon from '@material-ui/icons/Pause'
+import PlayArrowIcon from '@material-ui/icons/PlayArrow'
+import StopIcon from '@material-ui/icons/Stop'
+import { useEffect, useState, useRef } from 'react'
 import styled from 'styled-components'
-import { useEffect, useState } from 'react'
-import { LinearProgress } from '@material-ui/core'
+import { useHover } from '../hooks/useHover'
 import { useTimer } from './useTimer'
 
 const pad2 = (n: number) => `${n}`.padStart(2, '0')
@@ -23,6 +27,7 @@ function Timer({ total }: { total: number }) {
   const sw = useTimer()
   const [timeStr, setTimeStr] = useState<string>('0')
   const [timeMilliStr, setTimeMilliStr] = useState<string>('00')
+  const [hoverRef, isHovered] = useHover()
 
   useEffect(() => {
     const [timeStr, milliStr] = timeToStr(sw.floorTime)
@@ -38,29 +43,57 @@ function Timer({ total }: { total: number }) {
   }, [total])
 
   return (
-    <Style>
+    <Style
+      ref={hoverRef}
+      onClick={() => {
+        console.log('whole event')
+        if (sw.status === 'init') {
+          sw.start()
+        } else if (sw.status === 'run') {
+          sw.pause()
+        } else if (sw.status === 'pause') {
+          sw.resume()
+        }
+      }}
+    >
       <div className="frame">
         <span className="time">
           {timeStr}.<span className="time-ms">{timeMilliStr}</span>
         </span>
-        <div className="controls">
-          {sw.status === 'init' && (
-            <button onClick={() => sw.start()}>Start</button>
-          )}
-          {sw.status === 'pause' && (
-            <>
-              <button onClick={() => sw.resume()}>Resume</button>
-              <button onClick={() => sw.reset()}>Reset</button>
-            </>
-          )}
-          {sw.status === 'run' && (
-            <button onClick={() => sw.pause()}>Pause</button>
-          )}
-          {sw.status === 'end' && (
-            <button onClick={() => sw.reset()}>Reset</button>
-          )}
-        </div>
         <LinearProgress variant="determinate" value={sw.progress} />
+      </div>
+
+      <div
+        className="controls"
+        style={{ display: isHovered ? 'block' : 'none' }}
+      >
+        {sw.status === 'init' && <PlayArrowIcon />}
+        {sw.status === 'pause' && (
+          <>
+            <PlayArrowIcon />
+            <IconButton
+              className="sub-control"
+              onClick={(e) => {
+                sw.reset()
+                e.stopPropagation()
+              }}
+            >
+              <StopIcon />
+            </IconButton>
+          </>
+        )}
+        {sw.status === 'run' && <PauseIcon />}
+        {sw.status === 'end' && (
+          <IconButton
+            className="sub-control"
+            onClick={(e) => {
+              sw.reset()
+              e.stopPropagation()
+            }}
+          >
+            <PlayArrowIcon />
+          </IconButton>
+        )}
       </div>
     </Style>
   )
@@ -70,6 +103,7 @@ const Style = styled.div`
   height: 100vh;
   width: 100vw;
   .time {
+    width: 20vw;
     text-align: center;
     font-size: calc(100vh / 3);
     font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif, monospace;
@@ -82,11 +116,27 @@ const Style = styled.div`
   .frame {
     display: grid;
     height: 100%;
-    grid-template-columns: max-content max-content 1fr;
+    grid-template-columns: max-content 1fr;
     display: grid;
     align-items: center;
     justify-content: center;
     /* border: solid 0.5px gray; */
+  }
+  .controls {
+    height: 100%;
+    width: 100%;
+    padding: 4px;
+    background: rgba(255, 255, 255, 0.5);
+    position: absolute;
+    top: 0;
+    line-height: 100vh;
+    text-align: center;
+    /* z-index: 1; */
+    .sub-control {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
   }
 `
 
