@@ -42,25 +42,7 @@ class Document extends NextDocument {
   render() {
     return (
       <Html lang={'ja'}>
-        <Head>
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, shrink-to-fit=no"
-          />
-          <link rel="shortcut icon" href="/static/images/icon.png" />
-          <link
-            rel="icon"
-            type="image/png"
-            href="/static/images/icon-4x.png"
-            sizes="192x192"
-          />
-
-          <link rel="manifest" href="/static/manifest.json" />
-          <link
-            href="https://unpkg.com/sanitize.css/forms.css"
-            rel="stylesheet"
-          />
-        </Head>
+        <Head />
         <body>
           <Main />
           <NextScript />

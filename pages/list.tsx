@@ -2,7 +2,7 @@ import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import Layout from '../components/Layout'
 import List from '../components/List'
-import { getOne } from '../utils/browser'
+import { getOne } from '../utils/ssr'
 
 const IndexPage: NextPage = () => {
   const { query } = useRouter()
