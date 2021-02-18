@@ -7,6 +7,7 @@ import ListGenerator from '../List/ListGenerator'
 import YomiageGenerator from '../Yomiage/YomiageGenerator'
 import ItemsGenerator from '../Items/ItemGenerator'
 import TimerGenerator from '../Timer/TimerGenerator'
+import ColorGenerator from '../Color/ColorGenerator'
 
 const frames = [
   ListGenerator,
@@ -15,6 +16,7 @@ const frames = [
   StopwatchGenerator,
   TimerGenerator,
   YomiageGenerator,
+  ColorGenerator,
   ItemsGenerator,
 ]
 
@@ -37,6 +39,7 @@ const TopPage = () => {
         <Tab label="ストップウォッチ" />
         <Tab label="タイマー" />
         <Tab label="読み上げ" />
+        <Tab label="単色パネル" />
         <Tab label="その他" />
       </Tabs>
       <Frame />
