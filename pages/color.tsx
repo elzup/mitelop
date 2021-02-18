@@ -11,6 +11,8 @@ const ClockPage: NextPage = () => {
 
   const color = getOne(query['color']) || '#ffffff'
 
+  console.log(color)
+
   return (
     <Layout title="Color" reset>
       <Color color={color} />
