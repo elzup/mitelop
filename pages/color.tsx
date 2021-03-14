@@ -5,14 +5,10 @@ import Layout from '../components/Layout'
 import Color from '../components/Color'
 import { getOne } from '../utils/ssr'
 
-const ClockPage: NextPage = () => {
+const ColorPage: NextPage = () => {
   const { query } = useRouter()
 
-  console.log(query)
-
   const color = getOne(query['color']) || '#ffffff'
-
-  console.log(color)
 
   return (
     <Layout title="Color" reset>
@@ -25,4 +21,4 @@ const ClockPage: NextPage = () => {
   )
 }
 
-export default ClockPage
+export default ColorPage
