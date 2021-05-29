@@ -1,5 +1,6 @@
-import { Typography, Tab, Tabs } from '@material-ui/core'
+import { Typography, Tab, Tabs, Theme } from '@material-ui/core'
 import { useState } from 'react'
+import { createStyles, withStyles } from '@material-ui/styles'
 import ClockGenerator from '../Clock/ClockGenerator'
 import KatinkoGenerator from '../Katinko/KatinkoGenerator'
 import StopwatchGenerator from '../Stopwatch/StopwatchGenerator'
@@ -20,6 +21,21 @@ const frames = [
   ItemsGenerator,
 ]
 
+const StyledTab = withStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      textTransform: 'none',
+      minWidth: '100px',
+      fontWeight: theme.typography.fontWeightRegular,
+      fontSize: theme.typography.pxToRem(15),
+      marginRight: theme.spacing(1),
+      '&:focus': {
+        opacity: 1,
+      },
+    },
+  })
+)((props) => <Tab disableRipple {...props} />)
+
 const TopPage = () => {
   const [selected, setSelected] = useState<number>(0)
   const Frame = frames[selected]
@@ -29,18 +45,19 @@ const TopPage = () => {
       <Typography variant="h4">Mitelop</Typography>
       <Tabs
         value={selected}
-        style={{ maxWidth: '100vw' }}
+        variant="scrollable"
+        scrollButtons="auto"
         onChange={(e, i) => setSelected(i)}
         aria-label="simple tabs example"
       >
-        <Tab label="リスト" />
-        <Tab label="カチンコ" />
-        <Tab label="クロック" />
-        <Tab label="ストップウォッチ" />
-        <Tab label="タイマー" />
-        <Tab label="読み上げ" />
-        <Tab label="単色パネル" />
-        <Tab label="その他" />
+        <StyledTab label="リスト" />
+        <StyledTab label="カチンコ" />
+        <StyledTab label="クロック" />
+        <StyledTab label="ストップウォッチ" />
+        <StyledTab label="タイマー" />
+        <StyledTab label="読み上げ" />
+        <StyledTab label="単色パネル" />
+        <StyledTab label="その他" />
       </Tabs>
       <Frame />
     </div>
