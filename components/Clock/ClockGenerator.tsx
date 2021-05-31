@@ -1,18 +1,15 @@
-import { Typography, Button } from '@material-ui/core'
+import { Button } from '@material-ui/core'
 import { useState } from 'react'
+import { GeneratorFrame } from '..'
+import { Size } from '../../types'
 import { windowOpen } from '../../utils/browser'
 import { isDev } from '../../utils/env'
-import { Size } from '../../types'
-import PreviewResizable from '../PreviewResizable'
-import { GeneratorFrame } from '..'
 
 function ClockGenerator() {
   const [size, setSize] = useState<Size>({ width: 400, height: 300 })
 
   return (
     <GeneratorFrame>
-      <Typography variant="h5">クロック</Typography>
-      <Typography variant="caption">時刻を表示する</Typography>
       <div>
         <div>
           <Button
@@ -26,7 +23,6 @@ function ClockGenerator() {
             作成
           </Button>
         </div>
-        <PreviewResizable url="/clock" size={size} onChangeSize={setSize} />
       </div>
     </GeneratorFrame>
   )

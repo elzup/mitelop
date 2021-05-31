@@ -50,6 +50,7 @@ const TopPage = () => {
         onChange={(e, i) => setSelected(i)}
         aria-label="simple tabs example"
       >
+        <StyledTab label="総合" />
         <StyledTab label="リスト" />
         <StyledTab label="カチンコ" />
         <StyledTab label="クロック" />
