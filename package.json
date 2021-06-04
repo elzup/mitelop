@@ -15,6 +15,7 @@
     "@material-ui/icons": "4.11.2",
     "@material-ui/styles": "4.11.4",
     "formik": "2.2.8",
+    "muuri-react": "^3.1.6",
     "next": "10.2.3",
     "next-pwa": "5.2.21",
     "re-resizable": "6.9.0",

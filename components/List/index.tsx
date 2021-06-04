@@ -27,6 +27,11 @@ function List({ titles, row }: Props) {
   )
 }
 
+List.defaultProps = {
+  titles: [],
+  row: false,
+}
+
 const Style = styled.div`
   height: 100vh;
   width: 100vw;

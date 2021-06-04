@@ -99,6 +99,9 @@ function Timer({ total }: { total: number }) {
     </Style>
   )
 }
+Timer.defaultProps = {
+  total: 60,
+}
 
 const Style = styled.div`
   height: 100vh;

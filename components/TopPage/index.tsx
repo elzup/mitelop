@@ -9,8 +9,10 @@ import YomiageGenerator from '../Yomiage/YomiageGenerator'
 import ItemsGenerator from '../Items/ItemGenerator'
 import TimerGenerator from '../Timer/TimerGenerator'
 import ColorGenerator from '../Color/ColorGenerator'
+import GadgetList from './GadgetList'
 
 const frames = [
+  GadgetList,
   ListGenerator,
   KatinkoGenerator,
   ClockGenerator,
