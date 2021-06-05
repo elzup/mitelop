@@ -22,11 +22,13 @@ const components = [
 function GadgetList() {
   return (
     <div style={{ display: 'grid' }}>
-      {components.map((comp, i) => (
-        <div key={i} style={{ width: '200px', height: '300px' }}>
-          {comp}
-        </div>
-      ))}
+      <MuuriComponent dragEnabled>
+        {components.map((comp, i) => (
+          <div key={i} style={{ width: '200px', height: '300px' }}>
+            {comp}
+          </div>
+        ))}
+      </MuuriComponent>
     </div>
   )
 }

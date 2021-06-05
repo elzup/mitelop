@@ -9,7 +9,7 @@ const synth = window.speechSynthesis
 
 const Style = styled.div`
   display: grid;
-  height: 100vh;
+  height: 100%;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr 2fr;
   grid-template-areas:
@@ -27,7 +27,7 @@ const Style = styled.div`
     padding: 8px;
   }
   button {
-    font-size: 10vw;
+    font-size: 10%;
     &[disabled] {
       opacity: 0.1;
     }

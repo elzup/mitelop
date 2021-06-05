@@ -47,7 +47,7 @@ function Stopwatch() {
 }
 
 const Style = styled.div`
-  height: 100vh;
+  height: 100%;
   display: grid;
   grid-template-rows: 1fr max-content 1fr;
   .frame {
@@ -57,12 +57,12 @@ const Style = styled.div`
     /* border: solid 0.5px gray; */
     span {
       text-align: center;
-      font-size: calc(100vw / 5);
+      font-size: calc(100% / 5);
       line-height: 1.05em;
 
       &.date {
         text-align: unset;
-        font-size: calc(100vw / 5 / 3);
+        font-size: calc(100% / 5 / 3);
       }
     }
   }

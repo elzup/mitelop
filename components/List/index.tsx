@@ -33,14 +33,14 @@ List.defaultProps = {
 }
 
 const Style = styled.div`
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   ul {
     padding: 0;
     margin: 0;
     list-style-type: none;
     display: grid;
-    height: 100vh;
+    height: 100%;
   }
   li {
     font-size: 30px;

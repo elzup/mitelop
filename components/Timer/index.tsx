@@ -104,18 +104,18 @@ Timer.defaultProps = {
 }
 
 const Style = styled.div`
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   .time {
-    width: 20vw;
+    width: 20%;
     text-align: center;
-    font-size: calc(100vh / 3);
+    font-size: calc(100% / 3);
     font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif, monospace;
     margin: 5%;
     line-height: 1.05em;
   }
   .time-ms {
-    font-size: calc(100vh / 3 / 2);
+    font-size: calc(100% / 3 / 2);
   }
   .frame {
     display: grid;
@@ -133,7 +133,7 @@ const Style = styled.div`
     background: rgba(255, 255, 255, 0.5);
     position: absolute;
     top: 0;
-    line-height: 100vh;
+    line-height: 100%;
     text-align: center;
     /* z-index: 1; */
     .sub-control {
