@@ -1,6 +1,7 @@
 import React from 'react'
 import { MuuriComponent } from 'muuri-react'
 
+import styled from 'styled-components'
 import List from '../List'
 import Katinko from '../Katinko'
 import Clock from '../Clock'
@@ -10,26 +11,31 @@ import Yomiage from '../Yomiage'
 import Color from '../Color'
 
 const components = [
-  <List key={0} />,
-  <Katinko key={1} />,
-  <Clock key={2} />,
-  <Stopwatch key={3} />,
-  <Timer key={4} />,
-  <Yomiage key={5} />,
-  <Color key={6} />,
+  <List key={'gadget-list'} />,
+  <Katinko key={'gadget-katinko'} />,
+  <Clock key={'gadget-clock'} />,
+  <Stopwatch key={'gadget-stopwatch'} />,
+  <Timer key={'gadget-timer'} />,
+  <Yomiage key={'gadget-yomiage'} />,
+  <Color key={'gadget-color'} />,
 ]
+
+const GadgetCard = styled.div`
+  width: 300px;
+  height: 200px;
+  border: solid 1px #2b0065;
+  border-radius: 4px;
+  padding: 8px;
+  margin: 8px;
+`
 
 function GadgetList() {
   return (
-    <div style={{ display: 'grid' }}>
-      <MuuriComponent dragEnabled>
-        {components.map((comp, i) => (
-          <div key={i} style={{ width: '200px', height: '300px' }}>
-            {comp}
-          </div>
-        ))}
-      </MuuriComponent>
-    </div>
+    <MuuriComponent dragEnabled={false}>
+      {components.map((comp) => (
+        <GadgetCard key={comp.key}>{comp}</GadgetCard>
+      ))}
+    </MuuriComponent>
   )
 }
 export default GadgetList
