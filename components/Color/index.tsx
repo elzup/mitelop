@@ -35,10 +35,11 @@ function Color({ color }: { color: string }) {
     ></Style>
   )
 }
+Color.defaultProps = { color: '#fff', onFinish: () => {} }
 
 const Style = styled.div`
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
 `
 
 export default Color

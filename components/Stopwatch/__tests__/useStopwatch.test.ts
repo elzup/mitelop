@@ -39,7 +39,7 @@ test('useStopwatch', () => {
     advanceTo(new Date(date).setSeconds(10, 0))
     jest.advanceTimersByTime(10000)
   })
-  expect(result.current.time).toMatchInlineSnapshot(`10000`)
+  expect(result.current.time).toMatchInlineSnapshot(`9000`)
 
   result.current.pause()
 
@@ -56,7 +56,7 @@ test('useStopwatch', () => {
     advanceTo(new Date(date).setSeconds(20, 0))
     jest.advanceTimersByTime(5000)
   })
-  expect(result.current.time).toMatchInlineSnapshot(`15000`)
+  expect(result.current.time).toMatchInlineSnapshot(`14000`)
   expect(result.current.status).toBe('run')
 
   result.current.pause()
