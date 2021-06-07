@@ -9,33 +9,33 @@ import Stopwatch from '../Stopwatch'
 import Timer from '../Timer'
 import Yomiage from '../Yomiage'
 import Color from '../Color'
+import GadgetCard from './GadgetCard'
 
 const components = [
-  <List key={'gadget-list'} />,
-  <Katinko key={'gadget-katinko'} />,
-  <Clock key={'gadget-clock'} />,
-  <Stopwatch key={'gadget-stopwatch'} />,
-  <Timer key={'gadget-timer'} />,
-  <Yomiage key={'gadget-yomiage'} />,
-  <Color key={'gadget-color'} />,
+  <GadgetCard key={'gad-list'} icon={'list'} title="List">
+    <List />
+  </GadgetCard>,
+  <GadgetCard key={'gad-katinko'} icon={'movie'} title="Katinko">
+    <Katinko key={'gad-katinko'} />
+  </GadgetCard>,
+  <GadgetCard key={'gad-clock'} icon={'schedule'} title="Clock">
+    <Clock />
+  </GadgetCard>,
+  <GadgetCard key={'gad-sw'} icon={'timer'} title="StopWatch">
+    <Stopwatch />
+  </GadgetCard>,
+  <GadgetCard key={'gad-timer'} icon={'timer'} title="Timer">
+    <Timer />
+  </GadgetCard>,
+  <GadgetCard key={'gad-yomiage'} icon={'speaker'} title="Yomiage">
+    <Yomiage />
+  </GadgetCard>,
+  <GadgetCard key={'gad-color'} icon={'palette'} title="Color">
+    <Color />
+  </GadgetCard>,
 ]
 
-const GadgetCard = styled.div`
-  width: 300px;
-  height: 200px;
-  border: solid 1px #2b0065;
-  border-radius: 4px;
-  padding: 8px;
-  margin: 8px;
-`
-
 function GadgetList() {
-  return (
-    <MuuriComponent dragEnabled={false}>
-      {components.map((comp) => (
-        <GadgetCard key={comp.key}>{comp}</GadgetCard>
-      ))}
-    </MuuriComponent>
-  )
+  return <MuuriComponent dragEnabled={false}>{components}</MuuriComponent>
 }
 export default GadgetList

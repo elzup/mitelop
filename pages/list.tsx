@@ -10,7 +10,7 @@ const IndexPage: NextPage = () => {
   const row = !!getOne(query['row'])
 
   return (
-    <Layout title="List List" reset>
+    <Layout title="List" reset>
       <List titles={titles} row={row} />
     </Layout>
   )

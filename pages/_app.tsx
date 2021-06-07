@@ -17,6 +17,10 @@ const App = ({ Component, pageProps }: AppProps) => (
         href="/static/images/icon-4x.png"
         sizes="192x192"
       />
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      />
 
       <link rel="manifest" href="/static/manifest.json" />
       <link href="https://unpkg.com/sanitize.css/forms.css" rel="stylesheet" />
