@@ -1,14 +1,12 @@
-import React from 'react'
 import { MuuriComponent } from 'muuri-react'
-
-import styled from 'styled-components'
-import List from '../List'
-import Katinko from '../Katinko'
+import React from 'react'
 import Clock from '../Clock'
+import Color from '../Color'
+import Katinko from '../Katinko'
+import List from '../List'
 import Stopwatch from '../Stopwatch'
 import Timer from '../Timer'
 import Yomiage from '../Yomiage'
-import Color from '../Color'
 import GadgetCard from './GadgetCard'
 
 const components = [
@@ -24,7 +22,7 @@ const components = [
   <GadgetCard key={'gad-sw'} icon={'timer'} title="StopWatch">
     <Stopwatch />
   </GadgetCard>,
-  <GadgetCard key={'gad-timer'} icon={'timer'} title="Timer">
+  <GadgetCard key={'gad-timer'} icon={'hourglass_empty'} title="Timer">
     <Timer />
   </GadgetCard>,
   <GadgetCard key={'gad-yomiage'} icon={'speaker'} title="Yomiage">
