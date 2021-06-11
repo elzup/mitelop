@@ -4,11 +4,13 @@
   "scripts": {
     "dev": "next -H localhost.mitelop",
     "test": "jest",
+    "storybook": "start-storybook -p 6006",
     "build": "next build",
     "export": "yarn build && next export",
     "start": "next start",
     "lint": "eslint --ext .ts,.tsx .",
-    "type-check": "tsc"
+    "type-check": "tsc",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "@material-ui/core": "4.11.4",
@@ -24,10 +26,16 @@
     "react-color": "2.19.3",
     "react-dom": "^16.0.0",
     "react-use": "17.2.4",
+    "recompose": "^0.30.0",
     "styled-components": "5.3.0",
     "use-seconds": "1.5.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.14.5",
+    "@storybook/addon-actions": "^6.2.9",
+    "@storybook/addon-links": "^6.2.9",
+    "@storybook/addons": "^6.2.9",
+    "@storybook/react": "^6.2.9",
     "@testing-library/react-hooks": "7.0.0",
     "@types/jest": "26.0.23",
     "@types/node": "15.6.1",
@@ -35,6 +43,7 @@
     "@types/react-color": "3.0.4",
     "@types/react-dom": "^16.0.0",
     "@types/styled-components": "5.1.9",
+    "babel-loader": "^8.2.2",
     "babel-plugin-styled-components": "1.12.0",
     "eslint": "7.27.0",
     "eslint-config-nzap": "4.3.1",

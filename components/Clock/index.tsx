@@ -23,6 +23,7 @@ function Clock() {
 }
 
 const Style = styled.div`
+  width: 100%;
   height: 100%;
   display: grid;
   grid-template-rows: 1fr max-content 1fr;
