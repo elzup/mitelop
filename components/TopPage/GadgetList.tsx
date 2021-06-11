@@ -3,18 +3,18 @@ import React from 'react'
 import Clock from '../Clock'
 import Color from '../Color'
 import Katinko from '../Katinko'
-import List from '../List'
+import CheckList from '../CheckList'
 import Stopwatch from '../Stopwatch'
 import Timer from '../Timer'
 import Yomiage from '../Yomiage'
 import GadgetCard from './GadgetCard'
 
 const components = [
-  <GadgetCard key={'gad-list'} icon={'list'} title="List">
-    <List />
+  <GadgetCard key={'gad-checklist'} icon={'checklist'} title="CheckList">
+    <CheckList />
   </GadgetCard>,
   <GadgetCard key={'gad-katinko'} icon={'movie'} title="Katinko">
-    <Katinko key={'gad-katinko'} />
+    <Katinko />
   </GadgetCard>,
   <GadgetCard key={'gad-clock'} icon={'schedule'} title="Clock">
     <Clock />

@@ -1,11 +1,19 @@
 import styled from 'styled-components'
 import { useTitleCheckLocalStorage } from '../../utils/useLocalStorage'
 
+type CheckListItem = {
+  name: string
+  check: boolean
+}
+type CheckListConfig = {
+  items: CheckListItem[]
+}
+
 type Props = {
   titles: string[]
   row: boolean
 }
-function List({ titles, row }: Props) {
+function CheckList({ titles, row }: Props) {
   const [checks, setChecks] = useTitleCheckLocalStorage()
 
   return (
@@ -27,7 +35,7 @@ function List({ titles, row }: Props) {
   )
 }
 
-List.defaultProps = {
+CheckList.defaultProps = {
   titles: [],
   row: false,
 }
@@ -62,4 +70,4 @@ const Style = styled.div`
   }
 `
 
-export default List
+export default CheckList
