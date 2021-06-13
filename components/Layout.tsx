@@ -24,7 +24,7 @@ const Layout: React.FunctionComponent<Props> = ({
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
     <header></header>
-    {children}
+    <div style={{ height: '100vh' }}>{children}</div>
     {!reset && (
       <footer>
         <hr />

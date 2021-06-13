@@ -5874,7 +5874,7 @@ find-up@^5.0.0:
     locate-path "^6.0.0"
     path-exists "^4.0.0"
 
-fitty@2:
+fitty@^2.3.3:
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/fitty/-/fitty-2.3.3.tgz#176eb3a5d756ae7cdb7f7841a9357046b15817a0"
   integrity sha512-JBrXkAT29fGTMFA/O40zzxZTISK5qm4kx8gRU6x43a1OalC5kyVXG77RLbyFMFdFabd16nYX3HrRAe/hGKg+EQ==
@@ -9799,13 +9799,6 @@ react-fast-compare@^3.0.1, react-fast-compare@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-3.2.0.tgz#641a9da81b6a6320f270e89724fb45a0b39e43bb"
   integrity sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==
-
-react-fitty@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/react-fitty/-/react-fitty-1.0.1.tgz#e8a3b13da173f19e50eb538c9ab11986f178f284"
-  integrity sha512-mO+Sbon+bO8Kazv38qu3uwi52vYDdty6P8fla91TkQEc2KwfZjNLT4j31cXix3ZTlBMWmavWAu5SfG6J9SpaFQ==
-  dependencies:
-    fitty "2"
 
 react-helmet-async@^1.0.7:
   version "1.0.9"

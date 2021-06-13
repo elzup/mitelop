@@ -1,7 +1,8 @@
-import { ReactFitty } from 'react-fitty'
 import { useMeasure } from 'react-use'
 import styled from 'styled-components'
 import { useSeconds } from 'use-seconds'
+import fitty from 'fitty'
+import { DependencyList, useEffect, useRef } from 'react'
 
 const RATE = 1.8
 
@@ -11,10 +12,27 @@ const dateStr = (t: Date) =>
 const timeStr = (t: Date) =>
   [t.getHours(), t.getMinutes(), t.getSeconds()].map(pad2)
 
+function useFitty(deps?: DependencyList) {
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!ref.current) return
+    fitty(ref.current)
+    // ref.current.addEventListener('fit', (e) => {
+    //   console.log(e)
+    // })
+  }, [ref.current])
+  // }, [...(deps || []), ref.current])
+  return [ref] as const
+}
+
 function Clock() {
   const [time] = useSeconds()
-  const [ref, { height }] = useMeasure<HTMLDivElement>()
+  const [ref, { height, width }] = useMeasure<HTMLDivElement>()
   const maxWidth = height * RATE
+
+  const [ymdRef] = useFitty([height, width])
+  const [hmdRef] = useFitty([height, width])
 
   const [hs, ms, ss] = timeStr(time)
 
@@ -23,15 +41,17 @@ function Clock() {
       <div className="frame" style={{ maxWidth }}>
         <div>
           <div style={{ marginBottom: '-8%' }}>
-            <ReactFitty className="date">{dateStr(time) + '　　　'}</ReactFitty>
+            <div className="date" ref={ymdRef}>
+              {dateStr(time) + '　　'}
+            </div>
           </div>
-          <ReactFitty className="time">
+          <div className="time" ref={hmdRef}>
             {hs}
             <span>:</span>
             {ms}
             <span>:</span>
             {ss}
-          </ReactFitty>
+          </div>
         </div>
       </div>
     </Style>
