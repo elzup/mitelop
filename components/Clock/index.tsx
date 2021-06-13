@@ -1,5 +1,9 @@
+import { ReactFitty } from 'react-fitty'
+import { useMeasure } from 'react-use'
 import styled from 'styled-components'
 import { useSeconds } from 'use-seconds'
+
+const RATE = 1.8
 
 const pad2 = (n: number) => `${n}`.padStart(2, '0')
 const dateStr = (t: Date) =>
@@ -9,15 +13,17 @@ const timeStr = (t: Date) =>
 
 function Clock() {
   const [time] = useSeconds()
+  const [ref, { height }] = useMeasure<HTMLDivElement>()
+  const maxWidth = height * RATE
 
   return (
-    <Style>
-      <div />
-      <div className="frame">
-        <span className="date">{dateStr(time)}</span>
-        <span className="time">{timeStr(time)}</span>
+    <Style ref={ref}>
+      <div className="frame" style={{ maxWidth }}>
+        <div>
+          <ReactFitty className="date">{dateStr(time)}</ReactFitty>
+          <ReactFitty className="time">{timeStr(time)}</ReactFitty>
+        </div>
       </div>
-      <div />
     </Style>
   )
 }
@@ -25,21 +31,22 @@ function Clock() {
 const Style = styled.div`
   width: 100%;
   height: 100%;
-  display: grid;
-  grid-template-rows: 1fr max-content 1fr;
+  border: solid black;
+  /* display: table; */
   .frame {
     display: grid;
-    align-items: center;
-    justify-content: center;
+    height: 100%;
+    vertical-align: middle;
+    display: grid;
+    place-items: center;
     /* border: solid 0.5px gray; */
-    span {
+    > div {
+      margin: 0 auto;
       text-align: center;
-      font-size: calc(100% / 5);
-      line-height: 1.05em;
+      width: 100%;
 
-      &.date {
+      .date {
         text-align: unset;
-        font-size: calc(100% / 5 / 3);
       }
     }
   }
