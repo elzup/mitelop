@@ -29,24 +29,27 @@ function Clock() {
 }
 
 const Style = styled.div`
-  width: 100%;
+  width: 96%;
   height: 100%;
-  border: solid black;
+  padding: 0 2%;
+  font-family: 'Roboto';
   /* display: table; */
   .frame {
     display: grid;
     height: 100%;
     vertical-align: middle;
     display: grid;
+    margin: 0 auto;
+
     place-items: center;
     /* border: solid 0.5px gray; */
     > div {
-      margin: 0 auto;
       text-align: center;
       width: 100%;
 
       .date {
-        text-align: unset;
+        /* width: 50%; */
+        text-align: left;
       }
     }
   }

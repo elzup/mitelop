@@ -110,7 +110,7 @@ const Style = styled.div`
     width: 20%;
     text-align: center;
     font-size: calc(100% / 3);
-    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif, monospace;
+    font-family: 'Roboto', 'Helvetica', 'Arial', monospace, sans-serif;
     margin: 5%;
     line-height: 1.05em;
   }
