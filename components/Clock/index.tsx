@@ -9,12 +9,14 @@ const pad2 = (n: number) => `${n}`.padStart(2, '0')
 const dateStr = (t: Date) =>
   `${t.getFullYear()}-${pad2(t.getMonth() + 1)}-${pad2(t.getDate())}`
 const timeStr = (t: Date) =>
-  [t.getHours(), t.getMinutes(), t.getSeconds()].map(pad2).join(':')
+  [t.getHours(), t.getMinutes(), t.getSeconds()].map(pad2)
 
 function Clock() {
   const [time] = useSeconds()
   const [ref, { height }] = useMeasure<HTMLDivElement>()
   const maxWidth = height * RATE
+
+  const [hs, ms, ss] = timeStr(time)
 
   return (
     <Style ref={ref}>
@@ -23,7 +25,13 @@ function Clock() {
           <div style={{ marginBottom: '-8%' }}>
             <ReactFitty className="date">{dateStr(time) + '　　　'}</ReactFitty>
           </div>
-          <ReactFitty className="time">{timeStr(time)}</ReactFitty>
+          <ReactFitty className="time">
+            {hs}
+            <span>:</span>
+            {ms}
+            <span>:</span>
+            {ss}
+          </ReactFitty>
         </div>
       </div>
     </Style>
