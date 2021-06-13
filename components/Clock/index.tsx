@@ -20,7 +20,9 @@ function Clock() {
     <Style ref={ref}>
       <div className="frame" style={{ maxWidth }}>
         <div>
-          <ReactFitty className="date">{dateStr(time)}</ReactFitty>
+          <div style={{ marginBottom: '-8%' }}>
+            <ReactFitty className="date">{dateStr(time) + '　　　'}</ReactFitty>
+          </div>
           <ReactFitty className="time">{timeStr(time)}</ReactFitty>
         </div>
       </div>
