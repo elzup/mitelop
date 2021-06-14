@@ -1,30 +1,22 @@
+import React from 'react'
 import styled from 'styled-components'
-import { ClockConfig, GadgetMode } from '../../types'
-import { ConfigModal } from '../components'
+import { ClockConfig } from '../../types'
 import { useFitty } from '../hooks/useFitty'
 
 type Props = {
   config: ClockConfig
-  setConfMode: () => void
-  setMainMode: () => void
-  mode: GadgetMode
   dateStr: string
   tStrs: string[]
   maxWidth: number
 }
-function ClockAtom(props: Props) {
-  const { config, maxWidth, mode, dateStr } = props
+function ClockAtom(props: React.PropsWithChildren<Props>) {
+  const { config, maxWidth, dateStr } = props
   const [hs, ms, ss] = props.tStrs
   const [ymdRef] = useFitty()
   const [hmdRef] = useFitty()
 
   return (
-    <Style
-      bgColor={config.bgColor}
-      fontColor={config.fontColor}
-      onMouseOver={props.setConfMode}
-      // onMouseOut={() => setMode('main')}
-    >
+    <Style bgColor={config.bgColor} fontColor={config.fontColor}>
       <div className="frame" style={{ maxWidth }}>
         <div>
           {config.dateVisible && (
@@ -43,9 +35,6 @@ function ClockAtom(props: Props) {
           </div>
         </div>
       </div>
-      {mode === 'conf' && (
-        <ConfigModal onClose={props.setMainMode}>Config</ConfigModal>
-      )}
     </Style>
   )
 }

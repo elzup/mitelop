@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { useMeasure } from 'react-use'
 import { useSeconds } from 'use-seconds'
 import { ClockConfig, GadgetMode } from '../../types'
+import { ConfigModal } from '../components'
+import ColorSelectButton from '../ColorSelectButton'
 import ClockAtom from './ClockAtom'
 
 const RATE = 1.8
@@ -34,16 +36,29 @@ function ClockTool() {
   }, [+time])
 
   return (
-    <div ref={ref} style={{ height: '100%' }}>
+    <div
+      ref={ref}
+      style={{ position: 'relative', height: '100%' }}
+      onMouseEnter={() => setMode('conf')}
+    >
       <ClockAtom
         config={config}
-        mode={mode}
         dateStr={dateStr}
         tStrs={tStrs}
         maxWidth={maxWidth}
-        setConfMode={() => setMode('conf')}
-        setMainMode={() => setMode('main')}
       />
+      {mode === 'conf' && (
+        <ConfigModal onClose={() => setMode('main')}>
+          <div>
+            Back:
+            <ColorSelectButton />
+          </div>
+          <div>
+            Font:
+            <ColorSelectButton />
+          </div>
+        </ConfigModal>
+      )}
     </div>
   )
 }
