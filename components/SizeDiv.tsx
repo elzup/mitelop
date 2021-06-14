@@ -2,8 +2,8 @@ import { defaultProps } from 'recompose'
 import styled from 'styled-components'
 
 type HwProps = {
-  w: number | string
-  h: number | string
+  w: string
+  h: string
 }
 export const SizeDiv = styled.div<HwProps>`
   border: solid 1px;
@@ -21,8 +21,8 @@ export const SizeHori = defaultProps({ w: sm, h: ls })(SizeDiv)
 export const SizeLarge = defaultProps({ w: ls, h: ls })(SizeDiv)
 export const MultiSizeGrid = styled.div`
   display: grid;
-  width: 100%;
-  height: 100vw;
+  width: 80%;
+  height: 80vw;
   gap: 8px;
   grid-template-columns: 80% 20%;
   grid-template-rows: 20% 80%;
