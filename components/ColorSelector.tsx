@@ -1,6 +1,4 @@
-/* eslint-disable no-invalid-this */
-import React, { useState } from 'react'
-import { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { RGBColor, SketchPicker } from 'react-color'
 import reactCSS from 'reactcss'
 

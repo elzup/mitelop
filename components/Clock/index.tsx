@@ -3,7 +3,7 @@ import { useMeasure } from 'react-use'
 import { useSeconds } from 'use-seconds'
 import { ClockConfig, GadgetMode } from '../../types'
 import { ConfigModal } from '../components'
-import ColorSelectButton from '../ColorSelectButton'
+import ColorSelectButton from '../ColorSelector'
 import ClockAtom from './ClockAtom'
 
 const RATE = 1.8
