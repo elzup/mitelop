@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useMeasure } from 'react-use'
 import styled from 'styled-components'
 import { useSeconds } from 'use-seconds'
+import { ConfigModal } from '../components'
 
 const RATE = 1.8
 
@@ -26,12 +27,29 @@ function useFitty() {
   return [ref] as const
 }
 
+type ClockConfig = {
+  dateVisible: boolean
+  bgColor: string
+  fontColor: string
+}
+const initConfig: ClockConfig = {
+  dateVisible: true,
+  bgColor: '#aaaaff',
+  fontColor: '#000066',
+}
+
+type Props = {
+  initConfig?: ClockConfig
+}
 function Clock() {
   const [time] = useSeconds()
-  const [ref, { height, width }] = useMeasure<HTMLDivElement>()
+  const [config, setConfig] = useState<ClockConfig>(initConfig)
+
+  const [ref, { height }] = useMeasure<HTMLDivElement>()
   const maxWidth = height * RATE
   const [dateStr, setDstr] = useState<string>('0000-00-00')
   const [[hs, ms, ss], setTstrs] = useState<string[]>(['00', '00', '00'])
+  const [mode, setMode] = useState<'main' | 'conf'>('main')
 
   // useEffect(() => {
   //   // setDstr('0000-00-00')
@@ -49,14 +67,22 @@ function Clock() {
   const [hmdRef] = useFitty()
 
   return (
-    <Style ref={ref}>
+    <Style
+      ref={ref}
+      bgColor={config.bgColor}
+      fontColor={config.fontColor}
+      onMouseOver={() => setMode('conf')}
+      // onMouseOut={() => setMode('main')}
+    >
       <div className="frame" style={{ maxWidth }}>
         <div>
-          <div style={{ marginBottom: '-8%' }}>
-            <div className="date" ref={ymdRef}>
-              {dateStr}
+          {config.dateVisible && (
+            <div style={{ marginBottom: '-8%' }}>
+              <div className="date" ref={ymdRef}>
+                {dateStr}
+              </div>
             </div>
-          </div>
+          )}
           <div className="time" ref={hmdRef}>
             {hs}
             <span>:</span>
@@ -66,17 +92,23 @@ function Clock() {
           </div>
         </div>
       </div>
+      {mode === 'conf' && <ConfigModal>Config</ConfigModal>}
     </Style>
   )
 }
 
-const Style = styled.div`
+const Style = styled.div<{ bgColor: string; fontColor: string }>`
+  --bg-color: ${(p) => p.bgColor};
+  --font-color: ${(p) => p.fontColor};
   width: 96%;
   height: 100%;
   padding: 0 2%;
   font-family: 'Roboto';
+  position: relative;
   /* display: table; */
+  background: var(--bg-color);
   .frame {
+    color: var(--font-color);
     display: grid;
     height: 100%;
     vertical-align: middle;
