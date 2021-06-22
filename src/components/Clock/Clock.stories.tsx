@@ -8,8 +8,15 @@ export default {
   title: 'Clock',
   component: ClockTool,
 } as Meta
-
 export const ClockBase = () => (
+  <MultiSizeGrid>
+    <GridH>
+      <ClockTool />
+    </GridH>
+  </MultiSizeGrid>
+)
+
+export const ClockSize = () => (
   <MultiSizeGrid>
     <GridS>
       <ClockTool />

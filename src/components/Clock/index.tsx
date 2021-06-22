@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useMeasure } from 'react-use'
 import { useSeconds } from 'use-seconds'
+import { Typography } from '@material-ui/core'
 import { ClockConfig, GadgetMode } from '../../types'
 import { ConfigModal } from '../components'
 import ColorSelectButton from '../ColorSelector'
+import { useLocalStorage } from '../../utils/useLocalStorage'
 import ClockAtom from './ClockAtom'
 
 const RATE = 1.8
@@ -22,7 +24,10 @@ const initConfig: ClockConfig = {
 
 function ClockTool() {
   const [time] = useSeconds()
-  const [config, setConfig] = useState<ClockConfig>(initConfig)
+  const [config, setConfig] = useLocalStorage<ClockConfig>(
+    'config-clock',
+    initConfig
+  )
 
   const [ref, { height }] = useMeasure<HTMLDivElement>()
   const maxWidth = height * RATE
@@ -38,7 +43,7 @@ function ClockTool() {
   return (
     <div
       ref={ref}
-      style={{ position: 'relative', height: '100%' }}
+      style={{ position: 'relative', height: '100%', overflow: 'hidden' }}
       onMouseEnter={() => setMode('conf')}
     >
       <ClockAtom
@@ -50,12 +55,18 @@ function ClockTool() {
       {mode === 'conf' && (
         <ConfigModal onClose={() => setMode('main')}>
           <div>
-            Back:
-            <ColorSelectButton />
+            <Typography>Back:</Typography>
+            <ColorSelectButton
+              color={config.bgColor}
+              onChange={(bgColor) => setConfig((v) => ({ ...v, bgColor }))}
+            />
           </div>
           <div>
-            Font:
-            <ColorSelectButton />
+            <Typography>Font:</Typography>
+            <ColorSelectButton
+              color={config.fontColor}
+              onChange={(fontColor) => setConfig((v) => ({ ...v, fontColor }))}
+            />
           </div>
         </ConfigModal>
       )}

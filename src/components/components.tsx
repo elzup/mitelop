@@ -7,7 +7,8 @@ export const ConfigModalStyle = styled.div`
   left: 0;
   height: 100%;
   width: 100%;
-  background: rgba(0, 0, 0, 0.6);
+  padding: 4px;
+  background: white;
 `
 
 export const ConfigModal: React.FC<{ onClose: () => void }> = (props) => (

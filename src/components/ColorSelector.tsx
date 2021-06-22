@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { RGBColor, SketchPicker } from 'react-color'
+import { SketchPicker } from 'react-color'
 import styled from 'styled-components'
 
 const Style = styled.div`
@@ -29,14 +29,12 @@ const Style = styled.div`
   }
 `
 
-function SketchExample() {
+type Props = {
+  color: string
+  onChange: (v: string) => void
+}
+function ColorSelector({ color, onChange }: Props) {
   const [visible, setVisible] = useState<boolean>(false)
-  const [color, setColor] = useState<RGBColor>({
-    r: 241,
-    g: 112,
-    b: 19,
-    a: 1,
-  })
 
   useEffect(() => {
     console.log('DidMount')
@@ -47,12 +45,11 @@ function SketchExample() {
 
   const handleClick = () => setVisible((v) => !v)
   const handleClose = () => setVisible(false)
-  const background = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`
 
   return (
     <Style>
       <div className="swatch" onClick={handleClick}>
-        <div className="color" style={{ background }} />
+        <div className="color" style={{ background: color }} />
       </div>
       {visible && (
         <div className="popover">
@@ -60,7 +57,7 @@ function SketchExample() {
           <SketchPicker
             color={color}
             onChange={(res) => {
-              setColor(res.rgb)
+              onChange(res.hex)
             }}
           />
         </div>
@@ -69,4 +66,4 @@ function SketchExample() {
   )
 }
 
-export default SketchExample
+export default ColorSelector
