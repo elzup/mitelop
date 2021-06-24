@@ -42,7 +42,7 @@ function ClockAtom(props: React.PropsWithChildren<Props>) {
 const Style = styled.div<{ bgColor: string; fontColor: string }>`
   --bg-color: ${(p) => p.bgColor};
   --font-color: ${(p) => p.fontColor};
-  width: 96%;
+  width: 100%;
   height: 100%;
   padding: 0 2%;
   font-family: 'Roboto';

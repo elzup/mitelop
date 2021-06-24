@@ -1,10 +1,12 @@
 import { Meta } from '@storybook/react'
 import React from 'react'
-import ColorSelector from './ColorSelector'
+import ColorSelectButton from './forms/ColorSelectButton'
 
 export default {
   title: 'ColorSelector',
-  component: ColorSelector,
+  component: ColorSelectButton,
 } as Meta
 
-export const ClockConfigs = () => <ColorSelector />
+export const ClockConfigs = () => (
+  <ColorSelectButton color="#ffeeee" onChange={() => {}} />
+)

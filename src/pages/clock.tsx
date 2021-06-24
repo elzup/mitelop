@@ -1,6 +1,6 @@
 import { NextPage } from 'next'
-import Layout from '../components/Layout'
 import Clock from '../components/Clock'
+import Layout from '../components/Layout'
 
 const ClockPage: NextPage = () => {
   return (

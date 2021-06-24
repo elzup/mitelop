@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useMeasure } from 'react-use'
 import { useSeconds } from 'use-seconds'
-import { Typography } from '@material-ui/core'
 import { ClockConfig, GadgetMode } from '../../types'
-import { ConfigModal } from '../components'
-import ColorSelectButton from '../ColorSelector'
 import { useLocalStorage } from '../../utils/useLocalStorage'
+import { ConfigModal } from '../components'
+import ColorField from '../forms/ColorField'
 import ClockAtom from './ClockAtom'
 
 const RATE = 1.8
@@ -39,6 +38,7 @@ function ClockTool() {
     setDstr(toDateStr(time) + '　　')
     setTstrs(timeStr(time))
   }, [+time])
+  const miniConf = height < 400
 
   return (
     <div
@@ -54,20 +54,18 @@ function ClockTool() {
       />
       {mode === 'conf' && (
         <ConfigModal onClose={() => setMode('main')}>
-          <div>
-            <Typography>Back:</Typography>
-            <ColorSelectButton
-              color={config.bgColor}
-              onChange={(bgColor) => setConfig((v) => ({ ...v, bgColor }))}
-            />
-          </div>
-          <div>
-            <Typography>Font:</Typography>
-            <ColorSelectButton
-              color={config.fontColor}
-              onChange={(fontColor) => setConfig((v) => ({ ...v, fontColor }))}
-            />
-          </div>
+          <ColorField
+            label="Back"
+            onChange={(bgColor) => setConfig((v) => ({ ...v, bgColor }))}
+            value={config.bgColor}
+            mini={miniConf}
+          />
+          <ColorField
+            label="Font"
+            onChange={(fontColor) => setConfig((v) => ({ ...v, fontColor }))}
+            value={config.fontColor}
+            mini={miniConf}
+          />
         </ConfigModal>
       )}
     </div>

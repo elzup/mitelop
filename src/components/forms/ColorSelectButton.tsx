@@ -32,18 +32,12 @@ const Style = styled.div`
 type Props = {
   color: string
   onChange: (v: string) => void
+  editable?: boolean
 }
-function ColorSelector({ color, onChange }: Props) {
+function ColorSelectButton({ color, onChange, editable = true }: Props) {
   const [visible, setVisible] = useState<boolean>(false)
 
-  useEffect(() => {
-    console.log('DidMount')
-    return () => {
-      console.log('WillUnmount')
-    }
-  }, [])
-
-  const handleClick = () => setVisible((v) => !v)
+  const handleClick = () => editable && setVisible((v) => !v)
   const handleClose = () => setVisible(false)
 
   return (
@@ -66,4 +60,4 @@ function ColorSelector({ color, onChange }: Props) {
   )
 }
 
-export default ColorSelector
+export default ColorSelectButton
