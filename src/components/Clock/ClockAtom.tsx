@@ -1,32 +1,39 @@
 import React from 'react'
+import { useMeasure } from 'react-use'
 import styled from 'styled-components'
 import { ClockConfig } from '../../types'
-import { useFitty } from '../hooks/useFitty'
 
 type Props = {
   config: ClockConfig
   dateStr: string
   tStrs: string[]
-  maxWidth: number
 }
 function ClockAtom(props: React.PropsWithChildren<Props>) {
-  const { config, maxWidth, dateStr } = props
+  const { config, dateStr } = props
+  const [ref, { width, height }] = useMeasure<HTMLDivElement>()
   const [hs, ms, ss] = props.tStrs
-  const [ymdRef] = useFitty()
-  const [hmdRef] = useFitty()
+
+  const RATE = 1.8
+  const maxWidth = height * RATE
 
   return (
-    <Style bgColor={config.bgColor} fontColor={config.fontColor}>
-      <div className="frame" style={{ maxWidth }}>
-        <div>
-          {config.dateVisible && (
-            <div style={{ marginBottom: '-8%' }}>
-              <div className="date" ref={ymdRef}>
-                {dateStr}
-              </div>
-            </div>
-          )}
-          <div className="time" ref={hmdRef}>
+    <Style
+      ref={ref}
+      style={{
+        // @ts-ignore
+        '--w': `${Math.min(width, maxWidth)}px`,
+        '--h': `${height}px`,
+        '--bg-color': config.bgColor,
+        '--font-color': config.fontColor,
+      }}
+      bgColor={config.bgColor}
+      fontColor={config.fontColor}
+      date-visible={config.dateVisible}
+    >
+      <div className="outer">
+        <div className="inner">
+          <div className="date">{dateStr}</div>
+          <div className="time">
             {hs}
             <span>:</span>
             {ms}
@@ -40,31 +47,30 @@ function ClockAtom(props: React.PropsWithChildren<Props>) {
 }
 
 const Style = styled.div<{ bgColor: string; fontColor: string }>`
-  --bg-color: ${(p) => p.bgColor};
-  --font-color: ${(p) => p.fontColor};
-  width: 100%;
+  width: 94%;
   height: 100%;
-  padding: 0 2%;
+  padding: 0 3%;
   font-family: 'Roboto';
   position: relative;
   /* display: table; */
   background: var(--bg-color);
-  .frame {
+
+  .outer {
     color: var(--font-color);
     display: grid;
     height: 100%;
     vertical-align: middle;
-    display: grid;
-    margin: 0 auto;
-
     place-items: center;
-    /* border: solid 0.5px gray; */
-    > div {
+    .inner {
       text-align: center;
       width: 100%;
-
+      max-width: var(--w);
+      .time {
+        font-size: calc(var(--w) * 0.25);
+      }
       .date {
-        /* width: 50%; */
+        font-size: calc(var(--w) * 0.1);
+        margin-bottom: -4%;
         text-align: left;
       }
     }

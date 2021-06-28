@@ -8,7 +8,7 @@ type Props = {
   mini: boolean
   onChange: (v: string) => void
 }
-export const ColorField = ({ label, value, mini, onChange }: Props) => (
+const ColorField = ({ label, value, mini, onChange }: Props) => (
   <div
     style={{
       display: 'grid',

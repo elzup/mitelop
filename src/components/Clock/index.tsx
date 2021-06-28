@@ -7,8 +7,6 @@ import { ConfigModal } from '../components'
 import ColorField from '../forms/ColorField'
 import ClockAtom from './ClockAtom'
 
-const RATE = 1.8
-
 const pad2 = (n: number) => `${n}`.padStart(2, '0')
 const toDateStr = (t: Date) =>
   `${t.getFullYear()}-${pad2(t.getMonth() + 1)}-${pad2(t.getDate())}`
@@ -29,13 +27,12 @@ function ClockTool() {
   )
 
   const [ref, { height }] = useMeasure<HTMLDivElement>()
-  const maxWidth = height * RATE
   const [dateStr, setDstr] = useState<string>('0000-00-00')
   const [tStrs, setTstrs] = useState<string[]>(['00', '00', '00'])
   const [mode, setMode] = useState<GadgetMode>('main')
 
   useEffect(() => {
-    setDstr(toDateStr(time) + '　　')
+    setDstr(toDateStr(time))
     setTstrs(timeStr(time))
   }, [+time])
   const miniConf = height < 400
@@ -46,12 +43,7 @@ function ClockTool() {
       style={{ position: 'relative', height: '100%', overflow: 'hidden' }}
       onMouseEnter={() => setMode('conf')}
     >
-      <ClockAtom
-        config={config}
-        dateStr={dateStr}
-        tStrs={tStrs}
-        maxWidth={maxWidth}
-      />
+      <ClockAtom config={config} dateStr={dateStr} tStrs={tStrs} />
       {mode === 'conf' && (
         <ConfigModal onClose={() => setMode('main')}>
           <ColorField

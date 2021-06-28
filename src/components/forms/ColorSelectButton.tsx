@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { SketchPicker } from 'react-color'
 import styled from 'styled-components'
 
@@ -12,9 +12,7 @@ const Style = styled.div`
     padding: 5px;
     background: #fff;
     border-radius: 1px;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
     display: inline-block;
-    cursor: pointer;
   }
   .popover {
     position: absolute;
@@ -26,6 +24,12 @@ const Style = styled.div`
     right: 0px;
     bottom: 0px;
     left: 0px;
+  }
+  &[data-editable='true'] {
+    .swatch {
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+    }
   }
 `
 
@@ -41,7 +45,7 @@ function ColorSelectButton({ color, onChange, editable = true }: Props) {
   const handleClose = () => setVisible(false)
 
   return (
-    <Style>
+    <Style data-editable={editable}>
       <div className="swatch" onClick={handleClick}>
         <div className="color" style={{ background: color }} />
       </div>
