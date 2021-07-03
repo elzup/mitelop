@@ -1,3 +1,4 @@
+import { Button, Slider } from '@material-ui/core'
 import React from 'react'
 import { useMeasure } from 'react-use'
 import styled from 'styled-components'
@@ -12,8 +13,9 @@ export type Props = {
 }
 
 function ClockAtom(props: React.PropsWithChildren<Props>) {
-  const { config, plots } = props
+  const { config, plots, onDeletePlot, onAddPlot } = props
   const [ref, { width, height }] = useMeasure<HTMLDivElement>()
+  const marks = plots.map((p) => ({ value: p.rate, label: 'note' }))
 
   return (
     <Style
@@ -24,7 +26,37 @@ function ClockAtom(props: React.PropsWithChildren<Props>) {
         '--h': `${height}px`,
       }}
     >
-      <div className="outer">Hello</div>
+      <div className="outer">
+        <Slider
+          max={100}
+          track={false}
+          valueLabelDisplay="auto"
+          value={props.progressRate}
+        />
+        <Slider
+          max={100}
+          valueLabelDisplay="auto"
+          value={marks.map((v) => v.value)}
+          marks={marks}
+        />
+        <div className="ui">
+          <div>
+            <Button variant="contained" onClick={onAddPlot}>
+              Pin
+            </Button>
+          </div>
+          <div className="plots-list">
+            <ul>
+              {plots.map((plot) => (
+                <li key={plot.rate}>
+                  {plot.rate}
+                  <Button onClick={() => onDeletePlot(plot)}>❌</Button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
     </Style>
   )
 }
@@ -36,26 +68,14 @@ const Style = styled.div<{ bgColor: string; fontColor: string }>`
   font-family: 'Roboto';
   position: relative;
   /* display: table; */
-  background: var(--bg-color);
 
   .outer {
-    color: var(--font-color);
     display: grid;
     height: 100%;
-    vertical-align: middle;
-    place-items: center;
-    .inner {
-      text-align: center;
-      width: 100%;
-      max-width: var(--w);
-      .time {
-        font-size: calc(var(--w) * 0.25);
-      }
-      .date {
-        font-size: calc(var(--w) * 0.1);
-        margin-bottom: -4%;
-        text-align: left;
-      }
+
+    .ui {
+      display: grid;
+      grid-template-columns: auto auto;
     }
   }
 `

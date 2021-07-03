@@ -13,7 +13,7 @@ export const theme = createMuiTheme({
       variant: 'outlined',
     },
     MuiButton: {
-      variant: 'outlined',
+      variant: 'contained',
     },
   },
 })
