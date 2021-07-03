@@ -28,13 +28,15 @@ function ClockAtom(props: React.PropsWithChildren<Props>) {
     >
       <div className="outer">
         <Slider
+          step={5}
           max={100}
-          track={false}
           valueLabelDisplay="auto"
+          marks
           value={props.progressRate}
         />
         <Slider
           max={100}
+          track={false}
           valueLabelDisplay="auto"
           value={marks.map((v) => v.value)}
           marks={marks}
@@ -49,7 +51,7 @@ function ClockAtom(props: React.PropsWithChildren<Props>) {
             <ul>
               {plots.map((plot) => (
                 <li key={plot.rate}>
-                  {plot.rate}
+                  :{Math.floor((plot.rate / 100) * 60)}
                   <Button onClick={() => onDeletePlot(plot)}>❌</Button>
                 </li>
               ))}
