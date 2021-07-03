@@ -6,3 +6,8 @@ export type ClockConfig = {
   fontColor: string
 }
 export type GadgetMode = 'main' | 'conf'
+
+export type MidokoroConfig = {}
+export type MidokoroPlot = {
+  rate: number
+}
