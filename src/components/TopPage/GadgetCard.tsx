@@ -1,6 +1,7 @@
-import { Button, Icon, Typography } from '@material-ui/core'
+import { Button, Icon, IconButton, Typography } from '@material-ui/core'
 import React from 'react'
 import styled from 'styled-components'
+import LaunchIcon from '@material-ui/icons/Launch'
 import { windowOpen } from '../../utils/browser'
 import { isDev } from '../../utils/env'
 
@@ -23,10 +24,13 @@ const GadgetCard: React.FC<Props> = ({ icon, title, children, path }) => {
 
   return (
     <Style>
-      <div style={{ display: 'flex' }}>
-        <Icon>{icon}</Icon>
-        <Typography>{title}</Typography>
-        <Button
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr auto' }}>
+        <div style={{ display: 'flex' }}>
+          <Icon>{icon}</Icon>
+          <Typography>{title}</Typography>
+        </div>
+        <IconButton
+          size="small"
           onClick={() => {
             windowOpen(path, {
               name: isDev ? 'replace' : '_blank',
@@ -34,8 +38,8 @@ const GadgetCard: React.FC<Props> = ({ icon, title, children, path }) => {
             })
           }}
         >
-          開く
-        </Button>
+          <LaunchIcon />
+        </IconButton>
       </div>
       <div>{children}</div>
     </Style>
