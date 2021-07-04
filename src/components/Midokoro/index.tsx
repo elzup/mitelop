@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useSeconds } from 'use-seconds'
 import { MidokoroConfig, MidokoroPlot } from '../../types'
 import { useLocalStorage } from '../../utils/useLocalStorage'
-import { pad02 } from '../../utils/browser'
+import { pad02 } from '../../utils'
 import MidokoroAtom from './MidokoroAtom'
 
 const initConfig: MidokoroConfig = {
