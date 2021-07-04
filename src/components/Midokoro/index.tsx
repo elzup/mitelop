@@ -64,7 +64,7 @@ function MidokoroTool(_props: Props) {
             label: `${minute}`,
             id,
           }
-          const newHourPlots = { ...hourPlots }
+          const newHourPlots = { ...plots[ymdh] }
 
           newHourPlots[id] = newPlot
 
@@ -72,12 +72,12 @@ function MidokoroTool(_props: Props) {
           setPlots({ ...plots, [ymdh]: newHourPlots })
         }}
         onDeletePlot={(id) => {
-          const newHourPlots = { ...hourPlots }
+          const { ymdh } = currentTimes(time)
+          const newHourPlots = { ...plots[ymdh] }
 
           delete newHourPlots[id]
-
+          setPlots((plots) => ({ ...plots, [ymdh]: newHourPlots }))
           setHourPlots(newHourPlots)
-          setPlots({ ...plots, [ymdh]: newHourPlots })
         }}
       />
     </div>
