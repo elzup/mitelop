@@ -65,6 +65,7 @@ function MidokoroAtom(props: React.PropsWithChildren<Props>) {
 }
 
 const Style = styled.div<{ bgColor: string; fontColor: string }>`
+  width: 100%;
   width: 94%;
   height: 100%;
   padding: 0 3%;
