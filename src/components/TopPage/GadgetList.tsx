@@ -7,6 +7,7 @@ import CheckList from '../CheckList'
 import Stopwatch from '../Stopwatch'
 import Timer from '../Timer'
 import Yomiage from '../Yomiage'
+import Midokoro from '../Midokoro'
 import GadgetCard from './GadgetCard'
 
 const components = [
@@ -30,6 +31,9 @@ const components = [
   </GadgetCard>,
   <GadgetCard key={'gad-color'} icon={'palette'} title="Color">
     <Color />
+  </GadgetCard>,
+  <GadgetCard key={'gad-midokoro'} icon={'assessment'} title="Midokoro">
+    <Midokoro />
   </GadgetCard>,
 ]
 

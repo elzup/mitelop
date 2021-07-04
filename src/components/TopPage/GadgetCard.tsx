@@ -11,6 +11,7 @@ const Style = styled.div`
   border-radius: 4px;
   padding: 8px;
   margin: 8px;
+  overflow: hidden;
 `
 
 type Props = { icon: string; title: string }
