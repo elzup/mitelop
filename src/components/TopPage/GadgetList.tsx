@@ -11,28 +11,58 @@ import Midokoro from '../Midokoro'
 import GadgetCard from './GadgetCard'
 
 const components = [
-  <GadgetCard key={'gad-checklist'} icon={'checklist'} title="CheckList">
+  <GadgetCard
+    key={'gad-checklist'}
+    icon={'checklist'}
+    title="CheckList"
+    path="/list"
+  >
     <CheckList />
   </GadgetCard>,
-  <GadgetCard key={'gad-katinko'} icon={'movie'} title="Katinko">
+  <GadgetCard
+    key={'gad-katinko'}
+    icon={'movie'}
+    title="Katinko"
+    path="/katinko"
+  >
     <Katinko />
   </GadgetCard>,
-  <GadgetCard key={'gad-clock'} icon={'schedule'} title="Clock">
+  <GadgetCard key={'gad-clock'} icon={'schedule'} title="Clock" path="/clock">
     <Clock />
   </GadgetCard>,
-  <GadgetCard key={'gad-sw'} icon={'timer'} title="StopWatch">
+  <GadgetCard
+    key={'gad-stopwatch'}
+    icon={'timer'}
+    title="StopWatch"
+    path="/stopwatch"
+  >
     <Stopwatch />
   </GadgetCard>,
-  <GadgetCard key={'gad-timer'} icon={'hourglass_empty'} title="Timer">
+  <GadgetCard
+    key={'gad-timer'}
+    icon={'hourglass_empty'}
+    title="Timer"
+    path="/timer"
+  >
     <Timer />
   </GadgetCard>,
-  <GadgetCard key={'gad-yomiage'} icon={'speaker'} title="Yomiage">
+  <GadgetCard
+    key={'gad-yomiage'}
+    icon={'speaker'}
+    title="Yomiage"
+    path="/yomiage"
+  >
     <Yomiage />
   </GadgetCard>,
-  <GadgetCard key={'gad-color'} icon={'palette'} title="Color">
+  <GadgetCard key={'gad-color'} icon={'palette'} title="Color" path="/color">
     <Color />
   </GadgetCard>,
-  <GadgetCard key={'gad-midokoro'} icon={'assessment'} title="Midokoro">
+  <GadgetCard
+    key={'gad-midokoro'}
+    icon={'assessment'}
+    title="Midokoro"
+    path="/midokoro"
+  >
     <Midokoro />
   </GadgetCard>,
 ]
