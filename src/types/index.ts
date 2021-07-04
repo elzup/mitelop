@@ -5,7 +5,7 @@ export type ClockConfig = {
   bgColor: string
   fontColor: string
 }
-export type GadgetMode = 'main' | 'conf'
+export type GadgetMode = 'main' | 'over' | 'conf'
 
 export type MidokoroConfig = {}
 export type MidokoroPlot = {
