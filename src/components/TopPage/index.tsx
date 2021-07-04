@@ -1,25 +1,21 @@
-import { Typography, Tab, Tabs, Theme } from '@material-ui/core'
-import { useState } from 'react'
+import { Tab, Tabs, Theme, Typography } from '@material-ui/core'
 import { createStyles, withStyles } from '@material-ui/styles'
-import ClockGenerator from '../Clock/ClockGenerator'
+import { useState } from 'react'
+import ListGenerator from '../CheckList/ListGenerator'
+import ItemsGenerator from '../Items/ItemGenerator'
 import KatinkoGenerator from '../Katinko/KatinkoGenerator'
 import StopwatchGenerator from '../Stopwatch/StopwatchGenerator'
-import ListGenerator from '../CheckList/ListGenerator'
-import YomiageGenerator from '../Yomiage/YomiageGenerator'
-import ItemsGenerator from '../Items/ItemGenerator'
 import TimerGenerator from '../Timer/TimerGenerator'
-import ColorGenerator from '../Color/ColorGenerator'
+import YomiageGenerator from '../Yomiage/YomiageGenerator'
 import GadgetList from './GadgetList'
 
 const frames = [
   GadgetList,
   ListGenerator,
   KatinkoGenerator,
-  ClockGenerator,
   StopwatchGenerator,
   TimerGenerator,
   YomiageGenerator,
-  ColorGenerator,
   ItemsGenerator,
 ]
 
@@ -55,11 +51,9 @@ const TopPage = () => {
         <StyledTab label="総合" />
         <StyledTab label="リスト" />
         <StyledTab label="カチンコ" />
-        <StyledTab label="クロック" />
         <StyledTab label="ストップウォッチ" />
         <StyledTab label="タイマー" />
         <StyledTab label="読み上げ" />
-        <StyledTab label="単色パネル" />
         <StyledTab label="その他" />
       </Tabs>
       <Frame />
