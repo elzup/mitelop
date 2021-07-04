@@ -66,6 +66,12 @@ function MidokoroTool(_props: Props) {
           }
           const newHourPlots = { ...plots[ymdh] }
 
+          if (
+            Object.values(newHourPlots).find((v) => v.label === newPlot.label)
+          ) {
+            return
+          }
+
           newHourPlots[id] = newPlot
 
           setHourPlots(newHourPlots)

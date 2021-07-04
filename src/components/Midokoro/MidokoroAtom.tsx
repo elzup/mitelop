@@ -51,7 +51,7 @@ function MidokoroAtom(props: React.PropsWithChildren<Props>) {
           <div className="plots-list">
             <ul>
               {plots.map((plot) => (
-                <li key={plot.rate}>
+                <li key={plot.id}>
                   {plot.label}
                   <Button onClick={() => onDeletePlot(plot.id)}>❌</Button>
                 </li>
