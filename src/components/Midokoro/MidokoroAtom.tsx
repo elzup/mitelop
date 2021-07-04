@@ -15,6 +15,7 @@ export type Props = {
 function ClockAtom(props: React.PropsWithChildren<Props>) {
   const { config, plots, onDeletePlot, onAddPlot } = props
   const [ref, { width, height }] = useMeasure<HTMLDivElement>()
+
   const marks = plots.map((p) => ({ value: p.rate, label: 'note' }))
 
   return (

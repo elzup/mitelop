@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useSeconds } from 'use-seconds'
 import { MidokoroConfig, MidokoroPlot } from '../../types'
 import { useLocalStorage } from '../../utils/useLocalStorage'
@@ -20,8 +21,13 @@ function MidokoroTool(_props: Props) {
     'memo-midokoro_plots',
     []
   )
-  // 00 ~ 59
   const minute = time.getMinutes()
+
+  useEffect(() => {
+    if (minute === 0) {
+      setPlots([])
+    }
+  }, [minute])
 
   return (
     <div style={{ position: 'relative', height: '100%', overflow: 'hidden' }}>
