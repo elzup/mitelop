@@ -1,19 +1,21 @@
 import { Meta, Story } from '@storybook/react'
 import MidokoroAtom from './MidokoroAtom'
 
+type Props = Parameters<typeof MidokoroAtom>[0]
 export default {
   title: 'Midokoro',
   component: MidokoroAtom,
   args: {
     config: {},
-    plots: [{ rate: 10 }, { rate: 50 }],
+    plots: [
+      { id: '1', rate: 10, label: 'A' },
+      { id: '2', rate: 30, label: 'B' },
+    ],
     progressRate: 80,
   },
   parameters: {
     actions: { argTypesRegex: '^on.*' },
   },
-} as Meta
+} as Meta<Props>
 
-export const Base: Story<Parameters<typeof MidokoroAtom>[0]> = (args) => (
-  <MidokoroAtom {...args} />
-)
+export const Base: Story<Props> = (args) => <MidokoroAtom {...args} />

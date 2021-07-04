@@ -29,5 +29,4 @@ type IWindow = {
 //   }
 // }
 
-export const iwindow =
-  typeof window !== undefined ? (window as unknown as IWindow) : {}
+export const iwindow = window as unknown as IWindow
