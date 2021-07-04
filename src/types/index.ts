@@ -9,5 +9,7 @@ export type GadgetMode = 'main' | 'conf'
 
 export type MidokoroConfig = {}
 export type MidokoroPlot = {
+  id: string
   rate: number
+  label: string
 }

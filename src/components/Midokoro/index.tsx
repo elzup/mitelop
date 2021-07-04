@@ -1,7 +1,8 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSeconds } from 'use-seconds'
 import { MidokoroConfig, MidokoroPlot } from '../../types'
 import { useLocalStorage } from '../../utils/useLocalStorage'
+import { pad02 } from '../../utils/browser'
 import MidokoroAtom from './MidokoroAtom'
 
 const initConfig: MidokoroConfig = {
@@ -11,39 +12,72 @@ const initConfig: MidokoroConfig = {
 }
 
 type Props = {}
+
+const currentTimes = (
+  now: Date
+): {
+  ymdh: string
+  minute: number
+  id: string
+} => {
+  const minute = new Date().getMinutes()
+  const id = `${+now}`
+  const ymdh = `${now.getFullYear()}${pad02(now.getMonth() + 1)}${pad02(
+    now.getDate()
+  )}_${pad02(now.getHours())}`
+
+  return { minute, id, ymdh }
+}
+
+type MidokoroHourPlots = { [id: string]: MidokoroPlot }
+type MidokoroData = { [ymdh: string]: MidokoroHourPlots }
+
 function MidokoroTool(_props: Props) {
   const [time] = useSeconds()
   const [config, setConfig] = useLocalStorage<MidokoroConfig>(
     'config-midokoro',
     initConfig
   )
-  const [plots, setPlots] = useLocalStorage<MidokoroPlot[]>(
-    'memo-midokoro_plots',
-    []
+  const [hourPlots, setHourPlots] = useState<MidokoroHourPlots>({})
+  const [plots, setPlots] = useLocalStorage<MidokoroData>(
+    'data-midokoro_plots',
+    {}
   )
   const minute = time.getMinutes()
+  const { ymdh } = currentTimes(time)
 
   useEffect(() => {
-    if (minute === 0) {
-      setPlots([])
-    }
-  }, [minute])
+    setHourPlots(plots[ymdh] || {})
+  }, [ymdh])
 
   return (
     <div style={{ position: 'relative', height: '100%', overflow: 'hidden' }}>
       <MidokoroAtom
         config={config}
         progressRate={(minute * 100) / 60}
-        plots={plots}
+        plots={Object.values(hourPlots)}
         onAddPlot={() => {
-          setPlots((v) => [
-            ...v,
-            { rate: (new Date().getMinutes() * 100) / 60 },
-          ])
+          const now = new Date()
+          const { minute, id, ymdh } = currentTimes(now)
+          const newPlot: MidokoroPlot = {
+            rate: (minute * 100) / 60,
+            label: `${minute}`,
+            id,
+          }
+          const newHourPlots = { ...hourPlots }
+
+          newHourPlots[id] = newPlot
+
+          setHourPlots(newHourPlots)
+          setPlots({ ...plots, [ymdh]: newHourPlots })
         }}
-        onDeletePlot={(plot) => {
-          // NOTE:
-          setPlots(plots.filter((p) => p.rate !== plot.rate))
+        onDeletePlot={(id) => {
+          const newHourPlots = { ...hourPlots }
+
+          delete newHourPlots[id]
+
+          setHourPlots(newHourPlots)
+          setPlots({ ...plots, [ymdh]: newHourPlots })
         }}
       />
     </div>

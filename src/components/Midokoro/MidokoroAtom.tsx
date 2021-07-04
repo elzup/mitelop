@@ -9,14 +9,14 @@ export type Props = {
   progressRate: number
   plots: MidokoroPlot[]
   onAddPlot: () => void
-  onDeletePlot: (plot: MidokoroPlot) => void
+  onDeletePlot: (id: string) => void
 }
 
-function ClockAtom(props: React.PropsWithChildren<Props>) {
+function MidokoroAtom(props: React.PropsWithChildren<Props>) {
   const { config, plots, onDeletePlot, onAddPlot } = props
   const [ref, { width, height }] = useMeasure<HTMLDivElement>()
 
-  const marks = plots.map((p) => ({ value: p.rate, label: 'note' }))
+  const marks = plots.map((p) => ({ value: p.rate, label: p.label }))
 
   return (
     <Style
@@ -52,8 +52,8 @@ function ClockAtom(props: React.PropsWithChildren<Props>) {
             <ul>
               {plots.map((plot) => (
                 <li key={plot.rate}>
-                  :{Math.floor((plot.rate / 100) * 60)}
-                  <Button onClick={() => onDeletePlot(plot)}>❌</Button>
+                  {plot.label}
+                  <Button onClick={() => onDeletePlot(plot.id)}>❌</Button>
                 </li>
               ))}
             </ul>
@@ -83,4 +83,4 @@ const Style = styled.div<{ bgColor: string; fontColor: string }>`
   }
 `
 
-export default ClockAtom
+export default MidokoroAtom

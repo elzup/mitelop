@@ -29,4 +29,6 @@ type IWindow = {
 //   }
 // }
 
-export const iwindow = (window as unknown) as IWindow
+export const iwindow = window as unknown as IWindow
+
+export const pad02 = (v: number) => `${v}`.padStart(2, '0')
