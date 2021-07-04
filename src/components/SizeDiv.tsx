@@ -46,3 +46,9 @@ export const GridV = styled.div`
 export const GridH = styled.div`
   grid-area: h;
 `
+
+export const DefaultSizeGadget = styled.div`
+  width: 400px;
+  height: 300px;
+  border: gray solid 1px;
+`

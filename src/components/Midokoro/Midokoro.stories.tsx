@@ -1,4 +1,5 @@
 import { Meta, Story } from '@storybook/react'
+import { DefaultSizeGadget } from '../SizeDiv'
 import MidokoroAtom from './MidokoroAtom'
 
 type Props = Parameters<typeof MidokoroAtom>[0]
@@ -13,6 +14,14 @@ export default {
     ],
     progressRate: 80,
   },
+
+  decorators: [
+    (Story) => (
+      <DefaultSizeGadget>
+        <Story />
+      </DefaultSizeGadget>
+    ),
+  ],
   parameters: {
     actions: { argTypesRegex: '^on.*' },
   },
