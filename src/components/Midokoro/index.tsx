@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useSeconds } from 'use-seconds'
 import { MidokoroConfig, MidokoroPlot } from '../../types'
 import { useLocalStorage } from '../../utils/useLocalStorage'
-import { pad02, round3 } from '../../utils'
+import { pad02, round4 } from '../../utils'
 import MidokoroAtom from './MidokoroAtom'
 
 const initConfig: MidokoroConfig = {
@@ -28,7 +28,7 @@ const currentTimes = (
     now.getDate()
   )}_${pad02(now.getHours())}`
 
-  const perHour = round3((minute * 60 + sec) / 3600)
+  const perHour = round4((minute * 60 + sec) / 3600)
 
   return {
     minute,
