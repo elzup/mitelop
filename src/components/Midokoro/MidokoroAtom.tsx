@@ -1,7 +1,8 @@
-import { Button, Slider } from '@material-ui/core'
+import { Button, IconButton, InputBase, Paper, Slider } from '@material-ui/core'
 import React from 'react'
 import { useMeasure } from 'react-use'
 import styled from 'styled-components'
+import DeleteIcon from '@material-ui/icons/Delete'
 import { MidokoroConfig, MidokoroPlot } from '../../types'
 
 export type Props = {
@@ -10,10 +11,11 @@ export type Props = {
   plots: MidokoroPlot[]
   onAddPlot: () => void
   onDeletePlot: (id: string) => void
+  onChangePlot: (plot: MidokoroPlot) => void
 }
 
 function MidokoroAtom(props: React.PropsWithChildren<Props>) {
-  const { config, plots, onDeletePlot, onAddPlot } = props
+  const { config, plots, onDeletePlot, onAddPlot, onChangePlot } = props
   const [ref, { width, height }] = useMeasure<HTMLDivElement>()
 
   const marks = plots.map((p) => ({ value: p.rate, label: p.label }))
@@ -28,20 +30,24 @@ function MidokoroAtom(props: React.PropsWithChildren<Props>) {
       }}
     >
       <div className="outer">
-        <Slider
-          step={5}
-          max={100}
-          valueLabelDisplay="auto"
-          marks
-          value={props.progressRate}
-        />
-        <Slider
-          max={100}
-          track={false}
-          valueLabelDisplay="auto"
-          value={marks.map((v) => v.value)}
-          marks={marks}
-        />
+        <div className="slides">
+          <Slider
+            step={5}
+            max={100}
+            valueLabelDisplay="auto"
+            marks
+            value={props.progressRate}
+          />
+          <div className="marks-slide">
+            <Slider
+              max={100}
+              track={false}
+              valueLabelDisplay="auto"
+              value={marks.map((v) => v.value)}
+              marks={marks}
+            />
+          </div>
+        </div>
         <div className="ui">
           <div>
             <Button variant="contained" onClick={onAddPlot}>
@@ -49,14 +55,24 @@ function MidokoroAtom(props: React.PropsWithChildren<Props>) {
             </Button>
           </div>
           <div className="plots-list">
-            <ul>
-              {plots.map((plot) => (
-                <li key={plot.id}>
-                  {plot.label}
-                  <Button onClick={() => onDeletePlot(plot.id)}>❌</Button>
-                </li>
-              ))}
-            </ul>
+            {plots.map((plot) => (
+              <div key={plot.id}>
+                <Paper component="form">
+                  <InputBase
+                    value={plot.label}
+                    onChange={(e) =>
+                      onChangePlot({ ...plot, label: e.target.value })
+                    }
+                  />
+                  <IconButton
+                    aria-label="directions"
+                    onClick={() => onDeletePlot(plot.id)}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </Paper>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -74,7 +90,11 @@ const Style = styled.div<{ bgColor: string; fontColor: string }>`
   /* display: table; */
 
   .outer {
+    .marks-slide {
+      height: 28px;
+    }
     display: grid;
+    grid-template-rows: max-content 1fr;
     height: 100%;
 
     .ui {

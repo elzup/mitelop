@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useSeconds } from 'use-seconds'
 import { MidokoroConfig, MidokoroPlot } from '../../types'
 import { useLocalStorage } from '../../utils/useLocalStorage'
-import { pad02 } from '../../utils'
+import { pad02, round3 } from '../../utils'
 import MidokoroAtom from './MidokoroAtom'
 
 const initConfig: MidokoroConfig = {
@@ -19,14 +19,23 @@ const currentTimes = (
   ymdh: string
   minute: number
   id: string
+  perHour: number
 } => {
   const minute = new Date().getMinutes()
+  const sec = new Date().getSeconds()
   const id = `${+now}`
   const ymdh = `${now.getFullYear()}${pad02(now.getMonth() + 1)}${pad02(
     now.getDate()
   )}_${pad02(now.getHours())}`
 
-  return { minute, id, ymdh }
+  const perHour = round3((minute * 60 + sec) / 3600)
+
+  return {
+    minute,
+    id,
+    ymdh,
+    perHour,
+  }
 }
 
 type MidokoroHourPlots = { [id: string]: MidokoroPlot }
@@ -56,21 +65,29 @@ function MidokoroTool(_props: Props) {
         config={config}
         progressRate={(minute * 100) / 60}
         plots={Object.values(hourPlots)}
+        onChangePlot={(newPlot) => {
+          const now = new Date()
+          const { ymdh } = currentTimes(now)
+          const newHourPlots = { ...plots[ymdh] }
+
+          newHourPlots[newPlot.id] = newPlot
+          setHourPlots(newHourPlots)
+          setPlots({ ...plots, [ymdh]: newHourPlots })
+        }}
         onAddPlot={() => {
           const now = new Date()
-          const { minute, id, ymdh } = currentTimes(now)
+          const { minute, id, ymdh, perHour } = currentTimes(now)
           const newPlot: MidokoroPlot = {
-            rate: (minute * 100) / 60,
-            label: `${minute}`,
+            rate: perHour * 100,
+            label: `${perHour}`,
             id,
           }
           const newHourPlots = { ...plots[ymdh] }
+          const isDup = Object.values(newHourPlots).find(
+            (v) => v.label === newPlot.label
+          )
 
-          if (
-            Object.values(newHourPlots).find((v) => v.label === newPlot.label)
-          ) {
-            return
-          }
+          if (isDup) return
 
           newHourPlots[id] = newPlot
 
