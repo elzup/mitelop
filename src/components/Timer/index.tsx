@@ -3,8 +3,10 @@ import PauseIcon from '@material-ui/icons/Pause'
 import PlayArrowIcon from '@material-ui/icons/PlayArrow'
 import RotateLeftIcon from '@material-ui/icons/RotateLeft'
 import StopIcon from '@material-ui/icons/Stop'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { useMeasure } from 'react-use'
 import styled from 'styled-components'
+import { useCombinedRefs } from '../../utils/useCombinedRefs'
 import { useHover } from '../hooks/useHover'
 import { useTimer } from './useTimer'
 
@@ -28,7 +30,10 @@ function Timer({ total }: { total: number }) {
   const sw = useTimer()
   const [timeStr, setTimeStr] = useState<string>('0')
   const [timeMilliStr, setTimeMilliStr] = useState<string>('00')
+  const [measureRef, { width, height }] = useMeasure<HTMLDivElement>()
+
   const [hoverRef, isHovered] = useHover()
+  const ref = useCombinedRefs(measureRef, hoverRef)
 
   useEffect(() => {
     const [timeStr, milliStr] = timeToStr(sw.floorTime)
@@ -45,7 +50,7 @@ function Timer({ total }: { total: number }) {
 
   return (
     <Style
-      ref={hoverRef}
+      ref={ref}
       onClick={() => {
         console.log('whole event')
         if (sw.status === 'init') {
@@ -56,6 +61,7 @@ function Timer({ total }: { total: number }) {
           sw.resume()
         }
       }}
+      data-status={sw.status}
     >
       <div className="frame">
         <span className="time">
@@ -106,15 +112,18 @@ Timer.defaultProps = {
 const Style = styled.div`
   height: 100%;
   width: 100%;
+  padding: 5%;
   .time {
     width: 20%;
     text-align: center;
     font-size: calc(100% / 3);
+    font-size: 10vw;
     font-family: 'Roboto', 'Helvetica', 'Arial', monospace, sans-serif;
     margin: 5%;
     line-height: 1.05em;
   }
   .time-ms {
+    display: none;
     font-size: calc(100% / 3 / 2);
   }
   .frame {
@@ -140,6 +149,17 @@ const Style = styled.div`
       position: absolute;
       top: 0;
       left: 0;
+    }
+  }
+  &[data-status='end'] {
+    animation: blinkAnimeS2 0.5s infinite alternate;
+  }
+  @keyframes blinkAnimeS2 {
+    0% {
+      background: white;
+    }
+    100% {
+      background: red;
     }
   }
 `

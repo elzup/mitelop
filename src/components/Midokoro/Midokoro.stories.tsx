@@ -1,8 +1,9 @@
 import { Meta, Story } from '@storybook/react'
+import { ComponentProps } from 'react'
 import { DefaultSizeGadget } from '../SizeDiv'
 import MidokoroAtom from './MidokoroAtom'
 
-type Props = Parameters<typeof MidokoroAtom>[0]
+type Props = ComponentProps<typeof MidokoroAtom>
 export default {
   title: 'Midokoro',
   component: MidokoroAtom,
