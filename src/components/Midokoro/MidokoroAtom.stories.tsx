@@ -5,7 +5,7 @@ import MidokoroAtom from './MidokoroAtom'
 
 type Props = ComponentProps<typeof MidokoroAtom>
 export default {
-  title: 'Midokoro',
+  title: 'MidokoroAtom',
   component: MidokoroAtom,
   args: {
     config: {},
