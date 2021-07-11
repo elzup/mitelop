@@ -2,10 +2,10 @@ import { Meta, Story } from '@storybook/react'
 import { DefaultSizeGadget } from '../SizeDiv'
 import MidokoroTool from '.'
 
+type Props = Parameters<typeof MidokoroTool>
 export default {
   title: 'MidokoroTool',
   component: MidokoroTool,
-  args: {},
   parameters: {},
   decorators: [
     (Story) => (
@@ -14,8 +14,6 @@ export default {
       </DefaultSizeGadget>
     ),
   ],
-} as Meta
+} as Meta<Props>
 
-export const Base: Story<Parameters<typeof MidokoroTool>[0]> = (_args) => (
-  <MidokoroTool />
-)
+export const Base: Story<Props> = (_args) => <MidokoroTool />
