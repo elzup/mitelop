@@ -1,9 +1,10 @@
 import { Button, IconButton, InputBase, Paper, Slider } from '@material-ui/core'
+import DeleteIcon from '@material-ui/icons/Delete'
 import React from 'react'
 import { useMeasure } from 'react-use'
 import styled from 'styled-components'
-import DeleteIcon from '@material-ui/icons/Delete'
 import { MidokoroConfig, MidokoroPlot } from '../../types'
+import SizeDef from '../SizeDef'
 
 export type Props = {
   config: MidokoroConfig
@@ -21,14 +22,7 @@ function MidokoroAtom(props: React.PropsWithChildren<Props>) {
   const marks = plots.map((p) => ({ value: p.rate, label: p.label }))
 
   return (
-    <Style
-      ref={ref}
-      style={{
-        // @ts-ignore
-        '--w': `${width}px`,
-        '--h': `${height}px`,
-      }}
-    >
+    <Style>
       <div className="outer">
         <div className="slides">
           <Slider
@@ -80,7 +74,7 @@ function MidokoroAtom(props: React.PropsWithChildren<Props>) {
   )
 }
 
-const Style = styled.div<{ bgColor: string; fontColor: string }>`
+const Style = styled(SizeDef)`
   width: 100%;
   width: 94%;
   height: 100%;
