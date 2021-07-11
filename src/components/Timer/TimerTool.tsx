@@ -69,7 +69,10 @@ function TimerTool() {
 
       <ConfigModal visible={mode !== 'main'} onClose={() => setMode('main')}>
         <div style={{ display: mode === 'over' ? 'block' : 'none' }}>
-          <IconButton onClick={() => setMode('conf')}>
+          <IconButton
+            disabled={sw.status === 'run'}
+            onClick={() => setMode('conf')}
+          >
             <SettingsIcon />
           </IconButton>
           <div className="controls">
@@ -102,17 +105,32 @@ function TimerTool() {
         </div>
 
         <div style={{ display: mode === 'conf' ? 'block' : 'none' }}>
-          <TextField
-            label="TotalTime(minute)"
-            type="number"
-            value={Math.floor(config.total / 1000)}
-            onChange={(e) =>
-              setConfig((v) => ({
-                ...v,
-                total: parseInt(e.target.value || '') * 1000,
-              }))
-            }
-          />
+          <div>
+            <TextField
+              label="min"
+              type="number"
+              value={Math.floor(config.total / 1000 / 60)}
+              onChange={(e) =>
+                setConfig((v) => ({
+                  ...v,
+                  total: parseInt(e.target.value || '') * 1000 * 60,
+                }))
+              }
+            />
+          </div>
+          <div>
+            <TextField
+              label="sec"
+              type="number"
+              value={Math.floor(config.total / 1000)}
+              onChange={(e) =>
+                setConfig((v) => ({
+                  ...v,
+                  total: parseInt(e.target.value || '') * 1000,
+                }))
+              }
+            />
+          </div>
         </div>
       </ConfigModal>
     </Style>
@@ -120,6 +138,7 @@ function TimerTool() {
 }
 
 const Style = styled.div`
+  position: relative;
   height: 100%;
   width: 100%;
   overflow: hidden;
