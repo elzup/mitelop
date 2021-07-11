@@ -42,8 +42,8 @@ const Style = styled.div`
     line-height: 1.05em;
   }
   .time-ms {
-    display: none;
-    font-size: calc(100% / 3 / 2);
+    /* display: none; */
+    font-size: calc(var(--w) / 10 / 2);
   }
   .frame {
     display: grid;

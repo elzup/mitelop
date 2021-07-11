@@ -124,28 +124,6 @@ const Style = styled.div`
   width: 100%;
   overflow: hidden;
   padding: 5%;
-  .time {
-    width: 20%;
-    text-align: center;
-    font-size: calc(100% / 3);
-    font-size: 10vw;
-    font-family: 'Roboto', 'Helvetica', 'Arial', monospace, sans-serif;
-    margin: 5%;
-    line-height: 1.05em;
-  }
-  .time-ms {
-    display: none;
-    font-size: calc(100% / 3 / 2);
-  }
-  .frame {
-    display: grid;
-    height: 100%;
-    grid-template-columns: max-content 1fr;
-    display: grid;
-    align-items: center;
-    justify-content: center;
-    /* border: solid 0.5px gray; */
-  }
 
   &[data-status='end'] {
     animation: blinkAnimeS2 0.5s infinite alternate;
