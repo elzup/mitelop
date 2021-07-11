@@ -59,11 +59,13 @@ function MidokoroAtom(props: Props) {
                 <Slider
                   max={100}
                   valueLabelDisplay="auto"
+                  color="secondary"
                   value={props.progressRate}
                 />
                 <Slider
                   max={100}
                   track={false}
+                  color="secondary"
                   valueLabelDisplay="auto"
                   value={toMarks(current.plots).map((p) => p.value)}
                   marks={toMarks(current.plots)}
@@ -134,9 +136,10 @@ const Style = styled.div`
     }
     .MuiSlider-root,
     .MuiSlider-marked {
-      padding: 0 4px;
+      padding: 4px 0;
     }
     .MuiSlider-marked {
+      padding-top: 0px;
       margin-bottom: 4px;
     }
     .MuiSlider-markLabel {
