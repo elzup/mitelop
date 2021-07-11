@@ -19,14 +19,6 @@ const components = [
   >
     <CheckList />
   </GadgetCard>,
-  <GadgetCard
-    key={'gad-katinko'}
-    icon={'movie'}
-    title="Katinko"
-    path="/katinko"
-  >
-    <Katinko />
-  </GadgetCard>,
   <GadgetCard key={'gad-clock'} icon={'schedule'} title="Clock" path="/clock">
     <Clock />
   </GadgetCard>,
@@ -64,6 +56,15 @@ const components = [
     path="/midokoro"
   >
     <Midokoro />
+    <GadgetCard
+      key={'gad-katinko'}
+      icon={'movie'}
+      title="Katinko"
+      path="/katinko"
+    >
+      <Katinko />
+    </GadgetCard>
+    ,
   </GadgetCard>,
 ]
 
