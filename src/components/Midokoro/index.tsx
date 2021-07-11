@@ -18,15 +18,17 @@ const currentTimes = (
 ): {
   ymdh: string
   minute: number
+  hourStr: string
   id: string
   perHour: number
 } => {
   const minute = new Date().getMinutes()
   const sec = new Date().getSeconds()
   const id = `${+now}`
+  const hourStr = pad02(now.getHours())
   const ymdh = `${now.getFullYear()}${pad02(now.getMonth() + 1)}${pad02(
     now.getDate()
-  )}_${pad02(now.getHours())}`
+  )}_${hourStr}`
 
   const perHour = round4((minute * 60 + sec) / 3600)
 
@@ -34,6 +36,7 @@ const currentTimes = (
     minute,
     id,
     ymdh,
+    hourStr: hourStr + ':',
     perHour,
   }
 }
@@ -53,18 +56,28 @@ function MidokoroTool(_props: Props) {
     {}
   )
   const minute = time.getMinutes()
-  const { ymdh } = currentTimes(time)
+  const { ymdh, hourStr } = currentTimes(time)
 
   useEffect(() => {
     setHourPlots(plots[ymdh] || {})
   }, [ymdh])
+
+  const prevs = [2, 1]
+    .map(
+      (i) => currentTimes(new Date(time.getTime() - 60 * 60 * 1000 * i)).hourStr
+    )
+    .map((label) => ({
+      label,
+      plots: Object.values(plots[label] || {}),
+    }))
 
   return (
     <div style={{ position: 'relative', height: '100%', overflow: 'hidden' }}>
       <MidokoroAtom
         config={config}
         progressRate={(minute * 100) / 60}
-        plots={Object.values(hourPlots)}
+        prevs={prevs}
+        current={{ label: hourStr, plots: Object.values(hourPlots) }}
         onChangePlot={(newPlot) => {
           const now = new Date()
           const { ymdh } = currentTimes(now)

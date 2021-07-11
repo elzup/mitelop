@@ -1,14 +1,12 @@
 import {
   Button,
   IconButton,
-  InputBase,
-  Paper,
   Slider,
   TextField,
+  Typography,
 } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
 import React from 'react'
-import { useMeasure } from 'react-use'
 import styled from 'styled-components'
 import { MidokoroConfig, MidokoroPlot } from '../../types'
 import SizeDef from '../SizeDef'
@@ -16,38 +14,61 @@ import SizeDef from '../SizeDef'
 export type Props = {
   config: MidokoroConfig
   progressRate: number
-  plots: MidokoroPlot[]
+  prevs: { label: string; plots: MidokoroPlot[] }[]
+  current: { label: string; plots: MidokoroPlot[] }
   onAddPlot: () => void
   onDeletePlot: (id: string) => void
   onChangePlot: (plot: MidokoroPlot) => void
 }
 
-function MidokoroAtom(props: React.PropsWithChildren<Props>) {
-  const { config, plots, onDeletePlot, onAddPlot, onChangePlot } = props
-  const [ref, { width, height }] = useMeasure<HTMLDivElement>()
+function toMarks(plots: MidokoroPlot[]) {
+  return plots.map((p) => ({ value: p.rate, label: p.label }))
+}
 
-  const marks = plots.map((p) => ({ value: p.rate, label: p.label }))
+function MidokoroAtom(props: Props) {
+  const { prevs, current, onDeletePlot, onAddPlot, onChangePlot } = props
 
   return (
     <SizeDef>
+      <Typography>Midokoro Tool</Typography>
       <Style>
         <div className="outer">
           <div className="slides">
-            <Slider
-              step={5}
-              max={100}
-              valueLabelDisplay="auto"
-              marks
-              value={props.progressRate}
-            />
-            <div className="marks-slide">
-              <Slider
-                max={100}
-                track={false}
-                valueLabelDisplay="auto"
-                value={marks.map((v) => v.value)}
-                marks={marks}
-              />
+            <div className="prev-slides">
+              {prevs.map((prev, i) => (
+                <div
+                  key={prev.label}
+                  className="slide-item"
+                  data-hidden={prev.plots.length === 0}
+                >
+                  <span className="hour">{prev.label}</span>
+                  <Slider
+                    max={100}
+                    track={false}
+                    valueLabelDisplay="auto"
+                    value={toMarks(prev.plots).map((p) => p.value)}
+                    marks={toMarks(prev.plots)}
+                  />
+                </div>
+              ))}
+            </div>
+
+            <div className="slide-item">
+              <span className="hour">{current.label}</span>
+              <div>
+                <Slider
+                  max={100}
+                  valueLabelDisplay="auto"
+                  value={props.progressRate}
+                />
+                <Slider
+                  max={100}
+                  track={false}
+                  valueLabelDisplay="auto"
+                  value={toMarks(current.plots).map((p) => p.value)}
+                  marks={toMarks(current.plots)}
+                />
+              </div>
             </div>
           </div>
           <div className="ui">
@@ -57,7 +78,7 @@ function MidokoroAtom(props: React.PropsWithChildren<Props>) {
               </Button>
             </div>
             <div className="plots-list">
-              {plots.map((plot) => (
+              {current.plots.map((plot) => (
                 <div className="plot-form-item" key={plot.id}>
                   <TextField
                     variant="outlined"
@@ -93,17 +114,42 @@ const Style = styled.div`
   position: relative;
   /* display: table; */
 
-  .slides {
-    padding-bottom: 1rem;
-  }
-
   .outer {
-    .marks-slide {
-      height: 28px;
-    }
     display: grid;
     grid-template-rows: max-content 1fr;
     height: 100%;
+
+    .slides {
+      padding-bottom: 1rem;
+      .hour {
+        font-size: calc(var(--w) * 0.05);
+      }
+      .slide-item {
+        display: grid;
+        grid-template-columns: 8% auto;
+        &[data-hidden='true'] {
+          display: none;
+        }
+      }
+    }
+    .MuiSlider-root,
+    .MuiSlider-marked {
+      padding: 0 4px;
+    }
+    .MuiSlider-marked {
+      margin-bottom: 4px;
+    }
+    .MuiSlider-markLabel {
+      top: 4px;
+    }
+    .prev-slides {
+      .MuiSlider-marked {
+        padding-top: 16px;
+      }
+      .MuiSlider-markLabel {
+        top: 20px;
+      }
+    }
 
     .ui {
       padding: 4px;
