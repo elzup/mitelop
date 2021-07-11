@@ -19,6 +19,7 @@ function CheckList({ titles, row }: Props) {
   return (
     <Style data-row={row}>
       <ul>
+        WIP
         {titles.map((title, i) => (
           <li
             key={i}
