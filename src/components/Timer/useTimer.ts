@@ -7,7 +7,7 @@ type TimerState =
   | { status: 'pause'; time: number }
   | { status: 'end'; time: number }
 
-type TimerStatus = 'run' | 'pause' | 'init' | 'end'
+export type TimerStatus = 'run' | 'pause' | 'init' | 'end'
 type UseTimer = {
   status: TimerStatus
   start: (time?: number) => void

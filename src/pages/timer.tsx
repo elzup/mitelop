@@ -1,7 +1,7 @@
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import Layout from '../components/Layout'
-import Timer from '../components/Timer'
+import TimerAtom from '../components/Timer/TimerAtom'
 import { getOne } from '../utils/ssr'
 
 const TimerPage: NextPage = () => {
@@ -10,7 +10,7 @@ const TimerPage: NextPage = () => {
 
   return (
     <Layout title="Timer" reset>
-      <Timer total={total} />
+      <TimerAtom total={total} />
     </Layout>
   )
 }

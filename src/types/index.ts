@@ -13,3 +13,7 @@ export type MidokoroPlot = {
   rate: number
   label: string
 }
+
+export type TimerConfig = {
+  total: number
+}
