@@ -1,4 +1,11 @@
-import { Button, IconButton, InputBase, Paper, Slider } from '@material-ui/core'
+import {
+  Button,
+  IconButton,
+  InputBase,
+  Paper,
+  Slider,
+  TextField,
+} from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
 import React from 'react'
 import { useMeasure } from 'react-use'
@@ -22,59 +29,62 @@ function MidokoroAtom(props: React.PropsWithChildren<Props>) {
   const marks = plots.map((p) => ({ value: p.rate, label: p.label }))
 
   return (
-    <Style>
-      <div className="outer">
-        <div className="slides">
-          <Slider
-            step={5}
-            max={100}
-            valueLabelDisplay="auto"
-            marks
-            value={props.progressRate}
-          />
-          <div className="marks-slide">
+    <SizeDef>
+      <Style>
+        <div className="outer">
+          <div className="slides">
             <Slider
+              step={5}
               max={100}
-              track={false}
               valueLabelDisplay="auto"
-              value={marks.map((v) => v.value)}
-              marks={marks}
+              marks
+              value={props.progressRate}
             />
+            <div className="marks-slide">
+              <Slider
+                max={100}
+                track={false}
+                valueLabelDisplay="auto"
+                value={marks.map((v) => v.value)}
+                marks={marks}
+              />
+            </div>
           </div>
-        </div>
-        <div className="ui">
-          <div>
-            <Button variant="contained" onClick={onAddPlot}>
-              Pin
-            </Button>
-          </div>
-          <div className="plots-list">
-            {plots.map((plot) => (
-              <div key={plot.id}>
-                <Paper component="form">
-                  <InputBase
+          <div className="ui">
+            <div>
+              <Button variant="contained" onClick={onAddPlot}>
+                Pin
+              </Button>
+            </div>
+            <div className="plots-list">
+              {plots.map((plot) => (
+                <div className="plot-form-item" key={plot.id}>
+                  <TextField
+                    variant="outlined"
                     value={plot.label}
+                    size="small"
                     onChange={(e) =>
                       onChangePlot({ ...plot, label: e.target.value })
                     }
                   />
                   <IconButton
                     aria-label="directions"
+                    size="small"
                     onClick={() => onDeletePlot(plot.id)}
                   >
                     <DeleteIcon />
                   </IconButton>
-                </Paper>
-              </div>
-            ))}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-    </Style>
+      </Style>
+    </SizeDef>
   )
 }
 
-const Style = styled(SizeDef)`
+const Style = styled.div`
   width: 100%;
   width: 94%;
   height: 100%;
@@ -82,6 +92,10 @@ const Style = styled(SizeDef)`
   font-family: 'Roboto';
   position: relative;
   /* display: table; */
+
+  .slides {
+    padding-bottom: 1rem;
+  }
 
   .outer {
     .marks-slide {
@@ -92,8 +106,14 @@ const Style = styled(SizeDef)`
     height: 100%;
 
     .ui {
+      padding: 4px;
       display: grid;
       grid-template-columns: auto auto;
+      .plot-form-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 4px;
+      }
     }
   }
 `

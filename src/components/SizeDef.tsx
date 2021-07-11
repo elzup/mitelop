@@ -4,11 +4,18 @@ import { useMeasure } from 'react-use'
 const SizeDef: React.FC = ({ children }) => {
   const [ref, { width, height }] = useMeasure<HTMLDivElement>()
 
+  console.log(width, height)
+
   return (
     <div
       ref={ref}
-      // @ts-ignore
-      style={{ '--w': `${width}px`, '--h': `${height}px` }}
+      style={{
+        // @ts-ignore
+        '--w': `${width}px`,
+        '--h': `${height}px`,
+        height: '100%',
+        width: '100%',
+      }}
     >
       {children}
     </div>

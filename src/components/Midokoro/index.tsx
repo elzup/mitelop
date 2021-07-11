@@ -43,7 +43,7 @@ type MidokoroData = { [ymdh: string]: MidokoroHourPlots }
 
 function MidokoroTool(_props: Props) {
   const [time] = useSeconds()
-  const [config, setConfig] = useLocalStorage<MidokoroConfig>(
+  const [config, _setConfig] = useLocalStorage<MidokoroConfig>(
     'config-midokoro',
     initConfig
   )
@@ -76,7 +76,7 @@ function MidokoroTool(_props: Props) {
         }}
         onAddPlot={() => {
           const now = new Date()
-          const { minute, id, ymdh, perHour } = currentTimes(now)
+          const { id, ymdh, perHour } = currentTimes(now)
           const newPlot: MidokoroPlot = {
             rate: perHour * 100,
             label: `${perHour}`,
