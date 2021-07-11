@@ -17,8 +17,6 @@ function ClockAtom(props: React.PropsWithChildren<Props>) {
   const RATE = 1.8
   const maxWidth = height * RATE
 
-  console.log('render')
-
   return (
     <SizeDef>
       <Style

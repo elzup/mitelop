@@ -7,9 +7,9 @@ export function useFitty() {
   useEffect(() => {
     if (!ref.current) return
     fitty(ref.current)
-    ref.current.addEventListener('fit', (e) => {
-      console.log(e)
-    })
+    // ref.current.addEventListener('fit', (e) => {
+    //   console.log(e)
+    // })
   }, [ref.current])
   return [ref] as const
 }

@@ -4,8 +4,6 @@ import { useMeasure } from 'react-use'
 const SizeDef: React.FC = ({ children }) => {
   const [ref, { width, height }] = useMeasure<HTMLDivElement>()
 
-  console.log(width, height)
-
   return (
     <div
       ref={ref}
