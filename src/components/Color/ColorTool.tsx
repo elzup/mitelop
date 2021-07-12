@@ -8,22 +8,17 @@ import { ColorConfig, GadgetMode } from '../../types'
 import { useLocalStorage } from '../../utils/useLocalStorage'
 import { ConfigModal } from '../components'
 import ColorField from '../forms/ColorField'
+import { useConfig } from '../hooks/useConfig'
 import ColorAtom from './ColorAtom'
-
-const initConfig: ColorConfig = {
-  color: '#2B0065',
-}
 
 type Props = {
   windowMode?: boolean
 }
 function ColorTool(props: Props) {
-  const [mode, setMode] = useState<GadgetMode>('main')
+  const { mode, setMode, config, setConfig } = useConfig('color', {
+    color: '#2B0065',
+  })
   const [isDark, setIsDark] = useState<boolean>(false)
-  const [config, setConfig] = useLocalStorage<ColorConfig>(
-    'config-color',
-    initConfig
-  )
   const [touched, setTouched] = useState<boolean>(false)
 
   useEffect(() => {

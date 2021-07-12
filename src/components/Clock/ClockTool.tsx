@@ -6,6 +6,7 @@ import { ClockConfig, GadgetMode } from '../../types'
 import { useLocalStorage } from '../../utils/useLocalStorage'
 import { ConfigModal } from '../components'
 import ColorField from '../forms/ColorField'
+import { useConfig } from '../hooks/useConfig'
 import ClockAtom from './ClockAtom'
 
 const pad2 = (n: number) => `${n}`.padStart(2, '0')
@@ -14,27 +15,28 @@ const toDateStr = (t: Date) =>
 const timeStr = (t: Date) =>
   [t.getHours(), t.getMinutes(), t.getSeconds()].map(pad2)
 
-const initConfig: ClockConfig = {
-  dateVisible: true,
-  bgColor: '#aaaaff',
-  fontColor: '#000066',
-}
-
-function ClockTool() {
+function useTimeStr() {
   const [time] = useSeconds()
-  const [config, setConfig] = useLocalStorage<ClockConfig>(
-    'config-clock',
-    initConfig
-  )
 
   const [dateStr, setDstr] = useState<string>('0000-00-00')
   const [tStrs, setTstrs] = useState<string[]>(['00', '00', '00'])
-  const [mode, setMode] = useState<GadgetMode>('main')
 
   useEffect(() => {
     setDstr(toDateStr(time))
     setTstrs(timeStr(time))
   }, [+time])
+
+  return { dateStr, tStrs }
+}
+
+function ClockTool() {
+  const { mode, setMode, config, setConfig } = useConfig('clock', {
+    dateVisible: true,
+    bgColor: '#aaaaff',
+    fontColor: '#000066',
+  })
+  const { dateStr, tStrs } = useTimeStr()
+  const [touched, setTouched] = useState<boolean>(false)
 
   return (
     <div
@@ -43,8 +45,23 @@ function ClockTool() {
     >
       <ClockAtom config={config} dateStr={dateStr} tStrs={tStrs} />
 
-      <ConfigModal mode={mode}>
-        <div className="over">
+      <ConfigModal
+        mode={mode}
+        background="transparent"
+        onLeave={() => {
+          if (touched) return
+          setMode('main')
+        }}
+      >
+        <div
+          className="over"
+          style={{
+            height: 'max-contnt',
+            width: 'max-content',
+            background: '#ffffffaa',
+          }}
+          onMouseDown={() => setTouched(true)}
+        >
           <ColorField
             label="Back"
             onChange={(bgColor) => setConfig((v) => ({ ...v, bgColor }))}
@@ -55,7 +72,12 @@ function ClockTool() {
             onChange={(fontColor) => setConfig((v) => ({ ...v, fontColor }))}
             value={config.fontColor}
           />
-          <IconButton onClick={() => setMode('main')}>
+          <IconButton
+            onClick={() => {
+              setMode('main')
+              setTouched(false)
+            }}
+          >
             <Close />
           </IconButton>
         </div>
