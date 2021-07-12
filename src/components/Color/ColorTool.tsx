@@ -52,7 +52,11 @@ function ColorTool(props: Props) {
       >
         <div
           className="over"
-          style={{ height: 'max-contnt', background: '#ffffffaa' }}
+          style={{
+            height: 'max-contnt',
+            background: '#ffffffaa',
+            padding: '4px',
+          }}
         >
           <ColorField
             label="Color"

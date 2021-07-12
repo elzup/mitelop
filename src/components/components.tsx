@@ -11,6 +11,7 @@ export const Style = styled.div`
   left: 0;
   height: 100%;
   width: 100%;
+  box-sizing: border-box;
   padding: 4px;
 
   .conf,

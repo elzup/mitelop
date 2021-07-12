@@ -57,6 +57,7 @@ function ClockTool() {
           style={{
             height: 'max-contnt',
             width: 'max-content',
+            padding: '4px',
             background: '#ffffffaa',
           }}
           onMouseDown={() => setTouched(true)}
