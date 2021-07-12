@@ -2,6 +2,7 @@ import { LinearProgress } from '@material-ui/core'
 import { useState, useEffect } from 'react'
 
 import styled from 'styled-components'
+import { DummyMs } from '../DummyMs'
 import SizeDef from '../SizeDef'
 import { TimerStatus } from './useTimer'
 
@@ -28,7 +29,7 @@ function TimerAtom({
           <span className="time">
             {timeStr}.
             <span className="time-ms">
-              {status === 'run' ? <DummyMs ms={startTime} /> : timeMilliStr}
+              {status === 'run' ? <DummyMs inv ms={startTime} /> : timeMilliStr}
             </span>
           </span>
           <LinearProgress variant="determinate" value={progress} />
@@ -79,18 +80,5 @@ const Style = styled.div`
     }
   }
 `
-
-function DummyMs({ ms: start }: { ms: number }) {
-  const calc = () => (start - (+new Date() % 1000)) % 1000
-  const [ms, setMs] = useState<number>(calc())
-
-  useEffect(() => {
-    setInterval(() => {
-      setMs(calc())
-    }, 20)
-    return
-  }, [])
-  return <>{`${Math.floor(ms / 10)}`.padStart(2, '0') + ' '}</>
-}
 
 export default TimerAtom
