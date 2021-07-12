@@ -5,11 +5,11 @@ import { useStopwatch } from './useStopwatch'
 
 const pad2 = (n: number) => `${n}`.padStart(2, '0')
 
-const toTimeMilliStr = (t: number, showUnder = false) => {
+const toTimeMilliStr = (t: number) => {
   return `.${pad2(t % 1000)}`
 }
 
-const timeToStr = (t: number, showUnder = false) => {
+const timeToStr = (t: number) => {
   const SEC = 1000
   const MIN = 60 * SEC
   const HOU = 60 * MIN
@@ -28,13 +28,13 @@ function Stopwatch() {
   const [timeMilliStr, setTimeMilliStr] = useState<string>('000')
 
   useEffect(() => {
-    setTimeStr(timeToStr(sw.time, sw.status === 'pause'))
+    setTimeStr(timeToStr(sw.time))
     setTimeMilliStr(toTimeMilliStr(sw.time))
   }, [+sw.time])
 
   return (
     <Style>
-      <div className="frame">
+      <div className="outer">
         <span className="time">{timeStr}</span>
         <span>
           .{sw.status === 'run' ? <DummyMs ms={sw.startTime} /> : timeMilliStr}
@@ -59,7 +59,7 @@ const Style = styled.div`
   display: grid;
   position: relative;
   grid-template-rows: 1fr max-content 1fr;
-  .frame {
+  .outer {
     display: grid;
     align-items: center;
     justify-content: center;
