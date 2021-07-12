@@ -1,6 +1,6 @@
 import { Meta, Story } from '@storybook/react'
 import { ComponentProps } from 'react'
-import { DefaultSizeGadget, SizeSmall } from '../SizeDiv'
+import { decorators, SizeSmall } from '../SizeDiv'
 import TimerAtom from './TimerAtom'
 
 type Props = ComponentProps<typeof TimerAtom>
@@ -16,13 +16,7 @@ export default {
     status: 'pause',
   },
 
-  decorators: [
-    (Story) => (
-      <DefaultSizeGadget>
-        <Story />
-      </DefaultSizeGadget>
-    ),
-  ],
+  decorators,
   parameters: { actions: { argTypesRegex: '^on.*' } },
 } as Meta<Props>
 

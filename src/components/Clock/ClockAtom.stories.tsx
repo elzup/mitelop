@@ -1,6 +1,6 @@
 import { Meta, Story } from '@storybook/react'
 import { ComponentProps } from 'react'
-import { decorators, DefaultSizeGadget, multiSizeDecorators } from '../SizeDiv'
+import { decorators, multiSizeDecorators } from '../SizeDiv'
 import ClockAtom from './ClockAtom'
 
 type Props = ComponentProps<typeof ClockAtom>

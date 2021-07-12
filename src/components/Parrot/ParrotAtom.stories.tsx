@@ -1,6 +1,6 @@
 import { Meta, Story } from '@storybook/react'
 import { ComponentProps } from 'react'
-import { DefaultSizeGadget, SizeSmall } from '../SizeDiv'
+import { decorators, SizeSmall } from '../SizeDiv'
 import ParrotAtom from './ParrotAtom'
 
 type Props = ComponentProps<typeof ParrotAtom>
@@ -10,13 +10,7 @@ export default {
   args: {
     config: { pitch: 1.0, rate: 1.0 },
   },
-  decorators: [
-    (Story) => (
-      <DefaultSizeGadget>
-        <Story />
-      </DefaultSizeGadget>
-    ),
-  ],
+  decorators,
   parameters: { actions: { argTypesRegex: '^on.*' } },
 } as Meta<Props>
 

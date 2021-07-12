@@ -1,6 +1,6 @@
 import { Meta, Story } from '@storybook/react'
 import { ComponentProps } from 'react'
-import { DefaultSizeGadget } from '../SizeDiv'
+import { decorators } from '../SizeDiv'
 import ColorTool from './ColorTool'
 
 type Props = ComponentProps<typeof ColorTool>
@@ -9,13 +9,7 @@ export default {
   component: ColorTool,
   args: {},
 
-  decorators: [
-    (Story) => (
-      <DefaultSizeGadget>
-        <Story />
-      </DefaultSizeGadget>
-    ),
-  ],
+  decorators,
   parameters: { actions: { argTypesRegex: '^on.*' } },
 } as Meta<Props>
 

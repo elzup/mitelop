@@ -1,6 +1,6 @@
 import { Meta, Story } from '@storybook/react'
 import { ComponentProps } from 'react'
-import { DefaultSizeGadget } from '../SizeDiv'
+import { decorators } from '../SizeDiv'
 import StopwatchTool from './StopwatchTool'
 
 type Props = ComponentProps<typeof StopwatchTool>
@@ -9,13 +9,7 @@ export default {
   component: StopwatchTool,
   args: {},
   parameters: {},
-  decorators: [
-    (Story) => (
-      <DefaultSizeGadget>
-        <Story />
-      </DefaultSizeGadget>
-    ),
-  ],
+  decorators,
 } as Meta<Props>
 
 export const Base: Story<Props> = (_args) => <StopwatchTool />

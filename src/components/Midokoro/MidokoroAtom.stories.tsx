@@ -1,6 +1,6 @@
 import { Meta, Story } from '@storybook/react'
 import { ComponentProps } from 'react'
-import { DefaultSizeGadget } from '../SizeDiv'
+import { decorators } from '../SizeDiv'
 import MidokoroAtom from './MidokoroAtom'
 
 type Props = ComponentProps<typeof MidokoroAtom>
@@ -40,13 +40,7 @@ export default {
     progressRate: 80,
   },
 
-  decorators: [
-    (Story) => (
-      <DefaultSizeGadget>
-        <Story />
-      </DefaultSizeGadget>
-    ),
-  ],
+  decorators,
   parameters: {
     actions: { argTypesRegex: '^on.*' },
   },

@@ -26,7 +26,7 @@ function StopwatchAtom({
   status,
 }: Props) {
   return (
-    <SizeDef portRate={1.6} randRate={2}>
+    <SizeDef portRate={1.6} landRate={2}>
       <Style>
         <div className="outer">
           <div className="inner">
