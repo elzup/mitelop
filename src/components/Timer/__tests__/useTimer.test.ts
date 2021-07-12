@@ -39,7 +39,7 @@ test('useTimer', () => {
     jest.advanceTimersByTime(500)
   })
   expect(result.current.time).toMatchInlineSnapshot(`30000`)
-  expect(result.current.floorTime).toMatchInlineSnapshot(`29000`)
+  expect(result.current.flootTime).toMatchInlineSnapshot(`29000`)
 
   act(() => {
     advanceTo(new Date(date).setSeconds(9.5, 0))

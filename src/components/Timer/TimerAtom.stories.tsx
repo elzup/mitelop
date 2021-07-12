@@ -12,7 +12,8 @@ export default {
     timeMilliStr: '987',
     total: 100 * 1000,
     progress: 12,
-    status: 'run',
+    startTime: 1100,
+    status: 'pause',
   },
 
   decorators: [
@@ -26,6 +27,13 @@ export default {
 } as Meta<Props>
 
 export const Base: Story<Props> = (args) => <TimerAtom {...args} />
+
+export const Run = Base.bind({})
+Run.args = { status: 'run' }
+
+export const End = Base.bind({})
+End.args = { status: 'end', timeStr: '0', timeMilliStr: '000' }
+
 export const Small = Base.bind({})
 Small.decorators = [
   (Story) => (

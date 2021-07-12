@@ -6,8 +6,7 @@ import SettingsIcon from '@material-ui/icons/Settings'
 import StopIcon from '@material-ui/icons/Stop'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { GadgetMode, TimerConfig } from '../../types'
-import { useLocalStorage } from '../../utils/useLocalStorage'
+import { TimerConfig } from '../../types'
 import { ConfigModal } from '../components'
 import { useConfig } from '../hooks/useConfig'
 import TimerAtom from './TimerAtom'
@@ -39,7 +38,7 @@ function TimerTool() {
   })
 
   useEffect(() => {
-    const [timeStr, milliStr] = timeToStr(sw.floorTime)
+    const [timeStr, milliStr] = timeToStr(sw.flootTime)
 
     setTimeStr(timeStr)
     setTimeMilliStr('00')
@@ -58,6 +57,7 @@ function TimerTool() {
         timeStr={timeStr}
         timeMilliStr={timeMilliStr}
         progress={sw.progress}
+        startTime={sw.startTime}
         status={sw.status}
       />
 
@@ -136,19 +136,6 @@ const Style = styled.div`
   height: 100%;
   width: 100%;
   overflow: hidden;
-  padding: 5%;
-
-  &[data-status='end'] {
-    animation: blinkAnimeS2 0.5s infinite alternate;
-  }
-  @keyframes blinkAnimeS2 {
-    0% {
-      background: white;
-    }
-    100% {
-      background: red;
-    }
-  }
 `
 
 export default TimerTool

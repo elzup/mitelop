@@ -16,7 +16,8 @@ type UseTimer = {
   resume: () => void
   reset: () => void
   time: number
-  floorTime: number
+  startTime: number
+  flootTime: number
   progress: number
 }
 
@@ -54,7 +55,7 @@ export function useTimer(): UseTimer {
     setTimer({ status: 'run', startTime })
   }
 
-  const [time, floorTime] = calcTime(sw, total, +now)
+  const [time, flootTime] = calcTime(sw, total, +now)
 
   useEffect(() => {
     if (time > 0 || sw.status === 'init') return
@@ -64,13 +65,14 @@ export function useTimer(): UseTimer {
     })
   }, [time])
 
-  const progress = (1 - floorTime / total) * 100
+  const progress = (1 - flootTime / total) * 100
 
   return {
     status: sw.status,
-    floorTime,
+    flootTime: flootTime,
     progress,
     setTime: setTotal,
+    startTime: sw.status === 'run' ? sw.startTime : 0,
     start: (time?: number) => {
       if (time !== undefined) {
         setTotal(time)

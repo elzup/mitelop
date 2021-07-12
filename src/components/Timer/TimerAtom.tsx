@@ -1,4 +1,6 @@
 import { LinearProgress } from '@material-ui/core'
+import { useState, useEffect } from 'react'
+
 import styled from 'styled-components'
 import SizeDef from '../SizeDef'
 import { TimerStatus } from './useTimer'
@@ -8,16 +10,26 @@ type Props = {
   timeMilliStr: string
   total: number
   progress: number
+  startTime: number
   status: TimerStatus
 }
 
-function TimerAtom({ timeStr, timeMilliStr, progress }: Props) {
+function TimerAtom({
+  timeStr,
+  timeMilliStr,
+  startTime,
+  progress,
+  status,
+}: Props) {
   return (
     <SizeDef>
-      <Style>
+      <Style data-status={status}>
         <div className="frame">
           <span className="time">
-            {timeStr}.<span className="time-ms">{timeMilliStr}</span>
+            {timeStr}.
+            <span className="time-ms">
+              {status === 'run' ? <DummyMs ms={startTime} /> : timeMilliStr}
+            </span>
           </span>
           <LinearProgress variant="determinate" value={progress} />
         </div>
@@ -33,7 +45,7 @@ const Style = styled.div`
   height: 100%;
   width: 100%;
   box-sizing: border-box;
-  padding: 5%;
+  padding: 3%;
   .time {
     width: 20%;
     text-align: center;
@@ -50,26 +62,10 @@ const Style = styled.div`
     display: grid;
     height: 100%;
     grid-template-columns: max-content 1fr;
-    display: grid;
+    gap: 2%;
     align-items: center;
     justify-content: center;
     /* border: solid 0.5px gray; */
-  }
-  .controls {
-    height: 100%;
-    width: 100%;
-    padding: 4px;
-    background: rgba(255, 255, 255, 0.5);
-    position: absolute;
-    top: 0;
-    line-height: 100%;
-    text-align: center;
-    /* z-index: 1; */
-    .sub-control {
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
   }
   &[data-status='end'] {
     animation: blinkAnimeS2 0.5s infinite alternate;
@@ -83,5 +79,18 @@ const Style = styled.div`
     }
   }
 `
+
+function DummyMs({ ms: start }: { ms: number }) {
+  const calc = () => (start - (+new Date() % 1000)) % 1000
+  const [ms, setMs] = useState<number>(calc())
+
+  useEffect(() => {
+    setInterval(() => {
+      setMs(calc())
+    }, 20)
+    return
+  }, [])
+  return <>{`${Math.floor(ms / 10)}`.padStart(2, '0') + ' '}</>
+}
 
 export default TimerAtom
