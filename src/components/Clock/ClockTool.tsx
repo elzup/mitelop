@@ -1,7 +1,6 @@
 import { IconButton } from '@material-ui/core'
 import { Close } from '@material-ui/icons'
 import { useEffect, useState } from 'react'
-import { useMeasure } from 'react-use'
 import { useSeconds } from 'use-seconds'
 import { ClockConfig, GadgetMode } from '../../types'
 import { useLocalStorage } from '../../utils/useLocalStorage'
@@ -28,7 +27,6 @@ function ClockTool() {
     initConfig
   )
 
-  const [ref, { height }] = useMeasure<HTMLDivElement>()
   const [dateStr, setDstr] = useState<string>('0000-00-00')
   const [tStrs, setTstrs] = useState<string[]>(['00', '00', '00'])
   const [mode, setMode] = useState<GadgetMode>('main')
@@ -37,11 +35,9 @@ function ClockTool() {
     setDstr(toDateStr(time))
     setTstrs(timeStr(time))
   }, [+time])
-  const miniConf = height < 400
 
   return (
     <div
-      ref={ref}
       style={{ position: 'relative', height: '100%', overflow: 'hidden' }}
       onMouseEnter={() => setMode('over')}
     >
