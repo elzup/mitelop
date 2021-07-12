@@ -69,7 +69,7 @@ function speak(text: string, rate: number, pitch: number) {
   synth.speak(utterThis)
 }
 
-function YomiageTool() {
+function ParrotTool() {
   const [text, setText] = useState<string>('<認識テキストエリア>')
   const [isStart, setIsStart] = useState<boolean>(false)
   const [pitch, setPitch] = useLocalStorage<number>('speech-pitch', 1.0)
@@ -182,4 +182,4 @@ function YomiageTool() {
   )
 }
 
-export default YomiageTool
+export default ParrotTool

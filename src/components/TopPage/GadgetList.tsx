@@ -7,7 +7,7 @@ import Katinko from '../Katinko'
 import Midokoro from '../Midokoro/MidokoroTool'
 import Stopwatch from '../Stopwatch'
 import TimerTool from '../Timer/TimerTool'
-import YomiageTool from '../Yomiage/YomiageTool'
+import ParrotTool from '../Parrot/ParrotTool'
 import GadgetCard from './GadgetCard'
 
 const components = [
@@ -38,13 +38,8 @@ const components = [
   >
     <TimerTool />
   </GadgetCard>,
-  <GadgetCard
-    key={'gad-yomiage'}
-    icon={'speaker'}
-    title="Yomiage"
-    path="/yomiage"
-  >
-    <YomiageTool />
+  <GadgetCard key={'gad-parrot'} icon={'speaker'} title="Parrot" path="/parrot">
+    <ParrotTool />
   </GadgetCard>,
   <GadgetCard key={'gad-color'} icon={'palette'} title="Color" path="/color">
     <ColorTool />

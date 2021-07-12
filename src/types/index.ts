@@ -21,3 +21,8 @@ export type TimerConfig = {
 export type ColorConfig = {
   color: string
 }
+
+export type ParrotConfig = {
+  pitch: number
+  rate: number
+}
