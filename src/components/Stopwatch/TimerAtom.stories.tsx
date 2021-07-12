@@ -1,6 +1,13 @@
 import { Meta, Story } from '@storybook/react'
 import { ComponentProps } from 'react'
-import { DefaultSizeGadget, SizeSmall } from '../SizeDiv'
+import {
+  decorators,
+  GridH,
+  GridL,
+  GridS,
+  GridV,
+  MultiSizeGrid,
+} from '../SizeDiv'
 import StopwatchAtom from './StopwatchAtom'
 
 type Props = ComponentProps<typeof StopwatchAtom>
@@ -8,35 +15,43 @@ export default {
   title: 'StopwatchAtom',
   component: StopwatchAtom,
   args: {
-    timeStr: '0',
-    timeMilliStr: '0',
-    status: 'init',
+    timeStr: '10:10:10',
+    timeMilliStr: '000',
+    status: 'pause',
     startTime: 0,
   },
-
-  decorators: [
-    (Story) => (
-      <DefaultSizeGadget>
-        <Story />
-      </DefaultSizeGadget>
-    ),
-  ],
   parameters: { actions: { argTypesRegex: '^on.*' } },
 } as Meta<Props>
 
-export const Base: Story<Props> = (args) => <StopwatchAtom {...args} />
+const Base0: Story<Props> = (args) => <StopwatchAtom {...args} />
+
+export const Base = Base0.bind({})
+Base.decorators = decorators
 
 export const Run = Base.bind({})
 Run.args = { status: 'run' }
+Run.decorators = decorators
 
-export const Pause = Base.bind({})
-Pause.args = { status: 'pause', timeStr: '12', timeMilliStr: '987' }
+export const Init = Base.bind({})
+Init.args = { status: 'init', timeStr: '0', timeMilliStr: '0' }
+Init.decorators = decorators
 
-export const Small = Base.bind({})
-Small.decorators = [
+export const Size = Base0.bind({})
+Size.decorators = [
   (Story) => (
-    <SizeSmall>
-      <Story />
-    </SizeSmall>
+    <MultiSizeGrid>
+      <GridS>
+        <Story />
+      </GridS>
+      <GridL>
+        <Story />
+      </GridL>
+      <GridV>
+        <Story />
+      </GridV>
+      <GridH>
+        <Story />
+      </GridH>
+    </MultiSizeGrid>
   ),
 ]

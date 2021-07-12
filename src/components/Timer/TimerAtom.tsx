@@ -1,6 +1,4 @@
 import { LinearProgress } from '@material-ui/core'
-import { useState, useEffect } from 'react'
-
 import styled from 'styled-components'
 import { DummyMs } from '../DummyMs'
 import SizeDef from '../SizeDef'
@@ -51,7 +49,7 @@ const Style = styled.div`
     width: 20%;
     text-align: center;
     font-size: calc(var(--w) / 10);
-    font-family: 'Roboto', 'Helvetica', 'Arial', monospace, sans-serifc;
+    font-family: 'Roboto', 'Helvetica', 'Arial', monospace, sans-serif;
     margin: 5%;
     line-height: 1.05em;
   }

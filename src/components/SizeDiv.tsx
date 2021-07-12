@@ -1,3 +1,5 @@
+import { BaseDecorators } from '@storybook/addons'
+import { StoryFnReactReturnType } from '@storybook/react/dist/ts3.9/client/preview/types'
 import { Component } from 'react'
 import { defaultProps } from 'recompose'
 import styled from 'styled-components'
@@ -54,7 +56,7 @@ export const DefaultSizeGadget = styled.div`
   border: gray solid 1px;
 `
 
-export const decorators = [
+export const decorators: BaseDecorators<StoryFnReactReturnType> = [
   (Story) => (
     <DefaultSizeGadget>
       <Story />

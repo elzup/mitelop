@@ -1,10 +1,11 @@
 import { IconButton } from '@material-ui/core'
 import PauseIcon from '@material-ui/icons/Pause'
 import PlayArrowIcon from '@material-ui/icons/PlayArrow'
-import RotateLeftIcon from '@material-ui/icons/RotateLeft'
 import StopIcon from '@material-ui/icons/Stop'
+import { useMeasure } from 'react-use'
 import styled from 'styled-components'
 import { DummyMs } from '../DummyMs'
+import SizeDef from '../SizeDef'
 
 type Props = {
   timeStr: string
@@ -25,8 +26,21 @@ function StopwatchAtom({
   startTime,
   status,
 }: Props) {
+  const [ref, { width, height }] = useMeasure<HTMLDivElement>()
+
+  const RATE = 1.8
+  const maxWidth = height * RATE
+  const maxHeight = width / RATE
+
   return (
-    <Style>
+    <Style
+      ref={ref}
+      style={{
+        // @ts-ignore
+        '--w': `${Math.min(width, maxWidth)}px`,
+        '--h': `${Math.min(height, maxHeight)}px`,
+      }}
+    >
       <div className="outer">
         <span className="time">
           {timeStr}.
@@ -51,7 +65,6 @@ function StopwatchAtom({
           </IconButton>
         </div>
       </div>
-      <div />
     </Style>
   )
 }
@@ -62,20 +75,22 @@ const Style = styled.div`
   box-sizing: border-box;
 
   display: grid;
-  grid-template-rows: 1fr max-content 1fr;
   .outer {
     display: grid;
     align-items: center;
     justify-content: center;
     /* border: solid 0.5px gray; */
-    span {
+    .time {
+      font-family: 'Roboto', 'Helvetica', 'Arial', monospace, sans-serif;
       text-align: center;
-      font-size: calc(100%);
-      line-height: 1.05em;
+      font-size: calc(var(--w) * 0.15);
+    }
+    .controls {
+      display: flex;
+      justify-content: center;
 
-      &.date {
-        text-align: unset;
-        font-size: calc(100% / 5 / 3);
+      .MuiSvgIcon-root {
+        font-size: calc(var(--w) * 0.15);
       }
     }
   }
