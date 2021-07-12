@@ -9,6 +9,7 @@ import styled from 'styled-components'
 import { GadgetMode, TimerConfig } from '../../types'
 import { useLocalStorage } from '../../utils/useLocalStorage'
 import { ConfigModal } from '../components'
+import { useConfig } from '../hooks/useConfig'
 import TimerAtom from './TimerAtom'
 import { useTimer } from './useTimer'
 
@@ -28,20 +29,14 @@ const timeToStr = (t: number): [string, string] => {
   return [`${s}`, milli]
 }
 
-const initConfig: TimerConfig = {
-  total: 10,
-}
-
 function TimerTool() {
   const sw = useTimer()
   const [timeStr, setTimeStr] = useState<string>('0')
   const [timeMilliStr, setTimeMilliStr] = useState<string>('00')
 
-  const [mode, setMode] = useState<GadgetMode>('main')
-  const [config, setConfig] = useLocalStorage<TimerConfig>(
-    'config-timer',
-    initConfig
-  )
+  const { config, setConfig, mode, setMode } = useConfig<TimerConfig>('timer', {
+    total: 10,
+  })
 
   useEffect(() => {
     const [timeStr, milliStr] = timeToStr(sw.floorTime)
@@ -55,7 +50,6 @@ function TimerTool() {
   useEffect(() => {
     sw.setTime(config.total)
   }, [config.total])
-  console.log(sw)
 
   return (
     <Style onMouseEnter={() => setMode('over')}>

@@ -4,8 +4,7 @@ import color from 'color'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { ColorConfig, GadgetMode } from '../../types'
-import { useLocalStorage } from '../../utils/useLocalStorage'
+import { ColorConfig } from '../../types'
 import { ConfigModal } from '../components'
 import ColorField from '../forms/ColorField'
 import { useConfig } from '../hooks/useConfig'
@@ -15,7 +14,7 @@ type Props = {
   windowMode?: boolean
 }
 function ColorTool(props: Props) {
-  const { mode, setMode, config, setConfig } = useConfig('color', {
+  const { mode, setMode, config, setConfig } = useConfig<ColorConfig>('color', {
     color: '#2B0065',
   })
   const [isDark, setIsDark] = useState<boolean>(false)

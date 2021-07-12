@@ -2,8 +2,7 @@ import { IconButton } from '@material-ui/core'
 import { Close } from '@material-ui/icons'
 import { useEffect, useState } from 'react'
 import { useSeconds } from 'use-seconds'
-import { ClockConfig, GadgetMode } from '../../types'
-import { useLocalStorage } from '../../utils/useLocalStorage'
+import { ClockConfig } from '../../types'
 import { ConfigModal } from '../components'
 import ColorField from '../forms/ColorField'
 import { useConfig } from '../hooks/useConfig'
@@ -30,7 +29,7 @@ function useTimeStr() {
 }
 
 function ClockTool() {
-  const { mode, setMode, config, setConfig } = useConfig('clock', {
+  const { mode, setMode, config, setConfig } = useConfig<ClockConfig>('clock', {
     dateVisible: true,
     bgColor: '#aaaaff',
     fontColor: '#000066',
