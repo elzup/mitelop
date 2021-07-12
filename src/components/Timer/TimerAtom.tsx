@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import SizeDef from '../SizeDef'
 import { TimerStatus } from './useTimer'
 
-type Prop = {
+type Props = {
   timeStr: string
   timeMilliStr: string
   total: number
@@ -11,7 +11,7 @@ type Prop = {
   status: TimerStatus
 }
 
-function TimerAtom({ timeStr, timeMilliStr, progress }: Prop) {
+function TimerAtom({ timeStr, timeMilliStr, progress }: Props) {
   return (
     <SizeDef>
       <Style>
