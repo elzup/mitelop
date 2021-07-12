@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { TextField } from '@material-ui/core'
-import React, { useState } from 'react'
+import { IconButton, TextField } from '@material-ui/core'
+import SettingsIcon from '@material-ui/icons/Settings'
+import React from 'react'
 import styled from 'styled-components'
 import { ParrotConfig } from '../../types'
-import { useLocalStorage } from '../../utils/useLocalStorage'
 import { ConfigModal } from '../ConfigModal'
 import { useConfig } from '../hooks/useConfig'
 import ParrotAtom from './ParrotAtom'
@@ -17,8 +17,13 @@ function ParrotTool() {
   return (
     <Style onMouseEnter={() => setMode('over')}>
       <ParrotAtom config={config} />
-      <ConfigModal mode={mode} onLeave={() => setMode('main')}>
+      <ConfigModal miniOver mode={mode} onLeave={() => setMode('main')}>
         <div className="over">
+          <IconButton onClick={() => setMode('conf')}>
+            <SettingsIcon />
+          </IconButton>
+        </div>
+        <div className="conf">
           <div className="speed-control">
             <TextField
               type="number"

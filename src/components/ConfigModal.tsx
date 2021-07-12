@@ -15,6 +15,10 @@ export const Style = styled.div`
   background: #ffffffcc;
   padding: 4px;
   overflow: scroll;
+  pointer-events: none;
+  > * {
+    pointer-events: auto;
+  }
 
   .conf,
   .over {
