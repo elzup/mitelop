@@ -1,5 +1,5 @@
 import { NextPage } from 'next'
-import Clock from '../components/Clock'
+import Clock from '../components/Clock/ClockTool'
 import Layout from '../components/Layout'
 
 const ClockPage: NextPage = () => {

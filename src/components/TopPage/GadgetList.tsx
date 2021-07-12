@@ -1,13 +1,13 @@
 import { MuuriComponent } from 'muuri-react'
 import React from 'react'
 import CheckList from '../CheckList'
-import Clock from '../Clock'
+import Clock from '../Clock/ClockTool'
 import ColorTool from '../Color/ColorTool'
 import Katinko from '../Katinko'
-import Midokoro from '../Midokoro'
+import Midokoro from '../Midokoro/MidokoroTool'
 import Stopwatch from '../Stopwatch'
 import TimerTool from '../Timer/TimerTool'
-import Yomiage from '../Yomiage'
+import YomiageTool from '../Yomiage/YomiageTool'
 import GadgetCard from './GadgetCard'
 
 const components = [
@@ -44,7 +44,7 @@ const components = [
     title="Yomiage"
     path="/yomiage"
   >
-    <Yomiage />
+    <YomiageTool />
   </GadgetCard>,
   <GadgetCard key={'gad-color'} icon={'palette'} title="Color" path="/color">
     <ColorTool />

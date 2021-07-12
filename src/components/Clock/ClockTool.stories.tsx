@@ -1,7 +1,7 @@
 import { Meta } from '@storybook/react'
 import React from 'react'
 import { GridH, GridL, GridS, GridV, MultiSizeGrid } from '../SizeDiv'
-import ClockTool from '.'
+import ClockTool from './ClockTool'
 
 export default {
   title: 'ClockTool',

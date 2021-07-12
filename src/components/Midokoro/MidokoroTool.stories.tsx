@@ -1,6 +1,6 @@
 import { Meta, Story } from '@storybook/react'
 import { DefaultSizeGadget } from '../SizeDiv'
-import MidokoroTool from '.'
+import MidokoroTool from './MidokoroTool'
 
 type Props = Parameters<typeof MidokoroTool>
 export default {
