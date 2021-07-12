@@ -26,3 +26,5 @@ export type ParrotConfig = {
   pitch: number
   rate: number
 }
+
+export type StopwatchConfig = {}

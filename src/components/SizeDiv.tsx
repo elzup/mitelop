@@ -1,3 +1,4 @@
+import { Component } from 'react'
 import { defaultProps } from 'recompose'
 import styled from 'styled-components'
 
@@ -52,3 +53,11 @@ export const DefaultSizeGadget = styled.div`
   height: 300px;
   border: gray solid 1px;
 `
+
+export const decorators = [
+  (Story) => (
+    <DefaultSizeGadget>
+      <Story />
+    </DefaultSizeGadget>
+  ),
+]

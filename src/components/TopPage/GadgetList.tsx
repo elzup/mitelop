@@ -5,7 +5,7 @@ import Clock from '../Clock/ClockTool'
 import ColorTool from '../Color/ColorTool'
 import Katinko from '../Katinko'
 import Midokoro from '../Midokoro/MidokoroTool'
-import Stopwatch from '../Stopwatch'
+import StopwatchTool from '../Stopwatch/StopwatchTool'
 import TimerTool from '../Timer/TimerTool'
 import ParrotTool from '../Parrot/ParrotTool'
 import GadgetCard from './GadgetCard'
@@ -28,7 +28,7 @@ const components = [
     title="StopWatch"
     path="/stopwatch"
   >
-    <Stopwatch />
+    <StopwatchTool />
   </GadgetCard>,
   <GadgetCard
     key={'gad-timer'}

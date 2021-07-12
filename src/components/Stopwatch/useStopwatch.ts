@@ -5,7 +5,7 @@ type StopwatchState =
   | { status: 'run'; startTime: number }
   | { status: 'pause'; time: number }
 
-type UseStopwatch = {
+export type UseStopwatch = {
   status: 'run' | 'pause'
   startTime: number
   pause: () => void

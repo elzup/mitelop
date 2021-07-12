@@ -1,11 +1,11 @@
 import { NextPage } from 'next'
 import Layout from '../components/Layout'
-import Stopwatch from '../components/Stopwatch'
+import StopwatchTool from '../components/Stopwatch/StopwatchTool'
 
 const StopwatchPage: NextPage = () => {
   return (
     <Layout title="Stopwatch" reset>
-      <Stopwatch />
+      <StopwatchTool />
     </Layout>
   )
 }
