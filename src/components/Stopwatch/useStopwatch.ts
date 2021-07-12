@@ -7,6 +7,7 @@ type StopwatchState =
 
 type UseStopwatch = {
   status: 'run' | 'pause'
+  startTime: number
   pause: () => void
   run: () => void
   reset: () => void
@@ -33,6 +34,7 @@ export function useStopwatch(): UseStopwatch {
 
   return {
     status: sw.status,
+    startTime: sw.status === 'run' ? sw.startTime : 0,
     pause: () => {
       if (sw.status === 'pause') return
       setStopwatch({ status: 'pause', time: +new Date() - sw.startTime })
