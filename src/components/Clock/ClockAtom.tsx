@@ -1,5 +1,4 @@
 import React from 'react'
-import { useMeasure } from 'react-use'
 import styled from 'styled-components'
 import { ClockConfig } from '../../types'
 import SizeDef from '../SizeDef'
@@ -11,22 +10,11 @@ type Props = {
 }
 function ClockAtom(props: React.PropsWithChildren<Props>) {
   const { config, dateStr } = props
-  const [ref, { width, height }] = useMeasure<HTMLDivElement>()
   const [hs, ms, ss] = props.tStrs
 
-  const RATE = 1.8
-  const maxWidth = height * RATE
-
   return (
-    <SizeDef>
+    <SizeDef portRate={1.8}>
       <Style
-        ref={ref}
-        style={{
-          // @ts-ignore
-          '--w': `${Math.min(width, maxWidth)}px`,
-          '--font-color': config.fontColor,
-          '--bg-color': config.bgColor,
-        }}
         bgColor={config.bgColor}
         fontColor={config.fontColor}
         date-visible={config.dateVisible}
@@ -48,7 +36,10 @@ function ClockAtom(props: React.PropsWithChildren<Props>) {
   )
 }
 
-const Style = styled.div`
+const Style = styled.div<{
+  bgColor: string
+  fontColor: string
+}>`
   width: 100%;
   height: 100%;
   padding: 0 3%;
@@ -66,7 +57,6 @@ const Style = styled.div`
     place-items: center;
     .inner {
       text-align: center;
-      width: 100%;
       max-width: var(--w);
       .time {
         font-size: calc(var(--w) * 0.25);

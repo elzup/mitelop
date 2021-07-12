@@ -1,13 +1,6 @@
 import { Meta, Story } from '@storybook/react'
 import { ComponentProps } from 'react'
-import {
-  decorators,
-  GridH,
-  GridL,
-  GridS,
-  GridV,
-  MultiSizeGrid,
-} from '../SizeDiv'
+import { decorators, multiSizeDecorators } from '../SizeDiv'
 import StopwatchAtom from './StopwatchAtom'
 
 type Props = ComponentProps<typeof StopwatchAtom>
@@ -37,21 +30,4 @@ Init.args = { status: 'init', timeStr: '0', timeMilliStr: '0' }
 Init.decorators = decorators
 
 export const Size = Base0.bind({})
-Size.decorators = [
-  (Story) => (
-    <MultiSizeGrid>
-      <GridS>
-        <Story />
-      </GridS>
-      <GridL>
-        <Story />
-      </GridL>
-      <GridV>
-        <Story />
-      </GridV>
-      <GridH>
-        <Story />
-      </GridH>
-    </MultiSizeGrid>
-  ),
-]
+Size.decorators = multiSizeDecorators

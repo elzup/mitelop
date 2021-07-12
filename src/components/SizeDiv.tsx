@@ -1,6 +1,6 @@
 import { BaseDecorators } from '@storybook/addons'
+// eslint-disable-next-line import/no-unresolved
 import { StoryFnReactReturnType } from '@storybook/react/dist/ts3.9/client/preview/types'
-import { Component } from 'react'
 import { defaultProps } from 'recompose'
 import styled from 'styled-components'
 
@@ -61,5 +61,24 @@ export const decorators: BaseDecorators<StoryFnReactReturnType> = [
     <DefaultSizeGadget>
       <Story />
     </DefaultSizeGadget>
+  ),
+]
+
+export const multiSizeDecorators: BaseDecorators<StoryFnReactReturnType> = [
+  (Story) => (
+    <MultiSizeGrid>
+      <GridS>
+        <Story />
+      </GridS>
+      <GridL>
+        <Story />
+      </GridL>
+      <GridV>
+        <Story />
+      </GridV>
+      <GridH>
+        <Story />
+      </GridH>
+    </MultiSizeGrid>
   ),
 ]

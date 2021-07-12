@@ -13,22 +13,22 @@ const SizeDefStyle = styled.div<{ height: number; width: number }>`
 function calcRate(
   width: number,
   height: number,
-  rRate?: number,
+  lRate?: number,
   pRate?: number
 ) {
   const maxWidth = pRate ? height * pRate : width
-  const maxHeight = rRate ? width / rRate : height
+  const maxHeight = lRate ? width / lRate : height
 
   return [Math.min(width, maxWidth), Math.min(height, maxHeight)]
 }
 
-const SizeDef: React.FC<{ randRate?: number; portRate?: number }> = ({
+const SizeDef: React.FC<{ landRate?: number; portRate?: number }> = ({
   children,
-  randRate,
+  landRate,
   portRate,
 }) => {
   const [ref, { width, height }] = useMeasure<HTMLDivElement>()
-  const [w, h] = calcRate(width, height, randRate, portRate)
+  const [w, h] = calcRate(width, height, landRate, portRate)
 
   return (
     <SizeDefStyle ref={ref} width={w} height={h}>
