@@ -5,8 +5,9 @@ type Props = {
   label: string
   value: string
   onChange: (v: string) => void
+  onMouseDown?: () => void
 }
-const ColorField = ({ label, value, onChange }: Props) => (
+const ColorField = ({ label, value, onChange, onMouseDown }: Props) => (
   <div
     style={{
       display: 'grid',
@@ -19,6 +20,7 @@ const ColorField = ({ label, value, onChange }: Props) => (
     <input
       value={value}
       type="color"
+      onMouseDown={onMouseDown}
       onChange={(e) => onChange(e.target.value)}
     />
   </div>

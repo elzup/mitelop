@@ -1,9 +1,9 @@
 import { IconButton } from '@material-ui/core'
 import { Close } from '@material-ui/icons'
-import { useEffect, useState } from 'react'
-
-import styled from 'styled-components'
 import color from 'color'
+import Head from 'next/head'
+import { useEffect, useState } from 'react'
+import styled from 'styled-components'
 import { ColorConfig, GadgetMode } from '../../types'
 import { useLocalStorage } from '../../utils/useLocalStorage'
 import { ConfigModal } from '../components'
@@ -14,13 +14,17 @@ const initConfig: ColorConfig = {
   color: '#2B0065',
 }
 
-function ColorTool() {
+type Props = {
+  windowMode?: boolean
+}
+function ColorTool(props: Props) {
   const [mode, setMode] = useState<GadgetMode>('main')
   const [isDark, setIsDark] = useState<boolean>(false)
   const [config, setConfig] = useLocalStorage<ColorConfig>(
     'config-color',
     initConfig
   )
+  const [touched, setTouched] = useState<boolean>(false)
 
   useEffect(() => {
     try {
@@ -36,15 +40,38 @@ function ColorTool() {
       // @ts-ignore
       style={{ '--color': fontColor }}
     >
+      {props.windowMode && (
+        <Head>
+          <meta name="theme-color" content={config.color} />
+          <title>Color-{color}</title>
+        </Head>
+      )}
       <ColorAtom config={config} />
-      <ConfigModal mode={mode} background="transparent">
-        <div className="over">
+
+      <ConfigModal
+        mode={mode}
+        background="transparent"
+        onLeave={() => {
+          if (touched) return
+          setMode('main')
+        }}
+      >
+        <div
+          className="over"
+          style={{ height: 'max-contnt', background: '#ffffffaa' }}
+        >
           <ColorField
             label="Color"
             onChange={(color) => setConfig((v) => ({ ...v, color }))}
+            onMouseDown={() => setTouched(true)}
             value={config.color}
           />
-          <IconButton onClick={() => setMode('main')}>
+          <IconButton
+            onClick={() => {
+              setMode('main')
+              setTouched(false)
+            }}
+          >
             <Close />
           </IconButton>
         </div>
@@ -52,6 +79,7 @@ function ColorTool() {
     </Style>
   )
 }
+ColorTool.defaultProps = { windowMode: false }
 
 const Style = styled.div`
   position: relative;
