@@ -1,6 +1,10 @@
+import { IconButton } from '@material-ui/core'
+import PauseIcon from '@material-ui/icons/Pause'
+import PlayArrowIcon from '@material-ui/icons/PlayArrow'
+import RotateLeftIcon from '@material-ui/icons/RotateLeft'
+import StopIcon from '@material-ui/icons/Stop'
 import styled from 'styled-components'
 import { DummyMs } from '../DummyMs'
-import { UseStopwatch } from './useStopwatch'
 
 type Props = {
   timeStr: string
@@ -31,12 +35,21 @@ function StopwatchAtom({
           </span>
         </span>
 
-        <button onClick={onClickRun}>
-          {status === 'init' ? 'Start' : 'Resume'}
-        </button>
+        <div className="controls">
+          {status === 'run' ? (
+            <IconButton onClick={onClickPause}>
+              <PauseIcon />
+            </IconButton>
+          ) : (
+            <IconButton onClick={onClickRun}>
+              <PlayArrowIcon />
+            </IconButton>
+          )}
 
-        {status === 'run' && <button onClick={onClickPause}>Stop</button>}
-        <button onClick={onClickReset}>Reset</button>
+          <IconButton disabled={status === 'run'} onClick={onClickReset}>
+            <StopIcon />
+          </IconButton>
+        </div>
       </div>
       <div />
     </Style>

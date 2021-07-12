@@ -23,7 +23,7 @@ function StopwatchTool() {
         onClickRun={sw.run}
         onClickPause={sw.pause}
         onClickReset={sw.reset}
-        status={sw.time === 0 ? 'init' : sw.status}
+        status={sw.status === 'pause' && sw.time === 0 ? 'init' : sw.status}
         startTime={sw.startTime}
         timeStr={timeStr}
         timeMilliStr={timeMilliStr}
