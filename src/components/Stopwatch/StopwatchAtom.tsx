@@ -2,7 +2,6 @@ import { IconButton } from '@material-ui/core'
 import PauseIcon from '@material-ui/icons/Pause'
 import PlayArrowIcon from '@material-ui/icons/PlayArrow'
 import StopIcon from '@material-ui/icons/Stop'
-import { useMeasure } from 'react-use'
 import styled from 'styled-components'
 import { DummyMs } from '../DummyMs'
 import SizeDef from '../SizeDef'
@@ -26,46 +25,37 @@ function StopwatchAtom({
   startTime,
   status,
 }: Props) {
-  const [ref, { width, height }] = useMeasure<HTMLDivElement>()
-
-  const RATE = 1.8
-  const maxWidth = height * RATE
-  const maxHeight = width / RATE
-
   return (
-    <Style
-      ref={ref}
-      style={{
-        // @ts-ignore
-        '--w': `${Math.min(width, maxWidth)}px`,
-        '--h': `${Math.min(height, maxHeight)}px`,
-      }}
-    >
-      <div className="outer">
-        <span className="time">
-          {timeStr}.
-          <span className="time-ms">
-            {status === 'run' ? <DummyMs ms={startTime} /> : timeMilliStr}
-          </span>
-        </span>
+    <SizeDef portRate={1.6} randRate={2}>
+      <Style>
+        <div className="outer">
+          <div className="inner">
+            <span className="time">
+              {timeStr}.
+              <span className="time-ms">
+                {status === 'run' ? <DummyMs ms={startTime} /> : timeMilliStr}
+              </span>
+            </span>
 
-        <div className="controls">
-          {status === 'run' ? (
-            <IconButton onClick={onClickPause}>
-              <PauseIcon />
-            </IconButton>
-          ) : (
-            <IconButton onClick={onClickRun}>
-              <PlayArrowIcon />
-            </IconButton>
-          )}
+            <div className="controls">
+              {status === 'run' ? (
+                <IconButton onClick={onClickPause}>
+                  <PauseIcon />
+                </IconButton>
+              ) : (
+                <IconButton onClick={onClickRun}>
+                  <PlayArrowIcon />
+                </IconButton>
+              )}
 
-          <IconButton disabled={status === 'run'} onClick={onClickReset}>
-            <StopIcon />
-          </IconButton>
+              <IconButton disabled={status === 'run'} onClick={onClickReset}>
+                <StopIcon />
+              </IconButton>
+            </div>
+          </div>
         </div>
-      </div>
-    </Style>
+      </Style>
+    </SizeDef>
   )
 }
 
@@ -73,13 +63,18 @@ const Style = styled.div`
   height: 100%;
   width: 100%;
   box-sizing: border-box;
+  position: relative;
 
-  display: grid;
   .outer {
+    height: 100%;
     display: grid;
     align-items: center;
     justify-content: center;
-    /* border: solid 0.5px gray; */
+
+    .inner {
+      max-width: var(--w);
+      max-height: var(--h);
+    }
     .time {
       font-family: 'Roboto', 'Helvetica', 'Arial', monospace, sans-serif;
       text-align: center;

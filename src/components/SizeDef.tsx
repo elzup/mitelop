@@ -10,11 +10,28 @@ const SizeDefStyle = styled.div<{ height: number; width: number }>`
   box-sizing: border-box;
 `
 
-const SizeDef: React.FC = ({ children }) => {
+function calcRate(
+  width: number,
+  height: number,
+  rRate?: number,
+  pRate?: number
+) {
+  const maxWidth = pRate ? height * pRate : width
+  const maxHeight = rRate ? width / rRate : height
+
+  return [Math.min(width, maxWidth), Math.min(height, maxHeight)]
+}
+
+const SizeDef: React.FC<{ randRate?: number; portRate?: number }> = ({
+  children,
+  randRate,
+  portRate,
+}) => {
   const [ref, { width, height }] = useMeasure<HTMLDivElement>()
+  const [w, h] = calcRate(width, height, randRate, portRate)
 
   return (
-    <SizeDefStyle ref={ref} height={height} width={width}>
+    <SizeDefStyle ref={ref} width={w} height={h}>
       {children}
     </SizeDefStyle>
   )
