@@ -5,7 +5,7 @@ import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { ColorConfig } from '../../types'
-import { ConfigModal } from '../components'
+import { ConfigModal } from '../ConfigModal'
 import ColorField from '../forms/ColorField'
 import { useConfig } from '../hooks/useConfig'
 import ColorAtom from './ColorAtom'
@@ -44,20 +44,13 @@ function ColorTool(props: Props) {
 
       <ConfigModal
         mode={mode}
-        background="transparent"
+        miniOver
         onLeave={() => {
           if (touched) return
           setMode('main')
         }}
       >
-        <div
-          className="over"
-          style={{
-            height: 'max-contnt',
-            background: '#ffffffaa',
-            padding: '4px',
-          }}
-        >
+        <div className="over">
           <ColorField
             label="Color"
             onChange={(color) => setConfig((v) => ({ ...v, color }))}

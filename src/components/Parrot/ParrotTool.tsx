@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { ParrotConfig } from '../../types'
 import { useLocalStorage } from '../../utils/useLocalStorage'
-import { ConfigModal } from '../components'
+import { ConfigModal } from '../ConfigModal'
 import { useConfig } from '../hooks/useConfig'
 import ParrotAtom from './ParrotAtom'
 

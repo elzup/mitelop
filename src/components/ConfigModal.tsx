@@ -12,6 +12,7 @@ export const Style = styled.div`
   height: 100%;
   width: 100%;
   box-sizing: border-box;
+  background: #ffffffcc;
   padding: 4px;
 
   .conf,
@@ -22,6 +23,18 @@ export const Style = styled.div`
   &[data-mode='over'] {
     .over {
       display: block;
+    }
+    &[data-mini_over='true'] {
+      background: transparent;
+      .over {
+        padding: 4px;
+        background: #88888888;
+        height: max-content;
+        width: max-content;
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
     }
   }
   &[data-mode='conf'] {
@@ -35,17 +48,15 @@ export const Style = styled.div`
 export const ConfigModal: React.FC<{
   mode: GadgetMode
   onLeave?: () => void
-  background?: string
+  miniOver?: boolean
 }> = (props) => (
   <Style
     data-mode={props.mode}
-    style={{
-      background: props.background,
-    }}
+    data-mini_over={props.miniOver}
     onMouseLeave={props.onLeave}
   >
     {props.children}
   </Style>
 )
 
-ConfigModal.defaultProps = { background: '#ffffffcc' }
+ConfigModal.defaultProps = { miniOver: false }

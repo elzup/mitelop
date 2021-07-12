@@ -3,7 +3,7 @@ import { Close } from '@material-ui/icons'
 import { useEffect, useState } from 'react'
 import { useSeconds } from 'use-seconds'
 import { ClockConfig } from '../../types'
-import { ConfigModal } from '../components'
+import { ConfigModal } from '../ConfigModal'
 import ColorField from '../forms/ColorField'
 import { useConfig } from '../hooks/useConfig'
 import ClockAtom from './ClockAtom'
@@ -46,22 +46,13 @@ function ClockTool() {
 
       <ConfigModal
         mode={mode}
-        background="transparent"
+        miniOver
         onLeave={() => {
           if (touched) return
           setMode('main')
         }}
       >
-        <div
-          className="over"
-          style={{
-            height: 'max-contnt',
-            width: 'max-content',
-            padding: '4px',
-            background: '#ffffffaa',
-          }}
-          onMouseDown={() => setTouched(true)}
-        >
+        <div className="over" onMouseDown={() => setTouched(true)}>
           <ColorField
             label="Back"
             onChange={(bgColor) => setConfig((v) => ({ ...v, bgColor }))}
