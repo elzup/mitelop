@@ -53,6 +53,7 @@ const Style = styled.div<{ bgColor: string; fontColor: string }>`
   position: relative;
   /* display: table; */
   background: var(--bg-color);
+  box-sizing: border-box;
 
   .outer {
     color: var(--font-color);

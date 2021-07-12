@@ -115,6 +115,7 @@ const Style = styled.div`
   font-family: 'Roboto';
   position: relative;
   /* display: table; */
+  box-sizing: border-box;
 
   .outer {
     display: grid;
