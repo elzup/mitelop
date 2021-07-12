@@ -14,6 +14,7 @@ export const Style = styled.div`
   box-sizing: border-box;
   background: #ffffffcc;
   padding: 4px;
+  overflow: scroll;
 
   .conf,
   .over {
@@ -28,7 +29,7 @@ export const Style = styled.div`
       background: transparent;
       .over {
         padding: 4px;
-        background: #88888888;
+        background: #bbbbbbf7;
         height: max-content;
         width: max-content;
         position: absolute;

@@ -20,10 +20,13 @@ function ClockAtom(props: React.PropsWithChildren<Props>) {
   return (
     <SizeDef>
       <Style
-        // @ts-ignore
         ref={ref}
-        // @ts-ignore
-        style={{ '--w': `${Math.min(width, maxWidth)}px` }}
+        style={{
+          // @ts-ignore
+          '--w': `${Math.min(width, maxWidth)}px`,
+          '--font-color': config.fontColor,
+          '--bg-color': config.bgColor,
+        }}
         bgColor={config.bgColor}
         fontColor={config.fontColor}
         date-visible={config.dateVisible}
@@ -45,7 +48,7 @@ function ClockAtom(props: React.PropsWithChildren<Props>) {
   )
 }
 
-const Style = styled.div<{ bgColor: string; fontColor: string }>`
+const Style = styled.div`
   width: 100%;
   height: 100%;
   padding: 0 3%;

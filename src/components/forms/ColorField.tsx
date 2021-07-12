@@ -1,4 +1,4 @@
-import { TextField, Typography } from '@material-ui/core'
+import { TextField } from '@material-ui/core'
 import React from 'react'
 
 type Props = {
@@ -10,13 +10,17 @@ type Props = {
 const ColorField = ({ label, value, onChange, onMouseDown }: Props) => (
   <div
     style={{
-      display: 'grid',
-      width: '200px',
-      gridTemplateColumns: '80px auto auto',
+      display: 'flex',
+      gap: '4px',
+      alignItems: 'center',
     }}
   >
-    <Typography>{label}</Typography>
-    <TextField value={value} onChange={(e) => onChange(e.target.value)} />
+    <TextField
+      label={label}
+      size="small"
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+    />
     <input
       value={value}
       type="color"
