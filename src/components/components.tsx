@@ -8,15 +8,22 @@ export const ConfigModalStyle = styled.div`
   height: 100%;
   width: 100%;
   padding: 4px;
-  background: #ffffffcc;
 `
 
-export const ConfigModal: React.FC<{ visible: boolean; onClose: () => void }> =
-  (props) => (
-    <ConfigModalStyle
-      style={{ display: props.visible ? 'block' : 'none' }}
-      onMouseLeave={props.onClose}
-    >
-      {props.children}
-    </ConfigModalStyle>
-  )
+export const ConfigModal: React.FC<{
+  visible: boolean
+  onLeave?: () => void
+  background?: string
+}> = (props) => (
+  <ConfigModalStyle
+    style={{
+      display: props.visible ? 'block' : 'none',
+      background: props.background,
+    }}
+    onMouseLeave={props.onLeave}
+  >
+    {props.children}
+  </ConfigModalStyle>
+)
+
+ConfigModal.defaultProps = { background: '#ffffffcc' }

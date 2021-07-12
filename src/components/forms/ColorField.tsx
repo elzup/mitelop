@@ -1,14 +1,12 @@
 import { TextField, Typography } from '@material-ui/core'
 import React from 'react'
-import ColorSelectButton from './ColorSelectButton'
 
 type Props = {
   label: string
   value: string
-  mini: boolean
   onChange: (v: string) => void
 }
-const ColorField = ({ label, value, mini, onChange }: Props) => (
+const ColorField = ({ label, value, onChange }: Props) => (
   <div
     style={{
       display: 'grid',
@@ -17,8 +15,12 @@ const ColorField = ({ label, value, mini, onChange }: Props) => (
     }}
   >
     <Typography>{label}</Typography>
-    <ColorSelectButton color={value} onChange={onChange} editable={!mini} />
     <TextField value={value} onChange={(e) => onChange(e.target.value)} />
+    <input
+      value={value}
+      type="color"
+      onChange={(e) => onChange(e.target.value)}
+    />
   </div>
 )
 

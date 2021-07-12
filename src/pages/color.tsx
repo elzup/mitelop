@@ -2,7 +2,7 @@ import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Layout from '../components/Layout'
-import Color from '../components/Color'
+import ColorTool from '../components/Color/ColorTool'
 import { getOne } from '../utils/ssr'
 
 const ColorPage: NextPage = () => {
@@ -16,7 +16,7 @@ const ColorPage: NextPage = () => {
         <meta name="theme-color" content={color} />
         <title>Color-{color}</title>
       </Head>
-      <Color color={color} />
+      <ColorTool color={color} />
     </Layout>
   )
 }

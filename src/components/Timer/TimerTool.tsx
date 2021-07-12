@@ -67,7 +67,7 @@ function TimerTool() {
         status={sw.status}
       />
 
-      <ConfigModal visible={mode !== 'main'} onClose={() => setMode('main')}>
+      <ConfigModal visible={mode !== 'main'} onLeave={() => setMode('main')}>
         <div style={{ display: mode === 'over' ? 'block' : 'none' }}>
           <IconButton
             disabled={sw.status === 'run'}

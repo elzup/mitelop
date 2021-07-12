@@ -1,8 +1,8 @@
+import { IconButton } from '@material-ui/core'
+import { Close } from '@material-ui/icons'
 import { useEffect, useState } from 'react'
 import { useMeasure } from 'react-use'
 import { useSeconds } from 'use-seconds'
-import SettingsIcon from '@material-ui/icons/Settings'
-import { IconButton } from '@material-ui/core'
 import { ClockConfig, GadgetMode } from '../../types'
 import { useLocalStorage } from '../../utils/useLocalStorage'
 import { ConfigModal } from '../components'
@@ -47,26 +47,21 @@ function ClockTool() {
     >
       <ClockAtom config={config} dateStr={dateStr} tStrs={tStrs} />
 
-      <ConfigModal visible={mode !== 'main'} onClose={() => setMode('main')}>
+      <ConfigModal visible={mode !== 'main'}>
         <div style={{ display: mode === 'over' ? 'block' : 'none' }}>
-          <IconButton onClick={() => setMode('conf')}>
-            <SettingsIcon />
-          </IconButton>
-        </div>
-
-        <div style={{ display: mode === 'conf' ? 'block' : 'none' }}>
           <ColorField
             label="Back"
             onChange={(bgColor) => setConfig((v) => ({ ...v, bgColor }))}
             value={config.bgColor}
-            mini={miniConf}
           />
           <ColorField
             label="Font"
             onChange={(fontColor) => setConfig((v) => ({ ...v, fontColor }))}
             value={config.fontColor}
-            mini={miniConf}
           />
+          <IconButton onClick={() => setMode('main')}>
+            <Close />
+          </IconButton>
         </div>
       </ConfigModal>
     </div>

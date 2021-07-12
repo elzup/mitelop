@@ -17,3 +17,7 @@ export type MidokoroPlot = {
 export type TimerConfig = {
   total: number
 }
+
+export type ColorConfig = {
+  color: string
+}
