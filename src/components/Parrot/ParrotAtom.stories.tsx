@@ -8,13 +8,8 @@ export default {
   title: 'ParrotAtom',
   component: ParrotAtom,
   args: {
-    timeStr: '12',
-    timeMilliStr: '987',
-    total: 100 * 1000,
-    progress: 12,
-    status: 'run',
+    config: { pitch: 1.0, rate: 1.0 },
   },
-
   decorators: [
     (Story) => (
       <DefaultSizeGadget>

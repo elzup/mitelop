@@ -37,12 +37,8 @@ function ColorTool() {
       style={{ '--color': fontColor }}
     >
       <ColorAtom config={config} />
-      <ConfigModal visible={mode !== 'main'} background="transparent">
-        <div
-          style={{
-            display: mode === 'over' ? 'block' : 'none',
-          }}
-        >
+      <ConfigModal mode={mode} background="transparent">
+        <div className="over">
           <ColorField
             label="Color"
             onChange={(color) => setConfig((v) => ({ ...v, color }))}

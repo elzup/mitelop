@@ -43,8 +43,8 @@ function ClockTool() {
     >
       <ClockAtom config={config} dateStr={dateStr} tStrs={tStrs} />
 
-      <ConfigModal visible={mode !== 'main'}>
-        <div style={{ display: mode === 'over' ? 'block' : 'none' }}>
+      <ConfigModal mode={mode}>
+        <div className="over">
           <ColorField
             label="Back"
             onChange={(bgColor) => setConfig((v) => ({ ...v, bgColor }))}
