@@ -30,7 +30,7 @@ function MidokoroAtom(props: Props) {
         <div className="outer">
           <div className="slides">
             <div className="prev-slides">
-              {prevs.map((prev, i) => (
+              {prevs.map((prev) => (
                 <div
                   key={prev.label}
                   className="slide-item"

@@ -1,7 +1,6 @@
 import { IconButton } from '@material-ui/core'
-import styled from 'styled-components'
 import SettingsIcon from '@material-ui/icons/Settings'
-import { CheckBox } from '@material-ui/icons'
+import styled from 'styled-components'
 import { ChecksConfig, isLayoutType } from '../../types'
 import { arrToggle } from '../../utils'
 import { ConfigModal } from '../ConfigModal'
