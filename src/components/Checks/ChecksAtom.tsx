@@ -15,7 +15,6 @@ function CheckListAtom({ config, onClickItem }: Props) {
     <SizeDef>
       <Style data-layout={config.layout}>
         <div className="list">
-          WIP
           {titles.map((title, i) => (
             <div
               key={i}
@@ -24,7 +23,7 @@ function CheckListAtom({ config, onClickItem }: Props) {
               data-checked={checks[title]}
             >
               <div>
-                <span>{title}</span>
+                <span>{title || '-'}</span>
               </div>
             </div>
           ))}
@@ -39,10 +38,9 @@ CheckListAtom.defaultProps = {}
 const Style = styled.div`
   height: 100%;
   width: 100%;
+  box-sizing: border-box;
+
   .list {
-    padding: 0;
-    margin: 0;
-    list-style-type: none;
     display: grid;
     height: 100%;
   }
@@ -58,10 +56,8 @@ const Style = styled.div`
     }
   }
   &[data-layout='vertical'] {
-    ul {
+    div {
       grid-auto-flow: column;
-    }
-    li {
     }
   }
 `
