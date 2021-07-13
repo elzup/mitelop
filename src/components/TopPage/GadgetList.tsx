@@ -1,5 +1,5 @@
 import { MuuriComponent } from 'muuri-react'
-import React from 'react'
+import React, { ComponentProps } from 'react'
 import CheckList from '../CheckList'
 import Clock from '../Clock/ClockTool'
 import ColorTool from '../Color/ColorTool'
@@ -10,60 +10,73 @@ import TimerTool from '../Timer/TimerTool'
 import ParrotTool from '../Parrot/ParrotTool'
 import GadgetCard from './GadgetCard'
 
-const components = [
-  <GadgetCard
-    key={'gad-checklist'}
-    icon={'checklist'}
-    title="CheckList"
-    path="/list"
-  >
-    <CheckList />
-  </GadgetCard>,
-  <GadgetCard key={'gad-clock'} icon={'schedule'} title="Clock" path="/clock">
-    <Clock />
-  </GadgetCard>,
-  <GadgetCard
-    key={'gad-stopwatch'}
-    icon={'timer'}
-    title="StopWatch"
-    path="/stopwatch"
-  >
-    <StopwatchTool />
-  </GadgetCard>,
-  <GadgetCard
-    key={'gad-timer'}
-    icon={'hourglass_empty'}
-    title="Timer"
-    path="/timer"
-  >
-    <TimerTool />
-  </GadgetCard>,
-  <GadgetCard key={'gad-parrot'} icon={'speaker'} title="Parrot" path="/parrot">
-    <ParrotTool />
-  </GadgetCard>,
-  <GadgetCard key={'gad-color'} icon={'palette'} title="Color" path="/color">
-    <ColorTool />
-  </GadgetCard>,
-  <GadgetCard
-    key={'gad-midokoro'}
-    icon={'assessment'}
-    title="Midokoro"
-    path="/midokoro"
-  >
-    <Midokoro />
-    <GadgetCard
-      key={'gad-katinko'}
-      icon={'movie'}
-      title="Katinko"
-      path="/katinko"
-    >
-      <Katinko />
-    </GadgetCard>
-    ,
-  </GadgetCard>,
+type GadgetProp = ComponentProps<typeof GadgetCard> & { key: string }
+const gadgets: GadgetProp[] = [
+  {
+    key: 'gad-checklist',
+    icon: 'checklist',
+    title: 'CheckList',
+    path: '/list',
+    children: <CheckList />,
+  },
+  {
+    key: 'gad-clock',
+    icon: 'schedule',
+    title: 'Clock',
+    path: '/clock',
+    children: <Clock />,
+  },
+  {
+    key: 'gad-stopwatch',
+    icon: 'timer',
+    title: 'StopWatch',
+    path: '/stopwatch',
+    children: <StopwatchTool />,
+  },
+  {
+    key: 'gad-timer',
+    icon: 'hourglass_empty',
+    title: 'Timer',
+    path: '/timer',
+    children: <TimerTool />,
+  },
+  {
+    key: 'gad-parrot',
+    icon: 'speaker',
+    title: 'Parrot',
+    path: '/parrot"',
+    children: <ParrotTool />,
+  },
+  {
+    key: 'gad-color',
+    icon: 'palette',
+    title: 'Color',
+    path: '/color"',
+    children: <ColorTool />,
+  },
+  {
+    key: 'gad-midokoro',
+    icon: 'assessment',
+    title: 'Midokoro',
+    path: '/midokoro',
+    children: <Midokoro />,
+  },
+  {
+    key: 'gad-katinko',
+    icon: 'movie',
+    title: 'Katinko',
+    path: '/katinko',
+    children: <Katinko />,
+  },
 ]
 
 function GadgetList() {
-  return <MuuriComponent dragEnabled={false}>{components}</MuuriComponent>
+  return (
+    <MuuriComponent dragEnabled={false}>
+      {gadgets.map((props) => (
+        <GadgetCard {...props} key={props.key} />
+      ))}
+    </MuuriComponent>
+  )
 }
 export default GadgetList
