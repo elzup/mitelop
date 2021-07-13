@@ -44,14 +44,14 @@ const gadgets: GadgetProp[] = [
     key: 'gad-parrot',
     icon: 'speaker',
     title: 'Parrot',
-    path: '/parrot"',
+    path: '/parrot',
     children: <ParrotTool />,
   },
   {
     key: 'gad-color',
     icon: 'palette',
     title: 'Color',
-    path: '/color"',
+    path: '/color',
     children: <ColorTool />,
   },
   {
