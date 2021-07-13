@@ -1,36 +1,56 @@
+import { IconButton } from '@material-ui/core'
 import styled from 'styled-components'
-import { useTitleCheckLocalStorage } from '../../utils/useLocalStorage'
+import SettingsIcon from '@material-ui/icons/Settings'
+import { CheckBox } from '@material-ui/icons'
+import { ChecksConfig, isLayoutType } from '../../types'
+import { arrToggle } from '../../utils'
+import { ConfigModal } from '../ConfigModal'
+import { useConfig } from '../hooks/useConfig'
+import ChecksAtom from './ChecksAtom'
 
-type CheckListItem = {
-  name: string
-  check: boolean
-}
-type CheckListConfig = {
-  items: CheckListItem[]
-}
-
-type Props = {
-  titles: string[]
-  row: boolean
-}
-function ChecksTool({ titles, row }: Props) {
-  const [checks, setChecks] = useTitleCheckLocalStorage()
+type Props = {}
+function ChecksTool({}: Props) {
+  const { config, setConfig, mode, setMode } = useConfig<ChecksConfig>(
+    'checks',
+    {
+      text: `Hello\nWorld\n!!`,
+      checks: [],
+      layout: 'horizontal',
+    }
+  )
 
   return (
-    <Style data-row={row}>
-      <ul>
-        {titles.map((title, i) => (
-          <li
-            key={i}
-            onClick={() => setChecks((v) => ({ ...v, [title]: !v[title] }))}
-            data-checked={checks[title]}
+    <Style
+      onMouseEnter={() => setMode('over')}
+      onMouseLeave={() => setMode('main')}
+    >
+      <ChecksAtom
+        config={config}
+        onClickItem={(name) => {
+          setConfig((v) => ({ ...v, checks: arrToggle(v.checks, name) }))
+        }}
+      />
+      <ConfigModal mode={mode} miniOver>
+        <div className="over">
+          <IconButton onClick={() => setMode('conf')}>
+            <SettingsIcon />
+          </IconButton>
+        </div>
+        <div className="conf">
+          <select
+            value={config.layout}
+            onChange={(e) => {
+              const layout = e.target.value
+
+              if (!isLayoutType(layout)) return
+              setConfig((v) => ({ ...v, layout }))
+            }}
           >
-            <div>
-              <span>{title}</span>
-            </div>
-          </li>
-        ))}
-      </ul>
+            <option>horizontal</option>
+            <option>vertical</option>
+          </select>
+        </div>
+      </ConfigModal>
     </Style>
   )
 }
@@ -41,33 +61,10 @@ ChecksTool.defaultProps = {
 }
 
 const Style = styled.div`
+  position: relative;
   height: 100%;
   width: 100%;
-  ul {
-    padding: 0;
-    margin: 0;
-    list-style-type: none;
-    display: grid;
-    height: 100%;
-  }
-  li {
-    font-size: 30px;
-    padding-left: 8px;
-    border: solid 1px #444;
-    &[data-checked='true'] {
-      background: green;
-    }
-    span {
-      vertical-align: middle;
-    }
-  }
-  &[data-row='true'] {
-    ul {
-      grid-auto-flow: column;
-    }
-    li {
-    }
-  }
+  overflow: hidden;
 `
 
 export default ChecksTool

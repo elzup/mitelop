@@ -28,8 +28,14 @@ export type ParrotConfig = {
 }
 
 export type StopwatchConfig = {}
+
+export type ChecksLayout = 'horizontal' | 'vertical'
+
+export const isLayoutType = (v: string): v is ChecksLayout =>
+  v === 'horizontal' || v === 'vertical'
+
 export type ChecksConfig = {
   text: string
   checks: string[]
-  layout: 'horizontal' | 'vertical'
+  layout: ChecksLayout
 }

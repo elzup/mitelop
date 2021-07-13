@@ -26,7 +26,10 @@ function TimerTool() {
   }, [config.total])
 
   return (
-    <Style onMouseEnter={() => setMode('over')}>
+    <Style
+      onMouseEnter={() => setMode('over')}
+      onMouseLeave={() => setMode('main')}
+    >
       <TimerAtom
         total={config.total}
         timeStr={timeStr}
@@ -36,7 +39,7 @@ function TimerTool() {
         status={sw.status}
       />
 
-      <ConfigModal mode={mode} onLeave={() => setMode('main')}>
+      <ConfigModal mode={mode}>
         <div className="over">
           <IconButton
             disabled={sw.status === 'run'}

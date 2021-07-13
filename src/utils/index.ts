@@ -9,3 +9,7 @@ export const arrayToObj = (keys: string[]) => {
   })
   return obj
 }
+
+export const arrOmit = <T>(arr: T[], v: T): T[] => arr.filter((av) => av !== v)
+export const arrToggle = <T>(arr: T[], v: T): T[] =>
+  arr.includes(v) ? arrOmit(arr, v) : [...arr, v]

@@ -7,7 +7,7 @@ type Props = {
   config: ChecksConfig
   onClickItem: (id: string) => void
 }
-function CheckListAtom({ config, onClickItem }: Props) {
+function ChecksAtom({ config, onClickItem }: Props) {
   const titles = config.text.split('\n')
   const checks = arrayToObj(config.checks)
 
@@ -33,7 +33,7 @@ function CheckListAtom({ config, onClickItem }: Props) {
   )
 }
 
-CheckListAtom.defaultProps = {}
+ChecksAtom.defaultProps = {}
 
 const Style = styled.div`
   height: 100%;
@@ -62,4 +62,4 @@ const Style = styled.div`
   }
 `
 
-export default CheckListAtom
+export default ChecksAtom

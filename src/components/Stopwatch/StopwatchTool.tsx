@@ -1,5 +1,3 @@
-import { IconButton } from '@material-ui/core'
-import SettingsIcon from '@material-ui/icons/Settings'
 import styled from 'styled-components'
 import { StopwatchConfig } from '../../types'
 import { ConfigModal } from '../ConfigModal'
@@ -18,7 +16,7 @@ function StopwatchTool() {
   )
 
   return (
-    <Style>
+    <Style onMouseLeave={() => setMode('main')}>
       <StopwatchAtom
         onClickRun={sw.run}
         onClickPause={sw.pause}
@@ -28,7 +26,7 @@ function StopwatchTool() {
         timeStr={timeStr}
         timeMilliStr={timeMilliStr}
       />
-      <ConfigModal miniOver mode={mode} onLeave={() => setMode('main')}>
+      <ConfigModal miniOver mode={mode}>
         <div className="over"></div>
       </ConfigModal>
     </Style>

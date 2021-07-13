@@ -1,33 +1,18 @@
-import { Meta } from '@storybook/react'
-import React from 'react'
-import { GridH, GridL, GridS, GridV, MultiSizeGrid } from '../SizeDiv'
+import { Meta, Story } from '@storybook/react'
+import React, { ComponentProps } from 'react'
+import { decorators, multiSizeDecorators } from '../SizeDiv'
 import ClockTool from './ClockTool'
+
+type Props = ComponentProps<typeof ClockTool>
 
 export default {
   title: 'ClockTool',
   component: ClockTool,
-} as Meta
-export const ClockBase = () => (
-  <MultiSizeGrid>
-    <GridH>
-      <ClockTool />
-    </GridH>
-  </MultiSizeGrid>
-)
+  parameters: { actions: { argTypesRegex: '^on.*' } },
+} as Meta<Props>
 
-export const ClockSize = () => (
-  <MultiSizeGrid>
-    <GridS>
-      <ClockTool />
-    </GridS>
-    <GridL>
-      <ClockTool />
-    </GridL>
-    <GridV>
-      <ClockTool />
-    </GridV>
-    <GridH>
-      <ClockTool />
-    </GridH>
-  </MultiSizeGrid>
-)
+export const Base: Story<Props> = (_args) => <ClockTool />
+Base.decorators = decorators
+
+export const Size = Base.bind({})
+Size.decorators = multiSizeDecorators

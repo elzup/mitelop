@@ -31,6 +31,10 @@ function ColorTool(props: Props) {
   return (
     <Style
       onMouseEnter={() => setMode('over')}
+      onMouseLeave={() => {
+        if (touched) return
+        setMode('main')
+      }}
       // @ts-ignore
       style={{ '--color': fontColor }}
     >
@@ -42,14 +46,7 @@ function ColorTool(props: Props) {
       )}
       <ColorAtom config={config} />
 
-      <ConfigModal
-        mode={mode}
-        miniOver
-        onLeave={() => {
-          if (touched) return
-          setMode('main')
-        }}
-      >
+      <ConfigModal mode={mode} miniOver>
         <div className="over">
           <ColorField
             label="Color"

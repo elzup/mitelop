@@ -16,8 +16,7 @@ export default {
   parameters: { actions: { argTypesRegex: '^on.*' } },
 } as Meta<Props>
 
-const Base: Story<Props> = (args) => <StopwatchAtom {...args} />
-
+export const Base: Story<Props> = (args) => <StopwatchAtom {...args} />
 Base.decorators = decorators
 
 export const Run = Base.bind({})

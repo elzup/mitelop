@@ -41,17 +41,14 @@ function ClockTool() {
     <div
       style={{ position: 'relative', height: '100%', overflow: 'hidden' }}
       onMouseEnter={() => setMode('over')}
+      onMouseLeave={() => {
+        if (touched) return
+        setMode('main')
+      }}
     >
       <ClockAtom config={config} dateStr={dateStr} tStrs={tStrs} />
 
-      <ConfigModal
-        mode={mode}
-        miniOver
-        onLeave={() => {
-          if (touched) return
-          setMode('main')
-        }}
-      >
+      <ConfigModal mode={mode} miniOver>
         <div className="over" onMouseDown={() => setTouched(true)}>
           <ColorField
             label="Back"

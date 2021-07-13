@@ -15,9 +15,12 @@ function ParrotTool() {
   )
 
   return (
-    <Style onMouseEnter={() => setMode('over')}>
+    <Style
+      onMouseEnter={() => setMode('over')}
+      onMouseLeave={() => setMode('main')}
+    >
       <ParrotAtom config={config} />
-      <ConfigModal miniOver mode={mode} onLeave={() => setMode('main')}>
+      <ConfigModal miniOver mode={mode}>
         <div className="over">
           <IconButton onClick={() => setMode('conf')}>
             <SettingsIcon />
