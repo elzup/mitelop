@@ -1,11 +1,6 @@
-import {
-  Button,
-  IconButton,
-  Slider,
-  TextField,
-  Typography,
-} from '@material-ui/core'
-import DeleteIcon from '@material-ui/icons/Delete'
+import { IconButton, Slider, Typography } from '@material-ui/core'
+import DeleteIcon from '@material-ui/icons/HighlightOff'
+import PinIcon from '@material-ui/icons/PinDrop'
 import React from 'react'
 import styled from 'styled-components'
 import { MidokoroConfig, MidokoroPlot } from '../../types'
@@ -30,8 +25,8 @@ function MidokoroAtom(props: Props) {
 
   return (
     <SizeDef>
-      <Typography>Midokoro Tool</Typography>
       <Style>
+        <Typography>Midokoro Tool</Typography>
         <div className="outer">
           <div className="slides">
             <div className="prev-slides">
@@ -75,17 +70,20 @@ function MidokoroAtom(props: Props) {
           </div>
           <div className="ui">
             <div>
-              <Button variant="contained" onClick={onAddPlot}>
-                Pin
-              </Button>
+              <IconButton
+                style={{ border: 'solid 1px' }}
+                aria-label="directions"
+                size="small"
+                onClick={onAddPlot}
+              >
+                <PinIcon />
+              </IconButton>
             </div>
-            <div className="plots-list">
+            <div className="plot-list">
               {current.plots.map((plot) => (
                 <div className="plot-form-item" key={plot.id}>
-                  <TextField
-                    variant="outlined"
+                  <input
                     value={plot.label}
-                    size="small"
                     onChange={(e) =>
                       onChangePlot({ ...plot, label: e.target.value })
                     }
@@ -109,7 +107,6 @@ function MidokoroAtom(props: Props) {
 
 const Style = styled.div`
   width: 100%;
-  width: 94%;
   height: 100%;
   padding: 0 3%;
   font-family: 'Roboto';
@@ -158,11 +155,31 @@ const Style = styled.div`
     .ui {
       padding: 4px;
       display: grid;
-      grid-template-columns: auto auto;
-      .plot-form-item {
-        display: flex;
-        justify-content: space-between;
-        padding: 4px;
+      grid-template-columns: auto 1fr;
+      gap: 8px;
+      border-top: 1px solid #e0e0e0;
+    }
+    .plot-list {
+      display: flex;
+      flex-wrap: wrap;
+      overflow-y: scroll;
+      height: max-content;
+      gap: 2px;
+    }
+    .plot-form-item {
+      width: 100px;
+      display: flex;
+      align-items: center;
+      input {
+        width: 80%;
+        font-size: 12px;
+        height: 24px;
+      }
+      button {
+        height: 20px;
+      }
+      svg {
+        width: 20px;
       }
     }
   }

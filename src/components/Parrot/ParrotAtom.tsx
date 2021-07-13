@@ -45,7 +45,7 @@ const Style = styled.div`
     'btns btnp'
     'text text';
   button {
-    font-size: 10%;
+    font-size: calc(var(--w) / 10);
     &[disabled] {
       opacity: 0.1;
     }

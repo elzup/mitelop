@@ -92,7 +92,7 @@ function MidokoroTool(_props: Props) {
           const { id, ymdh, perHour } = currentTimes(now)
           const newPlot: MidokoroPlot = {
             rate: perHour * 100,
-            label: `${perHour}`,
+            label: `${Math.floor(perHour * 60 * 10) / 10}`,
             id,
           }
           const newHourPlots = { ...plots[ymdh] }
