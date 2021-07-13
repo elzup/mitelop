@@ -1,6 +1,6 @@
 import { MuuriComponent } from 'muuri-react'
 import React, { ComponentProps } from 'react'
-import CheckList from '../CheckList'
+import ChecksTool from '../Checks/ChecksTool'
 import Clock from '../Clock/ClockTool'
 import ColorTool from '../Color/ColorTool'
 import Katinko from '../Katinko'
@@ -13,11 +13,11 @@ import GadgetCard from './GadgetCard'
 type GadgetProp = ComponentProps<typeof GadgetCard> & { key: string }
 const gadgets: GadgetProp[] = [
   {
-    key: 'gad-checklist',
+    key: 'gad-checks',
     icon: 'checklist',
-    title: 'CheckList',
-    path: '/list',
-    children: <CheckList />,
+    title: 'Checks',
+    path: '/checks',
+    children: <ChecksTool />,
   },
   {
     key: 'gad-clock',

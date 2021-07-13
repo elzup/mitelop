@@ -28,3 +28,8 @@ export type ParrotConfig = {
 }
 
 export type StopwatchConfig = {}
+export type ChecksConfig = {
+  text: string
+  checks: string[]
+  layout: 'horizontal' | 'vertical'
+}

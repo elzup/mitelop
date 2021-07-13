@@ -13,13 +13,12 @@ type Props = {
   titles: string[]
   row: boolean
 }
-function CheckList({ titles, row }: Props) {
+function ChecksTool({ titles, row }: Props) {
   const [checks, setChecks] = useTitleCheckLocalStorage()
 
   return (
     <Style data-row={row}>
       <ul>
-        WIP
         {titles.map((title, i) => (
           <li
             key={i}
@@ -36,7 +35,7 @@ function CheckList({ titles, row }: Props) {
   )
 }
 
-CheckList.defaultProps = {
+ChecksTool.defaultProps = {
   titles: [],
   row: false,
 }
@@ -71,4 +70,4 @@ const Style = styled.div`
   }
 `
 
-export default CheckList
+export default ChecksTool
