@@ -74,10 +74,10 @@ const Style = styled.div`
     .inner {
       max-width: var(--w);
       max-height: var(--h);
+      text-align: center;
     }
     .time {
       font-family: 'Roboto', 'Helvetica', 'Arial', monospace, sans-serif;
-      text-align: center;
       font-size: calc(var(--w) * 0.15);
     }
     .controls {

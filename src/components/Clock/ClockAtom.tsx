@@ -15,8 +15,11 @@ function ClockAtom(props: React.PropsWithChildren<Props>) {
   return (
     <SizeDef portRate={1.8}>
       <Style
-        bgColor={config.bgColor}
-        fontColor={config.fontColor}
+        style={{
+          // @ts-ignore
+          '--bg-color': config.bgColor,
+          '--font-color': config.fontColor,
+        }}
         date-visible={config.dateVisible}
       >
         <div className="outer">
@@ -36,10 +39,7 @@ function ClockAtom(props: React.PropsWithChildren<Props>) {
   )
 }
 
-const Style = styled.div<{
-  bgColor: string
-  fontColor: string
-}>`
+const Style = styled.div`
   width: 100%;
   height: 100%;
   padding: 0 3%;
