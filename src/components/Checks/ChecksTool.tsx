@@ -21,7 +21,7 @@ function ChecksTool({}: Props) {
   return (
     <Style
       onMouseEnter={() => setMode('over')}
-      onMouseLeave={() => setMode('main')}
+      // onMouseLeave={() => setMode('main')}
     >
       <ChecksAtom
         config={config}
@@ -36,18 +36,35 @@ function ChecksTool({}: Props) {
           </IconButton>
         </div>
         <div className="conf">
-          <select
-            value={config.layout}
-            onChange={(e) => {
-              const layout = e.target.value
+          <div>
+            <div>
+              <label htmlFor="layout">layout</label>
+              <select
+                name="layout"
+                value={config.layout}
+                onChange={(e) => {
+                  const layout = e.target.value
 
-              if (!isLayoutType(layout)) return
-              setConfig((v) => ({ ...v, layout }))
-            }}
-          >
-            <option>horizontal</option>
-            <option>vertical</option>
-          </select>
+                  if (!isLayoutType(layout)) return
+                  setConfig((v) => ({ ...v, layout }))
+                }}
+              >
+                <option>horizontal</option>
+                <option>vertical</option>
+              </select>
+            </div>
+            <div>
+              <label htmlFor="items">items</label>
+              <textarea
+                name="items"
+                value={config.text}
+                // style={{ font-size: '' }}
+                onChange={(e) =>
+                  setConfig((v) => ({ ...v, text: e.target.value }))
+                }
+              ></textarea>
+            </div>
+          </div>
         </div>
       </ConfigModal>
     </Style>
@@ -64,6 +81,21 @@ const Style = styled.div`
   height: 100%;
   width: 100%;
   overflow: hidden;
+  .conf {
+    height: 100%;
+    > div {
+      height: 100%;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      /* padding:  */
+      textarea {
+        box-sizing: border-box;
+        font-size: 1.2rem;
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
 `
 
 export default ChecksTool

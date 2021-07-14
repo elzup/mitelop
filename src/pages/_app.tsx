@@ -1,7 +1,7 @@
 import { AppProps } from 'next/app'
 import { ThemeProvider, CssBaseline } from '@material-ui/core'
 import Head from 'next/head'
-import { theme } from '../utils/theme'
+import { theme, GlobalStyle } from '../utils/theme'
 
 const App = ({ Component, pageProps }: AppProps) => (
   <>
@@ -27,6 +27,7 @@ const App = ({ Component, pageProps }: AppProps) => (
     </Head>
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <GlobalStyle />
       <Component {...pageProps} />
     </ThemeProvider>
   </>
