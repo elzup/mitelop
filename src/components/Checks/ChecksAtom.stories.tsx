@@ -5,7 +5,7 @@ import ChecksAtom from './ChecksAtom'
 
 const text = `alice
 bob
-charlie
+チャーリー
 
 eugene
 `

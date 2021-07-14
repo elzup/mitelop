@@ -81,6 +81,7 @@ const Style = styled.div`
   height: 100%;
   width: 100%;
   overflow: hidden;
+
   .conf {
     height: 100%;
     > div {
