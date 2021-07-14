@@ -1,6 +1,6 @@
 import { IconButton } from '@material-ui/core'
 import { Close } from '@material-ui/icons'
-import color from 'color'
+import colorfn from 'color'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
@@ -22,7 +22,7 @@ function ColorTool(props: Props) {
 
   useEffect(() => {
     try {
-      setIsDark(color(config.color).isDark())
+      setIsDark(colorfn(config.color).isDark())
     } catch (_e) {}
   }, [config.color])
 
@@ -41,7 +41,7 @@ function ColorTool(props: Props) {
       {props.windowMode && (
         <Head>
           <meta name="theme-color" content={config.color} />
-          <title>Color-{color}</title>
+          <title>Color-{config.color}</title>
         </Head>
       )}
       <ColorAtom config={config} />
