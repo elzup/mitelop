@@ -48,8 +48,8 @@ const Style = styled.div`
   .time {
     width: 20%;
     text-align: center;
-    font-size: calc(var(--w) / 10);
-    font-family: 'Roboto', 'Helvetica', 'Arial', monospace, sans-serif;
+    font-size: calc(var(--w) / 11);
+    /* font-family: 'Roboto', 'Helvetica', 'Arial', monospace, sans-serif; */
     margin: 5%;
     line-height: 1.05em;
   }
