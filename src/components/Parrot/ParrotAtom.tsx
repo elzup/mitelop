@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Typography } from '@material-ui/core'
 import React from 'react'
 import styled from 'styled-components'
 import { ParrotConfig } from '../../types'
@@ -10,8 +11,16 @@ type Props = {
 }
 function ParrotAtom({ config }: Props) {
   const { pitch, rate } = config
-  const { speechStart, speechStop, isStart, text } = useSpeech(pitch, rate)
+  const { speechStart, speechStop, isStart, text, initError } = useSpeech(
+    pitch,
+    rate
+  )
 
+  if (initError) {
+    return (
+      <Typography>Not supported browser (recomended Google Chrome)</Typography>
+    )
+  }
   return (
     <SizeDef>
       <Style>

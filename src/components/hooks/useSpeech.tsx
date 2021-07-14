@@ -34,6 +34,7 @@ export function useSpeech(pitch: number, rate: number) {
   const recognitionRef = useRef<Recognition>()
   const [errorCount, setErrorCount] = useState<number>(0)
   const [isStart, setIsStart] = useState<boolean>(false)
+  const [initError, setInitError] = useState<boolean>(false)
   const speechStart = () => {
     setIsStart(true)
     setErrorCount(0)
@@ -44,8 +45,16 @@ export function useSpeech(pitch: number, rate: number) {
   }
 
   useEffect(() => {
-    // eslint-disable-next-line new-cap
-    const recognition = new iwindow.webkitSpeechRecognition()
+    let recognition: Recognition | null = null
+
+    try {
+      // eslint-disable-next-line new-cap
+      recognition = new iwindow.webkitSpeechRecognition()
+    } catch (_e) {
+      setInitError(true)
+      return
+    }
+    if (!recognition) return
 
     recognition.lang = 'ja-JP'
     recognition.interimResults = false
@@ -69,7 +78,7 @@ export function useSpeech(pitch: number, rate: number) {
     recognitionRef.current = recognition
 
     return () => {
-      recognition.stop()
+      if (recognition !== null) recognition?.stop()
     }
   }, [])
 
@@ -106,6 +115,7 @@ export function useSpeech(pitch: number, rate: number) {
     speechStart,
     speechStop,
     isStart,
+    initError,
     recognition: recognitionRef.current,
     text,
   }
