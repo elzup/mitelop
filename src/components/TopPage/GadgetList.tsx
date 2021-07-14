@@ -72,7 +72,7 @@ const gadgets: GadgetProp[] = [
 
 function GadgetList() {
   return (
-    <MuuriComponent dragEnabled={false}>
+    <MuuriComponent instantLayout>
       {gadgets.map((props) => (
         <GadgetCard {...props} key={props.key} />
       ))}

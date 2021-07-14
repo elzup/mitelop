@@ -1,5 +1,6 @@
 import { IconButton } from '@material-ui/core'
 import SettingsIcon from '@material-ui/icons/Settings'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { ChecksConfig, isLayoutType } from '../../types'
 import { arrToggle } from '../../utils'
@@ -17,17 +18,27 @@ function ChecksTool({}: Props) {
       layout: 'horizontal',
     }
   )
+  const [chache, setChache] = useState<string | null>(null)
+
+  useEffect(() => {
+    return () => {
+      if (chache !== null) {
+        setConfig((v) => ({ ...v, text: chache }))
+      }
+    }
+  }, [])
 
   return (
     <Style
       onMouseEnter={() => setMode('over')}
-      // onMouseLeave={() => setMode('main')}
+      onMouseLeave={() => setMode('main')}
     >
       <ChecksAtom
         config={config}
         onClickItem={(name) => {
           setConfig((v) => ({ ...v, checks: arrToggle(v.checks, name) }))
         }}
+        onChangeText={(text) => setChache(text)}
       />
       <ConfigModal mode={mode} miniOver>
         <div className="over">

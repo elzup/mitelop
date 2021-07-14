@@ -1,6 +1,7 @@
 import NoCheckIcon from '@material-ui/icons/RadioButtonUnchecked'
 import CheckedIcon from '@material-ui/icons/CheckCircle'
 import styled from 'styled-components'
+import { MuuriComponent } from 'muuri-react'
 import { ChecksConfig } from '../../types'
 import { arrayToObj } from '../../utils'
 import SizeDef from '../SizeDef'
@@ -23,8 +24,9 @@ function CheckItem(props: {
 type Props = {
   config: ChecksConfig
   onClickItem: (id: string) => void
+  onChangeText: (text: string) => void
 }
-function ChecksAtom({ config, onClickItem }: Props) {
+function ChecksAtom({ config, onClickItem, onChangeText }: Props) {
   const titles = config.text.split('\n')
   const checks = arrayToObj(config.checks)
 
@@ -32,14 +34,30 @@ function ChecksAtom({ config, onClickItem }: Props) {
     <SizeDef>
       <Style data-layout={config.layout}>
         <div className="list">
-          {titles.map((title, i) => (
-            <CheckItem
-              key={i}
-              onClick={() => onClickItem(title)}
-              checked={checks[title]}
-              title={title}
-            />
-          ))}
+          <MuuriComponent
+            // NOTE: I wanna like defaultValue
+            dragEnabled
+            instantLayout
+            onDragEnd={(item) => {
+              const newText = item
+                .getGrid()
+                .getItems()
+                .map((c) => titles[Number(c.getKey())])
+                .join('\n')
+
+              console.log(newText)
+              onChangeText(newText)
+            }}
+          >
+            {titles.map((title, i) => (
+              <CheckItem
+                key={i}
+                onClick={() => onClickItem(title)}
+                checked={checks[title]}
+                title={title}
+              />
+            ))}
+          </MuuriComponent>
         </div>
       </Style>
     </SizeDef>
@@ -59,6 +77,8 @@ const Style = styled.div`
   }
   .item {
     display: flex;
+    height: 2rem;
+    width: 100%;
     font-size: 1.2rem;
     align-items: center;
     padding-left: 8px;

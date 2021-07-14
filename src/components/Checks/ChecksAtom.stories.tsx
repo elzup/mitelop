@@ -16,8 +16,10 @@ export default {
   component: ChecksAtom,
   args: {
     config: { text, checks: ['bob'], layout: 'horizontal' },
+    onClickItem: () => {},
+    onChangeText: () => {},
   },
-  parameters: { actions: { argTypesRegex: '^on.*' } },
+  actions: { argTypesRegex: '^on[A-Z].*' },
 } as Meta<Props>
 
 export const Base: Story<Props> = (args) => <ChecksAtom {...args} />
