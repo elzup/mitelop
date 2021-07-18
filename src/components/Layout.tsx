@@ -25,17 +25,34 @@ export const TopLayout: React.FunctionComponent<Props> = ({
       <meta charSet="utf-8" />
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
-    <div>{children}</div>
+    <Main>{children}</Main>
     <Footer>
-      <div className="author">
-        Made by <a href="">@anozon</a>
+      <div className="links">
+        <div>
+          <a href="https://github.com/elzup/mitelop">GitHub</a>
+        </div>
+        <div className="author">
+          Made by <a href="https://twitter.com/anozon">@anozon</a>
+        </div>
       </div>
     </Footer>
   </div>
 )
+const Main = styled.div`
+  min-height: calc(100vh - 80px);
+`
+
 const Footer = styled.footer`
-  height: 1rem;
+  height: 60px;
   bottom: 0;
+  padding: 20px 40px 0;
+  box-sizing: border-box;
+  border-top: solid 1px;
+  .links {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+  }
 `
 
 export default GadgetLayout
