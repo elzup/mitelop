@@ -1,13 +1,13 @@
-import { MuuriComponent } from 'muuri-react'
 import React, { ComponentProps } from 'react'
+import styled from 'styled-components'
 import ChecksTool from '../Checks/ChecksTool'
 import Clock from '../Clock/ClockTool'
 import ColorTool from '../Color/ColorTool'
 import Katinko from '../Katinko'
 import Midokoro from '../Midokoro/MidokoroTool'
+import ParrotTool from '../Parrot/ParrotTool'
 import StopwatchTool from '../Stopwatch/StopwatchTool'
 import TimerTool from '../Timer/TimerTool'
-import ParrotTool from '../Parrot/ParrotTool'
 import GadgetCard from './GadgetCard'
 
 type GadgetProp = ComponentProps<typeof GadgetCard> & { key: string }
@@ -72,11 +72,17 @@ const gadgets: GadgetProp[] = [
 
 function GadgetList() {
   return (
-    <MuuriComponent instantLayout>
+    <Style>
       {gadgets.map((props) => (
         <GadgetCard {...props} key={props.key} />
       ))}
-    </MuuriComponent>
+    </Style>
   )
 }
+const Style = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+`
+
 export default GadgetList

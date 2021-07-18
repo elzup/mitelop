@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import * as React from 'react'
 import styled from 'styled-components'
+import { GITHUB_LINK, TWITTER_LINK } from '../config'
 
 type Props = { title: string }
 
@@ -29,10 +30,10 @@ export const TopLayout: React.FunctionComponent<Props> = ({
     <Footer>
       <div className="links">
         <div>
-          <a href="https://github.com/elzup/mitelop">GitHub</a>
+          <a href={GITHUB_LINK}>GitHub</a>
         </div>
         <div className="author">
-          Made by <a href="https://twitter.com/anozon">@anozon</a>
+          Made by <a href={TWITTER_LINK}>@anozon</a>
         </div>
       </div>
     </Footer>
