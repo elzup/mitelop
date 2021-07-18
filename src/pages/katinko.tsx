@@ -1,12 +1,12 @@
 import { NextPage } from 'next'
-import Layout from '../components/Layout'
+import GadgetLayout from '../components/Layout'
 import Katinko from '../components/Katinko'
 
 const KatinkoPage: NextPage = () => {
   return (
-    <Layout title="Katinko" reset>
+    <GadgetLayout title="Katinko">
       <Katinko />
-    </Layout>
+    </GadgetLayout>
   )
 }
 

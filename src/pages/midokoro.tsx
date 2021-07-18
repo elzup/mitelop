@@ -1,12 +1,12 @@
 import { NextPage } from 'next'
-import Layout from '../components/Layout'
+import GadgetLayout from '../components/Layout'
 import Midokoro from '../components/Midokoro/MidokoroTool'
 
 const IndexPage: NextPage = () => {
   return (
-    <Layout title="Midokoro" reset>
+    <GadgetLayout title="Midokoro">
       <Midokoro />
-    </Layout>
+    </GadgetLayout>
   )
 }
 

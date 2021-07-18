@@ -1,6 +1,6 @@
 import { NextPage } from 'next'
 import dynamic from 'next/dynamic'
-import Layout from '../components/Layout'
+import GadgetLayout from '../components/Layout'
 
 const Parrot = dynamic(() => import('../components/Parrot/ParrotTool'), {
   ssr: false,
@@ -8,9 +8,9 @@ const Parrot = dynamic(() => import('../components/Parrot/ParrotTool'), {
 
 const IndexPage: NextPage = () => {
   return (
-    <Layout title="Parrot" reset>
+    <GadgetLayout title="Parrot">
       <Parrot />
-    </Layout>
+    </GadgetLayout>
   )
 }
 

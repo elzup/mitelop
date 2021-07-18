@@ -1,12 +1,12 @@
 import { NextPage } from 'next'
-import Layout from '../components/Layout'
+import GadgetLayout from '../components/Layout'
 import StopwatchTool from '../components/Stopwatch/StopwatchTool'
 
 const StopwatchPage: NextPage = () => {
   return (
-    <Layout title="Stopwatch" reset>
+    <GadgetLayout title="Stopwatch">
       <StopwatchTool />
-    </Layout>
+    </GadgetLayout>
   )
 }
 

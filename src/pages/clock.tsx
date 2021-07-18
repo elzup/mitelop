@@ -1,12 +1,12 @@
 import { NextPage } from 'next'
 import Clock from '../components/Clock/ClockTool'
-import Layout from '../components/Layout'
+import GadgetLayout from '../components/Layout'
 
 const ClockPage: NextPage = () => {
   return (
-    <Layout title="Clock" reset>
+    <GadgetLayout title="Clock" reset>
       <Clock />
-    </Layout>
+    </GadgetLayout>
   )
 }
 

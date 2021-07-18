@@ -1,6 +1,6 @@
 import { NextPage } from 'next'
 import dynamic from 'next/dynamic'
-import Layout from '../components/Layout'
+import GadgetLayout from '../components/Layout'
 
 const ChecksPage = dynamic(() => import('../components/Checks/ChecksTool'), {
   ssr: false,
@@ -8,9 +8,9 @@ const ChecksPage = dynamic(() => import('../components/Checks/ChecksTool'), {
 
 const IndexPage: NextPage = () => {
   return (
-    <Layout title="Checks" reset>
+    <GadgetLayout title="Checks">
       <ChecksPage />
-    </Layout>
+    </GadgetLayout>
   )
 }
 

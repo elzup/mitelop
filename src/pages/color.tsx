@@ -1,12 +1,12 @@
 import { NextPage } from 'next'
 import ColorTool from '../components/Color/ColorTool'
-import Layout from '../components/Layout'
+import GadgetLayout from '../components/Layout'
 
 const ColorPage: NextPage = () => {
   return (
-    <Layout title="Color" reset>
+    <GadgetLayout title="Color">
       <ColorTool windowMode />
-    </Layout>
+    </GadgetLayout>
   )
 }
 
