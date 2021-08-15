@@ -5,7 +5,7 @@ import GadgetLayout from '../components/Layout'
 const ClockPage: NextPage = () => {
   return (
     <GadgetLayout title="Clock">
-      <Clock />
+      <Clock windowMode />
     </GadgetLayout>
   )
 }

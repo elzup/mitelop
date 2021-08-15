@@ -30,3 +30,6 @@ type IWindow = {
 // }
 
 export const iwindow = window as unknown as IWindow
+
+export const displayModeMql = window.matchMedia('(display-mode: standalone)')
+export const getIsStandalone = () => displayModeMql.matches

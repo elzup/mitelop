@@ -1,18 +1,19 @@
-import {
-  AppBar,
-  IconButton,
-  Link,
-  Toolbar,
-  Typography,
-} from '@material-ui/core'
+import { AppBar, IconButton, Toolbar, Typography } from '@material-ui/core'
 import GitHubIcon from '@material-ui/icons/GitHub'
+import styled from 'styled-components'
 import { GITHUB_LINK } from '../../config'
 import GadgetList from './GadgetList'
+
+const StyledAppBar = styled(AppBar)`
+  @media (display-mode: standalone) {
+    display: none;
+  }
+`
 
 const TopPage = () => {
   return (
     <>
-      <AppBar position="static">
+      <StyledAppBar position="static">
         <Toolbar variant="dense">
           <Typography>Mitelop</Typography>
           <div style={{ flexGrow: 1 }} />
@@ -24,7 +25,7 @@ const TopPage = () => {
             </IconButton>
           </div>
         </Toolbar>
-      </AppBar>
+      </StyledAppBar>
       <div style={{ margin: '8px' }}>
         <GadgetList />
       </div>

@@ -1,5 +1,6 @@
 import { IconButton } from '@material-ui/core'
 import { Close } from '@material-ui/icons'
+import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import { useSeconds } from 'use-seconds'
 import { ClockConfig } from '../../types'
@@ -28,7 +29,10 @@ function useTimeStr() {
   return { dateStr, tStrs }
 }
 
-function ClockTool() {
+type Props = {
+  windowMode?: boolean
+}
+function ClockTool({ windowMode }: Props) {
   const { mode, setMode, config, setConfig } = useConfig<ClockConfig>('clock', {
     dateVisible: true,
     bgColor: '#aaaaff',
@@ -46,6 +50,11 @@ function ClockTool() {
         setMode('main')
       }}
     >
+      {windowMode && (
+        <Head>
+          <meta name="theme-color" content={config.bgColor} />
+        </Head>
+      )}
       <ClockAtom config={config} dateStr={dateStr} tStrs={tStrs} />
 
       <ConfigModal mode={mode} miniOver>
