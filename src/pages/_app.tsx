@@ -10,11 +10,11 @@ const App = ({ Component, pageProps }: AppProps) => (
         name="viewport"
         content="width=device-width, initial-scale=1, shrink-to-fit=no"
       />
-      <link rel="shortcut icon" href="/static/images/icon.png" />
+      <link rel="shortcut icon" href="/images/icon.png" />
       <link
         rel="icon"
         type="image/png"
-        href="/static/images/icon-4x.png"
+        href="/images/icon-4x.png"
         sizes="192x192"
       />
       <link
@@ -22,7 +22,7 @@ const App = ({ Component, pageProps }: AppProps) => (
         href="https://fonts.googleapis.com/icon?family=Material+Icons"
       />
 
-      <link rel="manifest" href="/static/manifest.json" />
+      <link rel="manifest" href="/manifest.json" />
       <link href="https://unpkg.com/sanitize.css/forms.css" rel="stylesheet" />
     </Head>
     <ThemeProvider theme={theme}>

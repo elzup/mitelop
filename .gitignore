@@ -1,5 +1,5 @@
 node_modules
 .next
 
-# 自動生成される
-public/
+public/sw.js
+public/workbox-*

@@ -4,7 +4,7 @@ import GadgetLayout from '../components/Layout'
 
 const ClockPage: NextPage = () => {
   return (
-    <GadgetLayout title="Clock" reset>
+    <GadgetLayout title="Clock">
       <Clock />
     </GadgetLayout>
   )
