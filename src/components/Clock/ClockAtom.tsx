@@ -15,12 +15,12 @@ function ClockAtom(props: React.PropsWithChildren<Props>) {
   return (
     <SizeDef portRate={1.8}>
       <Style
+        date-visible={config.dateVisible}
         style={{
           // @ts-ignore
           '--bg-color': config.bgColor,
           '--font-color': config.fontColor,
         }}
-        date-visible={config.dateVisible}
       >
         <div className="outer">
           <div className="inner">

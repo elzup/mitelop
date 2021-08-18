@@ -1,14 +1,14 @@
-import styled from 'styled-components'
 import { ColorConfig } from '../../types'
 
 type Props = { config: ColorConfig }
 function ColorAtom({ config }: Props) {
-  return <Style style={{ background: config.color }}></Style>
-}
+  console.log(config)
 
-const Style = styled.div`
-  height: 100%;
-  width: 100%;
-`
+  return (
+    <div
+      style={{ height: '100%', width: '100%', background: config.color }}
+    ></div>
+  )
+}
 
 export default ColorAtom

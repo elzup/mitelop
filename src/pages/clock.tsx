@@ -1,11 +1,15 @@
 import { NextPage } from 'next'
-import Clock from '../components/Clock/ClockTool'
+import dynamic from 'next/dynamic'
 import GadgetLayout from '../components/Layout'
+
+const ClockTool = dynamic(() => import('../components/Clock/ClockTool'), {
+  ssr: false,
+})
 
 const ClockPage: NextPage = () => {
   return (
     <GadgetLayout title="Clock">
-      <Clock windowMode />
+      <ClockTool windowMode />
     </GadgetLayout>
   )
 }
