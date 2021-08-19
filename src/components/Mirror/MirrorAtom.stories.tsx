@@ -22,7 +22,7 @@ BeforeAllow.args = { allowed: false }
 BeforeAllow.decorators = decorators
 
 export const Flipped = Base.bind({})
-Flipped.args = { flipped: true }
+Flipped.args = { flipped: false }
 Flipped.decorators = decorators
 
 export const Size = Base.bind({})

@@ -6,24 +6,18 @@ import SizeDef from '../SizeDef'
 type Props = {
   flipped: boolean
   allowed: boolean
+  fit: string
   onAllowClick: () => void
 }
 
-function MirrorAtom({ flipped, allowed, onAllowClick }: Props) {
+function MirrorAtom({ fit, flipped, allowed, onAllowClick }: Props) {
   const webcamRef = useRef<Webcam>(null)
 
   return (
     <SizeDef>
-      <Style>
+      <Style data-fit={fit}>
         {!allowed && <button onClick={onAllowClick}>Camera On</button>}
-        {allowed && (
-          <Webcam
-            ref={webcamRef}
-            mirrored={flipped}
-            audio={false}
-            style={{ width: '100%' }}
-          />
-        )}
+        {allowed && <Webcam ref={webcamRef} mirrored={flipped} audio={false} />}
       </Style>
     </SizeDef>
   )
@@ -34,6 +28,20 @@ const Style = styled.div`
   width: 100%;
   box-sizing: border-box;
   position: relative;
+  video {
+    height: 100%;
+    width: 100%;
+  }
+  &[data-fit='cover'] {
+    video {
+      object-fit: cover;
+    }
+  }
+  &[data-fit='contain'] {
+    video {
+      object-fit: contain;
+    }
+  }
 `
 
 export default MirrorAtom

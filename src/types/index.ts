@@ -42,4 +42,5 @@ export type ChecksConfig = {
 
 export type MirrorConfig = {
   flipped: boolean
+  fit: 'contain' | 'cover'
 }
