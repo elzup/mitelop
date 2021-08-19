@@ -39,3 +39,7 @@ export type ChecksConfig = {
   checks: string[]
   layout: ChecksLayout
 }
+
+export type MirrorConfig = {
+  flipped: boolean
+}
