@@ -5,6 +5,7 @@ import Clock from '../Clock/ClockTool'
 import ColorTool from '../Color/ColorTool'
 import Katinko from '../Katinko'
 import Midokoro from '../Midokoro/MidokoroTool'
+import MirrorTool from '../Mirror/MirrorTool'
 import ParrotTool from '../Parrot/ParrotTool'
 import StopwatchTool from '../Stopwatch/StopwatchTool'
 import TimerTool from '../Timer/TimerTool'
@@ -67,6 +68,13 @@ const gadgets: GadgetProp[] = [
     title: 'Katinko',
     path: '/katinko',
     children: <Katinko />,
+  },
+  {
+    key: 'gad-mirror',
+    icon: 'camera',
+    title: 'Mirror',
+    path: '/mirror',
+    children: <MirrorTool />,
   },
 ]
 
