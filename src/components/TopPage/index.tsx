@@ -6,7 +6,7 @@ import GadgetList from './GadgetList'
 
 const StyledAppBar = styled(AppBar)`
   @media (display-mode: standalone) {
-    display: none !important;
+    display: none;
   }
 `
 
