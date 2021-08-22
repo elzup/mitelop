@@ -44,3 +44,7 @@ export type MirrorConfig = {
   flipped: boolean
   fit: 'contain' | 'cover'
 }
+
+export type RulerConfig = {
+  line: 'simple' | 'multiple'
+}
