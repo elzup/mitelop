@@ -17,14 +17,48 @@ const Style = styled.div`
   box-sizing: border-box;
   position: relative;
 
-  --bg: #2b0065;
-  --fg: #ffffff;
+  --bg: #ffffff;
+  --fg: #2b0065;
 
   /* border: 0.4rem solid $dark; */
   background-color: var(--bg);
-  background-image: linear-gradient(var(--fg) 1px, transparent 1px),
-    linear-gradient(90deg, var(--fg) 1px, transparent 1px);
-  background-size: 10px 10px;
+  background-image: repeating-linear-gradient(
+      var(--fg),
+      transparent 1px,
+      transparent 10px
+    ),
+    repeating-linear-gradient(
+      var(--fg),
+      var(--fg) 1px,
+      transparent 2px,
+      transparent 50px
+    ),
+    repeating-linear-gradient(
+      var(--fg),
+      var(--fg) 2px,
+      transparent 3px,
+      transparent 100px
+    ),
+    repeating-linear-gradient(
+      to right,
+      var(--fg),
+      transparent 1px,
+      transparent 10px
+    ),
+    repeating-linear-gradient(
+      to right,
+      var(--fg),
+      var(--fg) 1px,
+      transparent 2px,
+      transparent 50px
+    ),
+    repeating-linear-gradient(
+      to right,
+      var(--fg),
+      var(--fg) 2px,
+      transparent 3px,
+      transparent 100px
+    );
   background-position: 0 0;
 `
 
