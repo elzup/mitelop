@@ -7,6 +7,7 @@ import Katinko from '../Katinko'
 import Midokoro from '../Midokoro/MidokoroTool'
 import MirrorTool from '../Mirror/MirrorTool'
 import ParrotTool from '../Parrot/ParrotTool'
+import RulerTool from '../Ruler/RulerTool'
 import StopwatchTool from '../Stopwatch/StopwatchTool'
 import TimerTool from '../Timer/TimerTool'
 import GadgetCard from './GadgetCard'
@@ -75,6 +76,13 @@ const gadgets: GadgetProp[] = [
     title: 'Mirror',
     path: '/mirror',
     children: <MirrorTool />,
+  },
+  {
+    key: 'gad-ruler',
+    icon: 'ruler',
+    title: 'Ruler',
+    path: '/ruler',
+    children: <RulerTool />,
   },
 ]
 
