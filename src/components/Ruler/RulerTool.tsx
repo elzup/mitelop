@@ -1,12 +1,14 @@
 import styled from 'styled-components'
-import { RulerConfig } from '../../types'
+import { RulerConfig, rulerConfigOrigin, rulerConfigUnit } from '../../types'
 import { ConfigModal } from '../ConfigModal'
+import { RadioGroup } from '../forms/RadioGroup'
 import { useConfig } from '../hooks/useConfig'
 import RulerAtom from './RulerAtom'
 
 function RulerTool() {
   const { config, setConfig, mode, setMode } = useConfig<RulerConfig>('ruler', {
-    line: 'simple',
+    unit: 'px',
+    origin: 'center',
   })
 
   return (
@@ -17,28 +19,19 @@ function RulerTool() {
       <RulerAtom />
       <ConfigModal miniOver mode={mode}>
         <div className="over">
-          <div>
-            <input
-              type="radio"
-              name="simple"
-              value="cover"
-              id="ruler-simple"
-              checked={config.line === 'simple'}
-              onChange={() => setConfig((v) => ({ ...v, line: 'simple' }))}
-            />
-            <label htmlFor="ruler-simple">simple</label>
-          </div>
-          <div>
-            <input
-              type="radio"
-              name="multiple"
-              value="contain"
-              id="ruler-multiple"
-              checked={config.line === 'multiple'}
-              onChange={() => setConfig((v) => ({ ...v, line: 'multiple' }))}
-            />
-            <label htmlFor="ruler-multiple">multiple</label>
-          </div>
+          <RadioGroup
+            name="origin"
+            value={config.origin}
+            divStyle={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}
+            options={rulerConfigOrigin}
+            onSelect={(origin) => setConfig((v) => ({ ...v, origin }))}
+          />
+          <RadioGroup
+            name="unit"
+            value={config.unit}
+            options={rulerConfigUnit}
+            onSelect={(unit) => setConfig((v) => ({ ...v, unit }))}
+          />
         </div>
       </ConfigModal>
     </Style>

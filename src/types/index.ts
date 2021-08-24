@@ -45,6 +45,10 @@ export type MirrorConfig = {
   fit: 'contain' | 'cover'
 }
 
+export const rulerConfigUnit = ['px', '%']
+export const rulerConfigOrigin = ['↖UL', 'UR↗', '↙DL', 'DR↘', 'center']
+
 export type RulerConfig = {
-  line: 'simple' | 'multiple'
+  unit: typeof rulerConfigUnit[number]
+  origin: typeof rulerConfigOrigin[number]
 }
