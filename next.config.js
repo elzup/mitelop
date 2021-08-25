@@ -1,7 +1,7 @@
 const withPWA = require('next-pwa')
 
 const settings = {
-  future: { webpack5: true },
+  webpack5: true,
   env: {},
   devIndicators: { autoPrerender: false },
   pwa: { dest: 'public' },
