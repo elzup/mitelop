@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { RulerConfig, rulerConfigOrigin, rulerConfigUnit } from '../../types'
+import { RulerConfig, RULER_ORIGINS, RULER_UNITS } from '../../types'
 import { ConfigModal } from '../ConfigModal'
 import { RadioGroup } from '../forms/RadioGroup'
 import { useConfig } from '../hooks/useConfig'
@@ -16,20 +16,20 @@ function RulerTool() {
       onMouseEnter={() => setMode('over')}
       onMouseLeave={() => setMode('main')}
     >
-      <RulerAtom />
+      <RulerAtom {...config} />
       <ConfigModal miniOver mode={mode}>
         <div className="over">
           <RadioGroup
             name="origin"
             value={config.origin}
             divStyle={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}
-            options={rulerConfigOrigin}
+            options={RULER_ORIGINS}
             onSelect={(origin) => setConfig((v) => ({ ...v, origin }))}
           />
           <RadioGroup
             name="unit"
             value={config.unit}
-            options={rulerConfigUnit}
+            options={RULER_UNITS}
             onSelect={(unit) => setConfig((v) => ({ ...v, unit }))}
           />
         </div>

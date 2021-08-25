@@ -1,12 +1,32 @@
-import styled from 'styled-components'
+import styled, { CSSProperties } from 'styled-components'
+import { RulerConfigOrigin, RulerConfigUnit } from '../../types'
 import SizeDef from '../SizeDef'
 
-type Props = {}
+type Props = {
+  unit: RulerConfigUnit
+  origin: RulerConfigOrigin
+}
 
-function RulerAtom({}: Props) {
+const unitParStyle = {
+  '--w1': '1%',
+  '--w2': '5%',
+  '--w3': '10%',
+} as CSSProperties
+
+const unitPxStyle = {
+  '--w1': '10px',
+  '--w2': '50px',
+  '--w3': '100px',
+} as CSSProperties
+const unitStyle: Record<RulerConfigUnit, CSSProperties> = {
+  '%': unitParStyle,
+  px: unitPxStyle,
+}
+
+function RulerAtom({ unit, origin }: Props) {
   return (
     <SizeDef>
-      <Style></Style>
+      <Style style={{ ...unitStyle[unit] }} data-origin={origin} />
     </SizeDef>
   )
 }
@@ -25,41 +45,45 @@ const Style = styled.div`
   background-image: repeating-linear-gradient(
       var(--fg),
       transparent 1px,
-      transparent 10px
+      transparent var(--w1)
     ),
     repeating-linear-gradient(
       var(--fg),
       var(--fg) 1px,
       transparent 2px,
-      transparent 50px
+      transparent var(--w2)
     ),
     repeating-linear-gradient(
       var(--fg),
       var(--fg) 2px,
       transparent 3px,
-      transparent 100px
+      transparent var(--w3)
     ),
+    repeating-linear-gradient(red, red 4px, transparent 5px, transparent 1000px),
     repeating-linear-gradient(
       to right,
       var(--fg),
       transparent 1px,
-      transparent 10px
+      transparent var(--w1)
     ),
     repeating-linear-gradient(
       to right,
       var(--fg),
       var(--fg) 1px,
       transparent 2px,
-      transparent 50px
+      transparent var(--w2)
     ),
     repeating-linear-gradient(
       to right,
       var(--fg),
       var(--fg) 2px,
       transparent 3px,
-      transparent 100px
+      transparent var(--w3)
     );
   background-position: 0 0;
+  &[data-origin='center'] {
+    background-position: calc(var(--w) / 2) calc(var(--h) / 2);
+  }
 `
 
 export default RulerAtom
