@@ -35,19 +35,29 @@ const originStyle = {
 function RulerAtom({ unit, origin }: Props) {
   return (
     <SizeDef>
-      <Style
-        style={{ ...unitStyle[unit], ...originStyle[origin] }}
-        data-origin={origin}
-      />
+      <Style>
+        <GridLines
+          style={{ ...unitStyle[unit], ...originStyle[origin] }}
+          data-origin={origin}
+        />
+        <Memory></Memory>
+      </Style>
     </SizeDef>
   )
 }
 
 const Style = styled.div`
+  position: relative;
+  height: 100%;
+  width: 100%;
+`
+const Memory = styled.div``
+
+const GridLines = styled.div`
+  position: absolute;
   height: 100%;
   width: 100%;
   box-sizing: border-box;
-  position: relative;
 
   --bg: #ffffff;
   --fg: #2b0065;
