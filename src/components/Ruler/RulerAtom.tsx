@@ -18,15 +18,27 @@ const unitPxStyle = {
   '--w2': '50px',
   '--w3': '100px',
 } as CSSProperties
+
 const unitStyle: Record<RulerConfigUnit, CSSProperties> = {
   '%': unitParStyle,
   px: unitPxStyle,
 }
 
+const originStyle = {
+  UL: { '--dir-h': 'right', '--dir-v': 'bottom' },
+  UR: { '--dir-h': 'left', '--dir-v': 'bottom' },
+  DL: { '--dir-h': 'right', '--dir-v': 'top' },
+  DR: { '--dir-h': 'left', '--dir-v': 'top' },
+  center: { '--dir-h': 'right', '--dir-v': 'bottom' },
+} as Record<RulerConfigOrigin, CSSProperties>
+
 function RulerAtom({ unit, origin }: Props) {
   return (
     <SizeDef>
-      <Style style={{ ...unitStyle[unit] }} data-origin={origin} />
+      <Style
+        style={{ ...unitStyle[unit], ...originStyle[origin] }}
+        data-origin={origin}
+      />
     </SizeDef>
   )
 }
@@ -43,46 +55,62 @@ const Style = styled.div`
   /* border: 0.4rem solid $dark; */
   background-color: var(--bg);
   background-image: repeating-linear-gradient(
+      to var(--dir-v),
       var(--fg),
       transparent 1px,
       transparent var(--w1)
     ),
     repeating-linear-gradient(
+      to var(--dir-v),
+      transparent,
+      transparent calc(var(--w2) - 1px),
+      var(--fg) var(--w2)
+    ),
+    repeating-linear-gradient(
+      to var(--dir-v),
       var(--fg),
       var(--fg) 1px,
       transparent 2px,
-      transparent var(--w2)
+      transparent calc(var(--w3) - 0px)
     ),
     repeating-linear-gradient(
-      var(--fg),
-      var(--fg) 2px,
-      transparent 3px,
-      transparent var(--w3)
-    ),
-    repeating-linear-gradient(red, red 4px, transparent 5px, transparent 1000px),
-    repeating-linear-gradient(
-      to right,
+      to var(--dir-h),
       var(--fg),
       transparent 1px,
       transparent var(--w1)
     ),
     repeating-linear-gradient(
-      to right,
+      to var(--dir-h),
+      transparent,
+      transparent calc(var(--w2) - 1px),
+      var(--fg) var(--w2)
+    ),
+    repeating-linear-gradient(
+      to var(--dir-h),
       var(--fg),
       var(--fg) 1px,
       transparent 2px,
-      transparent var(--w2)
-    ),
-    repeating-linear-gradient(
-      to right,
-      var(--fg),
-      var(--fg) 2px,
-      transparent 3px,
-      transparent var(--w3)
+      transparent calc(var(--w3) - 0px)
     );
-  background-position: 0 0;
+
   &[data-origin='center'] {
-    background-position: calc(var(--w) / 2) calc(var(--h) / 2);
+    background-position: calc(var(--w) % var(--w3) / 2)
+      calc(var(--h) % var(--w3) / 2);
+  }
+  &[data-origin='UL'] {
+    background-position: 0 0;
+  }
+  &[data-origin='UR'] {
+    background-position: 0 100%;
+  }
+  &[data-origin='DL'] {
+    background-position: 100% 0;
+    /* background-position: left 0 bottom calc(100% - var(--w3)); */
+  }
+  &[data-origin='DR'] {
+    background-position: 100% 100%;
+    /* background-position: right calc(100% - var(--w3)) bottom
+      calc(100% - var(--w3)); */
   }
 `
 

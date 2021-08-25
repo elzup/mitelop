@@ -56,11 +56,31 @@ export const DefaultSizeGadget = styled.div`
   border: gray solid 1px;
 `
 
+export const CompSizeGadget = styled.div`
+  width: 444px;
+  height: 333px;
+  border: gray solid 1px;
+`
+
 export const decorators: BaseDecorators<StoryFnReactReturnType> = [
   (Story) => (
     <DefaultSizeGadget>
       <Story />
     </DefaultSizeGadget>
+  ),
+]
+export const compDecorators: BaseDecorators<StoryFnReactReturnType> = [
+  (Story) => (
+    <CompSizeGadget>
+      <Story />
+    </CompSizeGadget>
+  ),
+]
+export const tileDeco: BaseDecorators<StoryFnReactReturnType> = [
+  (Story) => (
+    <div style={{ width: '111px', height: '111px' }}>
+      <Story />
+    </div>
   ),
 ]
 

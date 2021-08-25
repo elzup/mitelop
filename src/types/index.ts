@@ -46,7 +46,7 @@ export type MirrorConfig = {
 }
 
 export const RULER_UNITS = ['px', '%']
-export const RULER_ORIGINS = ['↖UL', 'UR↗', '↙DL', 'DR↘', 'center']
+export const RULER_ORIGINS = ['UL', 'UR', 'DL', 'DR', 'center']
 export type RulerConfigUnit = typeof RULER_UNITS[number]
 export type RulerConfigOrigin = typeof RULER_ORIGINS[number]
 export type RulerConfig = {

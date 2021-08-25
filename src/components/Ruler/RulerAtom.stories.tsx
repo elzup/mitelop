@@ -1,13 +1,13 @@
 import { Meta, Story } from '@storybook/react'
 import { ComponentProps } from 'react'
-import { decorators } from '../SizeDiv'
+import { compDecorators as decorators } from '../SizeDiv'
 import RulerAtom from './RulerAtom'
 
 type Props = ComponentProps<typeof RulerAtom>
 export default {
   title: 'RulerAtom',
   component: RulerAtom,
-  args: { origin: '↖LR', unit: 'px' },
+  args: { origin: 'UL', unit: 'px' },
   parameters: { actions: { argTypesRegex: '^on.*' } },
 } as Meta<Props>
 
@@ -19,7 +19,7 @@ OriginCenter.args = { origin: 'center' }
 OriginCenter.decorators = decorators
 
 export const OriginDR = Base.bind({})
-OriginDR.args = { origin: '↘DR' }
+OriginDR.args = { origin: 'DR' }
 OriginDR.decorators = decorators
 
 export const Parsent100 = Base.bind({})
