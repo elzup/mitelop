@@ -21,7 +21,9 @@ function MirrorTool() {
         allowed={allowed}
         flipped={config.flipped}
         fit={config.fit}
-        onAllowClick={() => setAllowed(true)}
+        onAllowClick={() => {
+          if (confirm('Can i turn on video camera?')) setAllowed(true)
+        }}
       />
       <ConfigModal miniOver mode={mode}>
         <div className="over">
