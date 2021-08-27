@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import ChecksTool from '../Checks/ChecksTool'
 import Clock from '../Clock/ClockTool'
 import ColorTool from '../Color/ColorTool'
+import CounterTool from '../Counter/CounterTool'
 import Katinko from '../Katinko'
 import Midokoro from '../Midokoro/MidokoroTool'
 import MirrorTool from '../Mirror/MirrorTool'
@@ -83,6 +84,13 @@ const gadgets: GadgetProp[] = [
     title: 'Ruler',
     path: '/ruler',
     children: <RulerTool />,
+  },
+  {
+    key: 'gad-counter',
+    icon: 'counter',
+    title: 'Counter',
+    path: '/counter',
+    children: <CounterTool />,
   },
 ]
 
