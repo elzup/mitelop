@@ -5,21 +5,10 @@ import ClearIcon from '@material-ui/icons/Clear'
 import * as React from 'react'
 import styled from 'styled-components'
 import SizeDef from '../SizeDef'
+import { useCounter } from '../hooks/useCounter'
 
 function CounterTool() {
-  const [count, setCount] = React.useState<number>(0)
-
-  const add = (): void => {
-    setCount((beforeCount) => beforeCount + 1)
-  }
-
-  const sub = (): void => {
-    setCount((beforeCount) => Math.max(0, beforeCount - 1))
-  }
-
-  const reset = (): void => {
-    setCount(0)
-  }
+  const { count, add, sub, reset } = useCounter()
 
   return (
     <SizeDef portRate={1.6} landRate={2}>
