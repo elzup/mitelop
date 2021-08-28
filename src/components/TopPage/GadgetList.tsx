@@ -87,7 +87,7 @@ const gadgets: GadgetProp[] = [
   },
   {
     key: 'gad-counter',
-    icon: 'counter',
+    icon: 'exposure',
     title: 'Counter',
     path: '/counter',
     children: <CounterTool />,
