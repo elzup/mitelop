@@ -59,7 +59,7 @@ const Style = styled.div`
       text-align: center;
       max-width: var(--w);
       .time {
-        font-size: calc(var(--w) * 0.25);
+        font-size: calc(var(--w) * 0.24);
       }
       .date {
         font-size: calc(var(--w) * 0.1);
