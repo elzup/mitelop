@@ -63,7 +63,7 @@ const Style = styled.div`
     .material-icons {
       color: white;
       width: 100%;
-      font-size: calc(var(--w) * 0.4);
+      font-size: calc(var(--w) * 0.3);
     }
   }
 `

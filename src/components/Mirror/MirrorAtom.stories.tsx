@@ -19,7 +19,13 @@ Base.decorators = decorators
 
 export const BeforeAllow = Base.bind({})
 BeforeAllow.args = { allowed: false }
-BeforeAllow.decorators = decorators
+BeforeAllow.decorators = [
+  (Story) => (
+    <div style={{ width: '400px', height: '200px' }}>
+      <Story />
+    </div>
+  ),
+]
 
 export const Flipped = Base.bind({})
 Flipped.args = { flipped: false }
