@@ -95,7 +95,7 @@ const gadgets: GadgetProp[] = [
   },
   {
     key: 'gad-piano',
-    icon: 'exposure',
+    icon: 'piano',
     title: 'Piano',
     path: '/piano',
     children: <PianoTool />,
