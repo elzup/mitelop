@@ -53,3 +53,5 @@ export type RulerConfig = {
   unit: RulerConfigUnit
   origin: RulerConfigOrigin
 }
+
+export type PianoConfig = {}

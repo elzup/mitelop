@@ -8,6 +8,7 @@ import Katinko from '../Katinko'
 import Midokoro from '../Midokoro/MidokoroTool'
 import MirrorTool from '../Mirror/MirrorTool'
 import ParrotTool from '../Parrot/ParrotTool'
+import PianoTool from '../Piano/PianoTool'
 import RulerTool from '../Ruler/RulerTool'
 import StopwatchTool from '../Stopwatch/StopwatchTool'
 import TimerTool from '../Timer/TimerTool'
@@ -91,6 +92,13 @@ const gadgets: GadgetProp[] = [
     title: 'Counter',
     path: '/counter',
     children: <CounterTool />,
+  },
+  {
+    key: 'gad-piano',
+    icon: 'exposure',
+    title: 'Piano',
+    path: '/piano',
+    children: <PianoTool />,
   },
 ]
 
