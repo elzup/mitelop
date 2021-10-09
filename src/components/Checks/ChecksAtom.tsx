@@ -1,7 +1,6 @@
-import NoCheckIcon from '@material-ui/icons/RadioButtonUnchecked'
 import CheckedIcon from '@material-ui/icons/CheckCircle'
+import NoCheckIcon from '@material-ui/icons/RadioButtonUnchecked'
 import styled from 'styled-components'
-import { MuuriComponent } from 'muuri-react'
 import { ChecksConfig } from '../../types'
 import { arrayToObj } from '../../utils'
 import SizeDef from '../SizeDef'
@@ -34,30 +33,14 @@ function ChecksAtom({ config, onClickItem, onChangeText }: Props) {
     <SizeDef>
       <Style data-layout={config.layout}>
         <div className="list">
-          <MuuriComponent
-            // NOTE: I wanna like defaultValue
-            dragEnabled
-            instantLayout
-            onDragEnd={(item) => {
-              const newText = item
-                .getGrid()
-                .getItems()
-                .map((c) => titles[Number(c.getKey())])
-                .join('\n')
-
-              console.log(newText)
-              onChangeText(newText)
-            }}
-          >
-            {titles.map((title, i) => (
-              <CheckItem
-                key={i}
-                onClick={() => onClickItem(title)}
-                checked={checks[title]}
-                title={title}
-              />
-            ))}
-          </MuuriComponent>
+          {titles.map((title, i) => (
+            <CheckItem
+              key={i}
+              onClick={() => onClickItem(title)}
+              checked={checks[title]}
+              title={title}
+            />
+          ))}
         </div>
       </Style>
     </SizeDef>
