@@ -30,6 +30,7 @@
     "reactcss": "1.2.3",
     "recompose": "0.30.0",
     "styled-components": "5.3.1",
+    "tone": "^14.7.77",
     "use-seconds": "1.6.0"
   },
   "devDependencies": {
