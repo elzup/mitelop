@@ -2,23 +2,22 @@ import { useRef } from 'react'
 import { Synth } from 'tone'
 import { Frequency } from '../../types'
 
-const synth = new Synth().toDestination()
-const makeSynth = () => new Synth().toDestination()
-// new Synth({
-//   oscillator: {
-//     type: 'amtriangle',
-//     harmonicity: 0.5,
-//     modulationType: 'sine',
-//   },
-//   envelope: {
-//     attackCurve: 'exponential',
-//     attack: 0.05,
-//     decay: 0.2,
-//     sustain: 0.2,
-//     release: 1.5,
-//   },
-//   portamento: 0.05,
-// }).toDestination()
+const makeSynth = () =>
+  new Synth({
+    oscillator: {
+      // type: 'amtriangle',
+      // harmonicity: 0.5,
+      // modulationType: 'sine',
+    },
+    envelope: {
+      attackCurve: 'exponential',
+      attack: 0.1,
+      decay: 0.2,
+      sustain: 0.5,
+      release: 0.8,
+    },
+    portamento: 0.05,
+  }).toDestination()
 
 export const soundStart = (freq: Frequency, synth: Synth) => {
   synth.triggerAttack(freq)
