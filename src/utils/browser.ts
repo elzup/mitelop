@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 type WindowOptions = {
   name?: string
   height?: number
@@ -33,3 +35,28 @@ export const iwindow = window as unknown as IWindow
 
 export const displayModeMql = window.matchMedia('(display-mode: standalone)')
 export const getIsStandalone = () => displayModeMql.matches
+
+export const useKeyChanged = ({
+  onChangedPress,
+  onChangedRelease,
+}: {
+  onChangedPress?: (key: string) => void
+  onChangedRelease?: (key: string) => void
+}) => {
+  const [pressed, setPressed] = useState<Record<string, boolean>>({})
+
+  const onPress = (key: string) => {
+    if (pressed[key]) return
+
+    onChangedPress?.(key)
+    setPressed((v) => ({ ...v, [key]: true }))
+  }
+  const onRelease = (key: string) => {
+    if (!pressed[key]) return
+
+    onChangedRelease?.(key)
+    setPressed((v) => ({ ...v, [key]: false }))
+  }
+
+  return { onPress, onRelease }
+}
