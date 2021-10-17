@@ -1,6 +1,6 @@
 import { Note as ToneNote } from 'tone/build/esm/core/type/NoteUnits'
 
-export type Note = ToneNote
+export type Frequency = ToneNote
 export type Size = { width: number; height: number }
 
 export type ClockConfig = {
