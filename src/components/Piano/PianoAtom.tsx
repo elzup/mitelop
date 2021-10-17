@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Frequency } from '../../types'
 import { swapKeyValue } from '../../utils'
 import SizeDef from '../SizeDef'
+import { soundEnd, useSynthToggle } from './sound'
 
 type Props = {}
 
@@ -68,18 +69,23 @@ const useKeyChanged = (onChangedPress: (key: string) => void) => {
 }
 
 const useKeySound = () => {
+  const { soundOn, soundOff } = useSynthToggle()
   const { onPress, onRelease } = useKeyChanged((key: string) => {
     console.log('press: ' + key)
     const note = noteByKey[key]
 
     if (!note) return
+    soundOn(note)
   })
 
   return {
     onPress,
     onRelease: (key: string) => {
       onRelease(key)
-      console.log('release: ' + key)
+      const note = noteByKey[key]
+
+      if (!note) return
+      soundOff(note)
     },
   }
 }

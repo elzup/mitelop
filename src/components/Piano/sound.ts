@@ -21,7 +21,7 @@ const makeSynth = () => new Synth().toDestination()
 // }).toDestination()
 
 export const soundStart = (freq: Frequency, synth: Synth) => {
-  synth.triggerAttackRelease(freq, '8n')
+  synth.triggerAttack(freq)
 }
 
 export const soundEnd = (synth: Synth) => {
