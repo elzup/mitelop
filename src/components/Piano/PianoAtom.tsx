@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useKeyPressEvent } from 'react-use'
 import styled from 'styled-components'
 import { Note } from '../../types'
@@ -52,26 +53,36 @@ const makeNoteMaps = (startOct: number, notes: string[]) => {
 
 const { noteByKey, keyByNote } = makeNoteMaps(oct, notes)
 
-console.log({ noteByKey, keyByNote })
+const useKeySound = () => {
+  const [pressed, setPressed] = useState<Record<string, boolean>>({})
+  const onPress = (key: string) => {
+    const note = noteByKey[key]
+
+    if (pressed[key]) return
+
+    setPressed((v) => ({ ...v, [key]: true }))
+
+    if (!note) return
+
+    // sound(note)
+  }
+  const onRelease = (key: string) => {
+    setPressed((v) => ({ ...v, [key]: false }))
+  }
+
+  return { onPress, onRelease }
+}
 
 function PianoAtom({}: Props) {
-  useKeyPressEvent(
-    () => true,
-    (e) => {
-      console.log(e.key)
-      const note = noteByKey[e.key]
-
-      if (!note) return
-
-      console.log({ note })
-
-      sound(note)
-    }
-  )
+  const { onPress, onRelease } = useKeySound()
 
   return (
     <SizeDef portRate={1.6} landRate={2}>
-      <Style>
+      <Style
+        onKeyUp={(e) => onRelease(e.key)}
+        onKeyDownCapture={(e) => onPress(e.key)}
+        tabIndex={-1}
+      >
         <div className="outer">
           <div className="inner">
             <div className="keyboard">
