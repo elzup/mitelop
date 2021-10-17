@@ -1,14 +1,12 @@
 import { useState } from 'react'
-import { useKeyPressEvent } from 'react-use'
 import styled from 'styled-components'
-import { Note } from '../../types'
+import { Frequency } from '../../types'
 import { swapKeyValue } from '../../utils'
 import SizeDef from '../SizeDef'
-import { sound } from './sound'
 
 type Props = {}
 
-const isNote = (note: string): note is Note => /[A-G]#?[1-9]/.test(note)
+const isNote = (note: string): note is Frequency => /[A-G]#?[1-9]/.test(note)
 const SCALE_CHARS = 'ABCDEFG'.split('')
 const CODE_CHARS = '345'.split('')
 
@@ -26,7 +24,7 @@ const notes = 'CDEFGAB'.split('')
 const notesB = 'C# D# F# G# A#'.split(' ')
 
 const makeNoteMaps = (startOct: number, notes: string[]) => {
-  const noteByKey: Record<string, Note> = {}
+  const noteByKey: Record<string, Frequency> = {}
 
   for (const [i, c] of Object.entries(octKeys)) {
     const oct = startOct + Math.floor(Number(i) / 7)
@@ -53,24 +51,37 @@ const makeNoteMaps = (startOct: number, notes: string[]) => {
 
 const { noteByKey, keyByNote } = makeNoteMaps(oct, notes)
 
-const useKeySound = () => {
+const useKeyChanged = (onChangedPress: (key: string) => void) => {
   const [pressed, setPressed] = useState<Record<string, boolean>>({})
-  const onPress = (key: string) => {
-    const note = noteByKey[key]
 
+  const onPress = (key: string) => {
     if (pressed[key]) return
 
+    onChangedPress(key)
     setPressed((v) => ({ ...v, [key]: true }))
-
-    if (!note) return
-
-    // sound(note)
   }
   const onRelease = (key: string) => {
     setPressed((v) => ({ ...v, [key]: false }))
   }
 
   return { onPress, onRelease }
+}
+
+const useKeySound = () => {
+  const { onPress, onRelease } = useKeyChanged((key: string) => {
+    console.log('press: ' + key)
+    const note = noteByKey[key]
+
+    if (!note) return
+  })
+
+  return {
+    onPress,
+    onRelease: (key: string) => {
+      onRelease(key)
+      console.log('release: ' + key)
+    },
+  }
 }
 
 function PianoAtom({}: Props) {
