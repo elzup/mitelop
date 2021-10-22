@@ -24,3 +24,4 @@ export const swapKeyValue = <T extends string | number | symbol>(
   })
   return newObj
 }
+export const noop = () => {}

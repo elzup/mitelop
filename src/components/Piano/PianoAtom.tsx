@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { useKeyChanged } from '../../utils/browser'
+import { useKeyPressAll } from '../hooks/useKey'
 import SizeDef from '../SizeDef'
 import { keyboardNotes, keyByNote, noteByKey } from './pianoNoteConfig'
 import { useSynthToggle } from './sound'
@@ -8,37 +8,29 @@ type Props = {}
 
 const useKeySound = () => {
   const { soundOn, soundOff } = useSynthToggle()
-  const { onPress, onRelease } = useKeyChanged({
-    onChangedPress: (key: string) => {
+
+  useKeyPressAll(
+    ({ key }) => {
       const note = noteByKey[key]
 
       if (!note) return
       soundOn(note)
     },
-  })
-
-  return {
-    onPress,
-    onRelease: (key: string) => {
-      onRelease(key)
+    ({ key }) => {
       const note = noteByKey[key]
 
       if (!note) return
       soundOff(note)
-    },
-  }
+    }
+  )
 }
 
 function PianoAtom({}: Props) {
-  const { onPress, onRelease } = useKeySound()
+  useKeySound()
 
   return (
     <SizeDef portRate={1.6} landRate={2}>
-      <Style
-        onKeyUp={(e) => onRelease(e.key)}
-        onKeyDownCapture={(e) => onPress(e.key)}
-        tabIndex={-1}
-      >
+      <Style>
         <div className="outer">
           <div className="inner">
             <div className="keyboard">

@@ -30,7 +30,8 @@ export const soundEnd = (synth: Synth) => {
 export function useSynthToggle() {
   const ref = useRef({} as Record<Frequency, Synth>)
 
-  const soundOn = (freq: Frequency) => {
+  const soundOn = (freq?: Frequency) => {
+    if (!freq) return
     if (!ref.current) return
     if (!ref.current[freq]) {
       ref.current = { ...ref.current, [freq]: makeSynth() }
@@ -41,7 +42,9 @@ export function useSynthToggle() {
     soundStart(freq, synth)
   }
 
-  const soundOff = (freq: Frequency) => {
+  const soundOff = (freq?: Frequency | undefined) => {
+    if (!freq) return
+
     const synth = ref.current?.[freq]
 
     if (!synth) return
