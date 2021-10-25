@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+import { useKeyPress, useKeyPressEvent } from 'react-use'
 import styled from 'styled-components'
 import { useKeyPressAll } from '../hooks/useKey'
 import SizeDef from '../SizeDef'

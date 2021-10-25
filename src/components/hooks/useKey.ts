@@ -3,6 +3,7 @@ import { useKey } from 'react-use'
 import { Handler } from 'react-use/lib/useKey'
 import { noop } from '../../utils'
 
+const nonFilter = () => true
 const mapReducer = (
   v: Record<string, boolean>,
   { key, down }: { key: string; down: boolean }
@@ -16,7 +17,7 @@ export const useKeyPressAll = (
   const [downs, set] = useReducer(mapReducer, {} as Record<string, boolean>)
 
   useKey(
-    () => true,
+    nonFilter,
     (e) => {
       keydownAll(e)
       if (!downs[e.key]) keydown(e)
@@ -25,7 +26,7 @@ export const useKeyPressAll = (
     { event: 'keydown' }
   )
   useKey(
-    () => true,
+    nonFilter,
     (e) => {
       if (downs[e.key]) keyup(e)
       set({ key: e.key, down: false })
