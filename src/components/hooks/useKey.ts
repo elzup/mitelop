@@ -1,13 +1,14 @@
-import { useReducer } from 'react'
-import { useKey } from 'react-use'
+import { useReducer, useRef, useEffect } from 'react'
 import { Handler } from 'react-use/lib/useKey'
+import { useKeyRef } from 'rooks'
 import { noop } from '../../utils'
 
-const nonFilter = () => true
 const mapReducer = (
   v: Record<string, boolean>,
   { key, down }: { key: string; down: boolean }
 ) => ({ ...v, [key]: down })
+
+const allKeys = `qwrtyuiop[]asdfghjkl;'zxcvbnm,./`.split('')
 
 export const useKeyPressAll = (
   keydown: Handler,
@@ -15,23 +16,32 @@ export const useKeyPressAll = (
   keydownAll: Handler = noop
 ) => {
   const [downs, set] = useReducer(mapReducer, {} as Record<string, boolean>)
+  const downsRef = useRef(downs)
 
-  useKey(
-    nonFilter,
+  useEffect(() => {
+    downsRef.current = downs
+  }, [downs])
+
+  const ref = useKeyRef(
+    allKeys,
     (e) => {
+      console.log(e)
+      console.log(e.detail)
+      console.log('down')
+      console.log(downsRef.current)
       keydownAll(e)
-      if (!downs[e.key]) keydown(e)
+
+      if (!downsRef.current[e.key]) keydown(e)
       set({ key: e.key, down: true })
-    },
-    { event: 'keydown' }
-  )
-  useKey(
-    nonFilter,
-    (e) => {
-      if (downs[e.key]) keyup(e)
+
+      console.log('up')
+      console.log(downsRef.current)
+
+      if (downsRef.current[e.key]) keyup(e)
       set({ key: e.key, down: false })
     },
-    { event: 'keyup' }
+    { eventTypes: ['keydown', 'keyup'] }
   )
-  return { downs }
+
+  return { downs, ref }
 }

@@ -1,11 +1,15 @@
 import { NextPage } from 'next'
+import dynamic from 'next/dynamic'
 import GadgetLayout from '../components/Layout'
-import PianoTool from '../components/Piano/PianoTool'
+
+const Piano = dynamic(() => import('../components/Piano/PianoTool'), {
+  ssr: false,
+})
 
 const PianoPage: NextPage = () => {
   return (
     <GadgetLayout title="Piano">
-      <PianoTool />
+      <Piano />
     </GadgetLayout>
   )
 }

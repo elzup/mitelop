@@ -1,5 +1,3 @@
-import { useEffect } from 'react'
-import { useKeyPress, useKeyPressEvent } from 'react-use'
 import styled from 'styled-components'
 import { useKeyPressAll } from '../hooks/useKey'
 import SizeDef from '../SizeDef'
@@ -11,9 +9,11 @@ type Props = {}
 const useKeySound = () => {
   const { soundOn, soundOff } = useSynthToggle()
 
-  useKeyPressAll(
+  const { ref } = useKeyPressAll(
     ({ key }) => {
       const note = noteByKey[key]
+
+      console.log({ key })
 
       if (!note) return
       soundOn(note)
@@ -21,19 +21,23 @@ const useKeySound = () => {
     ({ key }) => {
       const note = noteByKey[key]
 
+      console.log({ toggle: 'off', key })
+
       if (!note) return
       soundOff(note)
     }
   )
+
+  return { ref }
 }
 
 function PianoAtom({}: Props) {
-  useKeySound()
+  const { ref } = useKeySound()
 
   return (
     <SizeDef portRate={1.6} landRate={2}>
       <Style>
-        <div className="outer">
+        <div className="outer" ref={ref}>
           <div className="inner">
             <div className="keyboard">
               {keyboardNotes.map((note) => {

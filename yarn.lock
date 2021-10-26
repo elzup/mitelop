@@ -9617,6 +9617,11 @@ pbkdf2@^3.0.3:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
+performance-now@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
+  integrity sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=
+
 picocolors@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/picocolors/-/picocolors-0.2.1.tgz#570670f793646851d1ba135996962abad587859f"
@@ -10061,6 +10066,13 @@ queue@6.0.2:
   integrity sha512-iHZWu+q3IdFZFX36ro/lKBkSvfkztY5Y7HMiPlOUjhupPcG2JMfst2KKEpu5XndviX/3UhFbRngUPNKtgvtZiA==
   dependencies:
     inherits "~2.0.3"
+
+raf@^3.4.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/raf/-/raf-3.4.1.tgz#0742e99a4a6552f445d73e3ee0328af0ff1ede39"
+  integrity sha512-Sq4CW4QhwOHE8ucn6J34MqtZCeWFP2aQSmrlroYgqAV1PjStIhJXxYuTgUIfkEk7zTLjmIjLmU5q+fbD1NnOJA==
+  dependencies:
+    performance-now "^2.1.0"
 
 ramda@^0.21.0:
   version "0.21.0"
@@ -10748,6 +10760,14 @@ rollup@^2.43.1:
   integrity sha512-NOXpusKnaRpbS7ZVSzcEXqxcLDOagN6iFS8p45RkoiMqPHDLwJm758UF05KlMoCRbLBTZsPOIa887gZJ1AiXvw==
   optionalDependencies:
     fsevents "~2.3.2"
+
+rooks@^5.7.3:
+  version "5.7.3"
+  resolved "https://registry.yarnpkg.com/rooks/-/rooks-5.7.3.tgz#74f9f13b6597041828c7874b00b836ef1516c027"
+  integrity sha512-Y+HzDzEptIg3RwIB0mGqYL2MfB1PVosOlG1DLy1rm6McSdK7xQ6olLjicoSpmTrkBdiJuZMOVaowLJz61HclXQ==
+  dependencies:
+    lodash.debounce "^4.0.8"
+    raf "^3.4.1"
 
 rtl-css-js@^1.14.0:
   version "1.14.2"
