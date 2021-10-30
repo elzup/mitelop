@@ -2,7 +2,7 @@ import { Frequency } from '../../types'
 import { swapKeyValue } from '../../utils'
 
 const isNote = (note: string): note is Frequency => /[A-G]#?[1-9]/.test(note)
-const SCALE_CHARS = 'ABCDEFG'.split('')
+const SCALE_CHARS = 'CDEFGAB'.split('')
 const CODE_CHARS = '345'.split('')
 
 const octKeysB = 'wetyuio['.split('') // C# D# F# G# A#
@@ -11,6 +11,7 @@ const octKeys = `asdfghjkl;'`.split('') // CDEFGAB
 const oct = 3
 const notes = 'CDEFGAB'.split('')
 const notesB = 'C# D# F# G# A#'.split(' ')
+const SCALE_CHARS_ALL = 'C C# D D# E F F# G G# A A# B'.split(' ')
 
 const makeNoteMaps = (startOct: number, notes: string[]) => {
   const noteByKey: Record<string, Frequency> = {}
@@ -40,9 +41,19 @@ const makeNoteMaps = (startOct: number, notes: string[]) => {
 const { noteByKey, keyByNote } = makeNoteMaps(oct, notes)
 
 export const keyboardNotes = CODE_CHARS.map((cc) =>
-  SCALE_CHARS.map((sc) => `${sc}${cc}`)
+  SCALE_CHARS_ALL.map((sc) => `${sc}${cc}`)
 )
   .flat()
   .filter(isNote)
+type NoteButton = {
+  black: boolean
+  keyboard: string
+  note: string
+}
+export const keyboardLib: NoteButton[] = keyboardNotes.map((note) => ({
+  note,
+  keyboard: keyByNote[note],
+  black: !!note[1],
+}))
 
 export { noteByKey, keyByNote }

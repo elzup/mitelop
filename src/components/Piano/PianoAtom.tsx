@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { useKeyPressAll } from '../hooks/useKey'
 import SizeDef from '../SizeDef'
-import { keyboardNotes, keyByNote, noteByKey } from './pianoNoteConfig'
+import { keyboardLib, noteByKey } from './pianoNoteConfig'
 import { useSynthToggle } from './sound'
 
 type Props = {}
@@ -36,10 +36,10 @@ function PianoAtom({}: Props) {
         <div className="outer" ref={ref} tabIndex={-1}>
           <div className="inner">
             <div className="keyboard">
-              {keyboardNotes.map((note) => {
+              {keyboardLib.map((k) => {
                 return (
-                  <div key={note}>
-                    [{keyByNote[note]}]{note}
+                  <div className="key" key={k.note} data-black={k.black}>
+                    {k.keyboard}
                   </div>
                 )
               })}
@@ -67,6 +67,14 @@ const Style = styled.div`
       max-width: var(--w);
       max-height: var(--h);
       text-align: center;
+    }
+  }
+  .keyboard {
+    width: 100%;
+    display: grid;
+    grid-auto-flow: column;
+    .key {
+      border: solid 1px;
     }
   }
 `
