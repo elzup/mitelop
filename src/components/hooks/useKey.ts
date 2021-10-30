@@ -8,7 +8,7 @@ const mapReducer = (
   { key, down }: { key: string; down: boolean }
 ) => ({ ...v, [key]: down })
 
-const allKeys = `qwrtyuiop[]asdfghjkl;'zxcvbnm,./`.split('')
+const allKeys = `qwertyuiop[]asdfghjkl;'zxcvbnm,./`.split('')
 
 export const useKeyPressAll = (
   keydown: Handler,
@@ -25,20 +25,14 @@ export const useKeyPressAll = (
   const ref = useKeyRef(
     allKeys,
     (e) => {
-      console.log(e)
-      console.log(e.detail)
-      console.log('down')
-      console.log(downsRef.current)
-      keydownAll(e)
-
-      if (!downsRef.current[e.key]) keydown(e)
-      set({ key: e.key, down: true })
-
-      console.log('up')
-      console.log(downsRef.current)
-
-      if (downsRef.current[e.key]) keyup(e)
-      set({ key: e.key, down: false })
+      if (e.type === 'keydown') {
+        keydownAll(e)
+        if (!downsRef.current[e.key]) keydown(e)
+        set({ key: e.key, down: true })
+      } else if (e.type === 'keyup') {
+        if (downsRef.current[e.key]) keyup(e)
+        set({ key: e.key, down: false })
+      }
     },
     { eventTypes: ['keydown', 'keyup'] }
   )
