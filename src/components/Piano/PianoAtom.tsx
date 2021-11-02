@@ -31,7 +31,7 @@ function PianoAtom({}: Props) {
   const { ref } = useKeySound()
 
   return (
-    <SizeDef portRate={1.6} landRate={2}>
+    <SizeDef>
       <Style>
         <div className="outer" ref={ref} tabIndex={-1}>
           <div className="inner">
@@ -64,16 +64,19 @@ const Style = styled.div`
     justify-content: center;
 
     .inner {
-      max-width: var(--w);
-      max-height: var(--h);
+      width: var(--w);
+      height: var(--h);
       text-align: center;
     }
   }
   .keyboard {
     width: 100%;
-    display: grid;
+    display: flex;
+    justify-content: space-between;
     grid-auto-flow: column;
     .key {
+      height: 100%;
+      width: 100%;
       border: solid 1px;
     }
   }
