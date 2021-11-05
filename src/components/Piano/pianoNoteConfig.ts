@@ -2,7 +2,7 @@ import { Frequency } from '../../types'
 import { swapKeyValue } from '../../utils'
 
 const isNote = (note: string): note is Frequency => /[A-G]#?[1-9]/.test(note)
-const SCALE_CHARS = 'CDEFGAB'.split('')
+// const SCALE_CHARS = 'CDEFGAB'.split('')
 const CODE_CHARS = '345'.split('')
 
 const octKeysB = 'wetyuio['.split('') // C# D# F# G# A#
@@ -53,7 +53,7 @@ type NoteButton = {
 export const keyboardLib: NoteButton[] = keyboardNotes.map((note) => ({
   note,
   keyboard: keyByNote[note],
-  black: !!note[1],
+  black: note.includes('#'),
 }))
 
 export { noteByKey, keyByNote }

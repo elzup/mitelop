@@ -37,6 +37,8 @@ function PianoAtom({}: Props) {
           <div className="inner">
             <div className="keyboard">
               {keyboardLib.map((k) => {
+                if (!k.keyboard) return null
+
                 return (
                   <div className="key" key={k.note} data-black={k.black}>
                     {k.keyboard}
@@ -71,13 +73,24 @@ const Style = styled.div`
   }
   .keyboard {
     width: 100%;
+    height: 100%;
     display: flex;
     justify-content: space-between;
     grid-auto-flow: column;
+    font-size: calc(var(--w) / 30);
+    vertical-align: text-bottom;
+
     .key {
       height: 100%;
       width: 100%;
-      border: solid 1px;
+      border-left: solid 1px;
+      &:first-child {
+        border-left: none;
+      }
+      &[data-black='true'] {
+        background: black;
+        color: white;
+      }
     }
   }
 `
