@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { pad02 } from '../../utils'
+import { pad02 } from '@elzup/kit/lib/format'
 
 const timeToStr = (t: number): [string, string] => {
   const SEC = 1000

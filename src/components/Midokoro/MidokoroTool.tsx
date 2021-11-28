@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useSeconds } from 'use-seconds'
+import { pad02 } from '@elzup/kit/lib/format'
 import { MidokoroConfig, MidokoroPlot } from '../../types'
 import { useLocalStorage } from '../../utils/useLocalStorage'
-import { pad02, round4 } from '../../utils'
+import { round4 } from '../../utils'
 import MidokoroAtom from './MidokoroAtom'
 
 const initConfig: MidokoroConfig = {

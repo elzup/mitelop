@@ -2,8 +2,8 @@ import { Icon, IconButton, Typography } from '@material-ui/core'
 import LaunchIcon from '@material-ui/icons/Launch'
 import React from 'react'
 import styled from 'styled-components'
+import { isDev } from '@elzup/kit/lib/constants'
 import { windowOpen } from '../../utils/browser'
-import { isDev } from '../../utils/env'
 
 type Props = { icon: string; title: string; path: string }
 

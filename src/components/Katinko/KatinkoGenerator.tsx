@@ -1,7 +1,7 @@
 import { Typography, Button } from '@material-ui/core'
 import { useState } from 'react'
+import { isDev } from '@elzup/kit/lib/constants'
 import { windowOpen } from '../../utils/browser'
-import { isDev } from '../../utils/env'
 import { Size } from '../../types'
 import PreviewResizable from '../PreviewResizable'
 import { GeneratorFrame } from '..'

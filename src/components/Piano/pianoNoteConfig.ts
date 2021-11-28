@@ -1,5 +1,5 @@
+import { invert } from '@elzup/kit'
 import { Frequency } from '../../types'
-import { swapKeyValue } from '../../utils'
 
 const isNote = (note: string): note is Frequency => /[A-G]#?[1-9]/.test(note)
 // const SCALE_CHARS = 'CDEFGAB'.split('')
@@ -36,7 +36,7 @@ const makeNoteMaps = (startOct: number, notes: string[]) => {
     }
   }
 
-  return { noteByKey, keyByNote: swapKeyValue(noteByKey) } as const
+  return { noteByKey, keyByNote: invert(noteByKey) } as const
 }
 const { noteByKey, keyByNote } = makeNoteMaps(oct, notes)
 

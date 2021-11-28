@@ -13,6 +13,7 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
+    "@elzup/kit": "^1.1.2",
     "@material-ui/core": "4.12.3",
     "@material-ui/icons": "4.11.2",
     "@material-ui/styles": "4.11.4",
@@ -32,7 +33,7 @@
     "rooks": "^5.7.3",
     "styled-components": "5.3.1",
     "tone": "^14.7.77",
-    "use-seconds": "1.6.0"
+    "use-seconds": "^1.6.0"
   },
   "devDependencies": {
     "@babel/core": "7.15.8",

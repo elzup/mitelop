@@ -1,7 +1,7 @@
 import { useReducer, useRef, useEffect } from 'react'
 import { Handler } from 'react-use/lib/useKey'
 import { useKeyRef } from 'rooks'
-import { noop } from '../../utils'
+import { noop } from '@elzup/kit'
 
 const mapReducer = (
   v: Record<string, boolean>,
