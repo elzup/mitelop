@@ -1130,7 +1130,7 @@
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.5.tgz#9283c9ce5b289a3c4f61c12757469e59377f81f3"
   integrity sha512-6nFkfkmSeV/rqSaS4oWHgmpnYw194f6hmWF5is6b0J1naJZoiD0NTc9AiUwPHvWsowkjuHErCZT1wa0jg+BLIA==
 
-"@elzup/kit@^1.1.2":
+"@elzup/kit@1.1.2":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@elzup/kit/-/kit-1.1.2.tgz#421f73900794fbe635287b45f5dc63aed64397fe"
   integrity sha512-HehQVkD376B5erT63oXzyUPWFyrGPDyJOxFSUaDhzeQv/VecTEPdIablIpLpXSIt4iZrEHzoZpAwGxp+tG1mrg==
@@ -10766,7 +10766,7 @@ rollup@^2.43.1:
   optionalDependencies:
     fsevents "~2.3.2"
 
-rooks@^5.7.3:
+rooks@5.7.3:
   version "5.7.3"
   resolved "https://registry.yarnpkg.com/rooks/-/rooks-5.7.3.tgz#74f9f13b6597041828c7874b00b836ef1516c027"
   integrity sha512-Y+HzDzEptIg3RwIB0mGqYL2MfB1PVosOlG1DLy1rm6McSdK7xQ6olLjicoSpmTrkBdiJuZMOVaowLJz61HclXQ==
@@ -11879,7 +11879,7 @@ toidentifier@1.0.0:
   resolved "https://registry.yarnpkg.com/toidentifier/-/toidentifier-1.0.0.tgz#7e1be3470f1e77948bc43d94a3c8f4d7752ba553"
   integrity sha512-yaOH/Pk/VEhBWWTlhI+qXxDFXlejDGcQipMlyxda9nthulaxLZUNcUqFxokp0vcYnvteJln5FNQDRrxj3YcbVw==
 
-tone@^14.7.77:
+tone@14.7.77:
   version "14.7.77"
   resolved "https://registry.yarnpkg.com/tone/-/tone-14.7.77.tgz#12a2a9f033952ccdb552275a6384ca5d36d4b5ed"
   integrity sha512-tCfK73IkLHyzoKUvGq47gyDyxiKLFvKiVCOobynGgBB9Dl0NkxTM2p+eRJXyCYrjJwy9Y0XCMqD3uOYsYt2Fdg==
@@ -12308,7 +12308,7 @@ use-latest@^1.0.0:
   dependencies:
     use-isomorphic-layout-effect "^1.0.0"
 
-use-seconds@^1.6.0:
+use-seconds@1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/use-seconds/-/use-seconds-1.6.0.tgz#c0cef76e424ab8dfa6ef80f1fb7c2959577d11e1"
   integrity sha512-J00lqWC1AHtz1qa9IL+Z+S2twdnQ0xrOWNC3H2e11rmcM3ZJoY2SvzMPF64g/pYKq7SmQQRD/uSRwZrUsKXFVQ==
