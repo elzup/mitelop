@@ -36,7 +36,7 @@
     "use-seconds": "1.6.0"
   },
   "devDependencies": {
-    "@babel/core": "7.15.8",
+    "@babel/core": "7.16.0",
     "@storybook/addon-actions": "6.3.10",
     "@storybook/addon-links": "6.3.10",
     "@storybook/addons": "6.3.10",
@@ -50,7 +50,7 @@
     "@types/react-dom": "17.0.9",
     "@types/recompose": "0.30.8",
     "@types/styled-components": "5.1.15",
-    "babel-loader": "8.2.2",
+    "babel-loader": "8.2.3",
     "babel-plugin-styled-components": "1.13.3",
     "eslint": "7.32.0",
     "eslint-config-nzap": "4.4.0",
