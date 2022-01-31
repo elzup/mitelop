@@ -36,7 +36,7 @@
     "use-seconds": "1.6.0"
   },
   "devDependencies": {
-    "@babel/core": "7.16.7",
+    "@babel/core": "7.16.12",
     "@storybook/addon-actions": "6.3.10",
     "@storybook/addon-links": "6.3.10",
     "@storybook/addons": "6.3.10",
