@@ -7,6 +7,7 @@ export type ClockConfig = {
   dateVisible: boolean
   bgColor: string
   fontColor: string
+  diffMinutes: number
 }
 export type GadgetMode = 'main' | 'over' | 'conf'
 

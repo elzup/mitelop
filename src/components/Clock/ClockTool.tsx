@@ -1,7 +1,7 @@
-import { IconButton } from '@material-ui/core'
+import { IconButton, TextField } from '@material-ui/core'
 import { Close } from '@material-ui/icons'
 import Head from 'next/head'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useSeconds } from 'use-seconds'
 import { ClockConfig } from '../../types'
 import { ConfigModal } from '../ConfigModal'
@@ -15,18 +15,13 @@ const toDateStr = (t: Date) =>
 const timeStr = (t: Date) =>
   [t.getHours(), t.getMinutes(), t.getSeconds()].map(pad2)
 
-function useTimeStr() {
-  const [time] = useSeconds()
+const offsetMinutes = new Date().getTimezoneOffset() || -540
 
-  const [dateStr, setDstr] = useState<string>('0000-00-00')
-  const [tStrs, setTstrs] = useState<string[]>(['00', '00', '00'])
+function useTimeStr(diffMinutes: number) {
+  const [localeTime] = useSeconds()
+  const time = new Date(+localeTime + (offsetMinutes - diffMinutes) * 1000 * 60)
 
-  useEffect(() => {
-    setDstr(toDateStr(time))
-    setTstrs(timeStr(time))
-  }, [+time])
-
-  return { dateStr, tStrs }
+  return { dateStr: toDateStr(time), tStrs: timeStr(time) }
 }
 
 type Props = {
@@ -37,8 +32,11 @@ function ClockTool({ windowMode }: Props) {
     dateVisible: true,
     bgColor: '#aaaaff',
     fontColor: '#000066',
+    diffMinutes: offsetMinutes,
   })
-  const { dateStr, tStrs } = useTimeStr()
+
+  console.log({ offsetMinutes })
+  const { dateStr, tStrs } = useTimeStr(config.diffMinutes)
   const [touched, setTouched] = useState<boolean>(false)
 
   return (
@@ -68,6 +66,14 @@ function ClockTool({ windowMode }: Props) {
             label="Font"
             onChange={(fontColor) => setConfig((v) => ({ ...v, fontColor }))}
             value={config.fontColor}
+          />
+          <TextField
+            type="number"
+            label="diffMinutes"
+            onChange={(e) =>
+              setConfig((v) => ({ ...v, diffMinutes: Number(e.target.value) }))
+            }
+            value={config.diffMinutes}
           />
           <IconButton
             onClick={() => {
