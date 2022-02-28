@@ -7,7 +7,7 @@ export default {
   title: 'MidokoroTool',
   component: MidokoroTool,
   parameters: {},
-  decorators,
+  decorators: decorators(),
 } as Meta<Props>
 
 export const Base: Story<Props> = (_args) => <MidokoroTool />

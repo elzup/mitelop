@@ -16,7 +16,7 @@ export default {
     status: 'pause',
   },
 
-  decorators,
+  decorators: decorators(),
   parameters: { actions: { argTypesRegex: '^on.*' } },
 } as Meta<Props>
 

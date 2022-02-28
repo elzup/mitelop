@@ -9,7 +9,7 @@ export default {
   component: ColorTool,
   args: {},
 
-  decorators,
+  decorators: decorators(),
   parameters: { actions: { argTypesRegex: '^on.*' } },
 } as Meta<Props>
 

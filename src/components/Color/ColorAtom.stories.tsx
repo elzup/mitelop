@@ -10,7 +10,7 @@ export default {
   args: {
     config: { color: '#aa33aa' },
   },
-  decorators,
+  decorators: decorators(),
 } as Meta<Props>
 
 export const Base: Story<Props> = (args) => <ColorAtom {...args} />

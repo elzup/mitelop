@@ -9,7 +9,7 @@ export default {
   component: TimerTool,
   args: {},
   parameters: {},
-  decorators,
+  decorators: decorators(),
 } as Meta<Props>
 
 export const Base: Story<Props> = (_args) => <TimerTool />

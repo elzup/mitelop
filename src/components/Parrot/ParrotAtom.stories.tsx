@@ -10,7 +10,7 @@ export default {
   args: {
     config: { pitch: 1.0, rate: 1.0 },
   },
-  decorators,
+  decorators: decorators(),
   parameters: { actions: { argTypesRegex: '^on.*' } },
 } as Meta<Props>
 

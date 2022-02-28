@@ -9,7 +9,7 @@ export default {
   component: StopwatchTool,
   args: {},
   parameters: {},
-  decorators,
+  decorators: decorators(),
 } as Meta<Props>
 
 export const Base: Story<Props> = (_args) => <StopwatchTool />

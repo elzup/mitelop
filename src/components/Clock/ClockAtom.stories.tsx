@@ -18,6 +18,7 @@ export default {
     tStrs: ['12', '34', '56'],
     progressRate: 80,
   },
+  decorators: decorators(),
   parameters: { actions: { argTypesRegex: '^on.*' } },
 } as Meta<Props>
 

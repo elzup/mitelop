@@ -40,7 +40,7 @@ export default {
     progressRate: 80,
   },
 
-  decorators,
+  decorators: decorators(),
   parameters: {
     actions: { argTypesRegex: '^on.*' },
   },
