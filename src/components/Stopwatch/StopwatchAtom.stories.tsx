@@ -17,15 +17,15 @@ export default {
 } as Meta<Props>
 
 export const Base: Story<Props> = (args) => <StopwatchAtom {...args} />
-Base.decorators = decorators
+Base.decorators = decorators()
 
 export const Run = Base.bind({})
 Run.args = { status: 'run' }
-Run.decorators = decorators
+Run.decorators = decorators()
 
 export const Init = Base.bind({})
 Init.args = { status: 'init', timeStr: '0', timeMilliStr: '0' }
-Init.decorators = decorators
+Init.decorators = decorators()
 
 export const Size = Base.bind({})
-Size.decorators = multiSizeDecorators
+Size.decorators = multiSizeDecorators()

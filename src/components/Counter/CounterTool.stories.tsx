@@ -10,7 +10,7 @@ const meta: Meta = {
 export default meta
 
 export const Base: Story = () => <CounterTool />
-Base.decorators = decorators
+Base.decorators = decorators()
 
 export const Size = Base.bind({})
-Size.decorators = multiSizeDecorators
+Size.decorators = multiSizeDecorators()

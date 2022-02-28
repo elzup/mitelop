@@ -15,7 +15,7 @@ export default {
 } as Meta<Props>
 
 export const Base: Story<Props> = (args) => <MirrorAtom {...args} />
-Base.decorators = decorators
+Base.decorators = decorators()
 
 export const BeforeAllow = Base.bind({})
 BeforeAllow.args = { allowed: false }
@@ -29,7 +29,7 @@ BeforeAllow.decorators = [
 
 export const Flipped = Base.bind({})
 Flipped.args = { flipped: false }
-Flipped.decorators = decorators
+Flipped.decorators = decorators()
 
 export const Size = Base.bind({})
-Size.decorators = multiSizeDecorators
+Size.decorators = multiSizeDecorators()
