@@ -12,16 +12,16 @@ export default {
 } as Meta<Props>
 
 export const Base: Story<Props> = (args) => <RulerAtom {...args} />
-Base.decorators = decorators
+Base.decorators = decorators()
 
 export const OriginCenter = Base.bind({})
 OriginCenter.args = { origin: 'center' }
-OriginCenter.decorators = decorators
+OriginCenter.decorators = decorators()
 
 export const OriginDR = Base.bind({})
 OriginDR.args = { origin: 'DR' }
-OriginDR.decorators = decorators
+OriginDR.decorators = decorators()
 
 export const Parsent100 = Base.bind({})
 Parsent100.args = { unit: '%' }
-Parsent100.decorators = decorators
+Parsent100.decorators = decorators()

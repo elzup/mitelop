@@ -12,7 +12,7 @@ export default {
 } as Meta<Props>
 
 export const Base: Story<Props> = (_args) => <ChecksTool />
-Base.decorators = decorators
+Base.decorators = decorators()
 
 export const Size = Base.bind({})
-Size.decorators = multiSizeDecorators
+Size.decorators = multiSizeDecorators()

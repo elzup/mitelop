@@ -23,15 +23,15 @@ export default {
 } as Meta<Props>
 
 export const Base: Story<Props> = (args) => <ChecksAtom {...args} />
-Base.decorators = decorators
+Base.decorators = decorators()
 
 export const Empty = Base.bind({})
 Empty.args = { config: { text: '', checks: ['bob'], layout: 'horizontal' } }
-Empty.decorators = decorators
+Empty.decorators = decorators()
 
 export const Vertical = Base.bind({})
 Vertical.args = { config: { text, checks: ['bob'], layout: 'vertical' } }
-Vertical.decorators = decorators
+Vertical.decorators = decorators()
 
 export const Size = Base.bind({})
-Size.decorators = multiSizeDecorators
+Size.decorators = multiSizeDecorators()

@@ -1,6 +1,6 @@
-import { BaseDecorators } from '@storybook/addons'
-// eslint-disable-next-line import/no-unresolved
-import { StoryFnReactReturnType } from '@storybook/react/dist/ts3.9/client/preview/types'
+import { PartialStoryFn } from '@storybook/csf'
+import { ReactFramework, Story } from '@storybook/react'
+import React, { ReactNode } from 'react'
 import { defaultProps } from 'recompose'
 import styled from 'styled-components'
 
@@ -62,21 +62,25 @@ export const CompSizeGadget = styled.div`
   border: gray solid 1px;
 `
 
-export const decorators: BaseDecorators<StoryFnReactReturnType> = [
+export type Decorators<T = {}> = Story<T>['decorators']
+// type Decorators = Parameters<typeof addDecorator>[0][]
+
+export const decorators = <T,>(): Decorators<T> => [
   (Story) => (
     <DefaultSizeGadget>
       <Story />
     </DefaultSizeGadget>
   ),
 ]
-export const compDecorators: BaseDecorators<StoryFnReactReturnType> = [
+
+export const compDecorators = <T,>(): Decorators<T> => [
   (Story) => (
     <CompSizeGadget>
       <Story />
     </CompSizeGadget>
   ),
 ]
-export const tileDeco: BaseDecorators<StoryFnReactReturnType> = [
+export const tileDeco = <T,>(): Decorators<T> => [
   (Story) => (
     <div style={{ width: '111px', height: '111px' }}>
       <Story />
@@ -84,7 +88,7 @@ export const tileDeco: BaseDecorators<StoryFnReactReturnType> = [
   ),
 ]
 
-export const multiSizeDecorators: BaseDecorators<StoryFnReactReturnType> = [
+export const multiSizeDecorators = <T,>(): Decorators<T> => [
   (Story) => (
     <MultiSizeGrid>
       <GridS>

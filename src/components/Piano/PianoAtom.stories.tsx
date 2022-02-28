@@ -12,4 +12,4 @@ export default {
 } as Meta<Props>
 
 export const Base: Story<Props> = (args) => <PianoAtom {...args} />
-Base.decorators = decorators
+Base.decorators = decorators()
