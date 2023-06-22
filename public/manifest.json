@@ -10,5 +10,23 @@
       "type": "image/png",
       "sizes": "192x192"
     }
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "mitelop",
+      "url": "/%s"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Clock",
+      "short_name": "clock",
+      "url": "/clock"
+    },
+    {
+      "name": "Timer",
+      "short_name": "timer",
+      "url": "/timer"
+    }
   ]
 }
