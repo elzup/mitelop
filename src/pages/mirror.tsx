@@ -4,7 +4,7 @@ import MirrorTool from '../components/Mirror/MirrorTool'
 
 const MirrorPage: NextPage = () => {
   return (
-    <GadgetLayout title="Timer">
+    <GadgetLayout title="Mirror">
       <MirrorTool />
     </GadgetLayout>
   )
