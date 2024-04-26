@@ -4,6 +4,7 @@ import ChecksTool from '../Checks/ChecksTool'
 import Clock from '../Clock/ClockTool'
 import ColorTool from '../Color/ColorTool'
 import CounterTool from '../Counter/CounterTool'
+import IntervalTool from '../Interval/IntervalTool'
 import Katinko from '../Katinko'
 import Midokoro from '../Midokoro/MidokoroTool'
 import MirrorTool from '../Mirror/MirrorTool'
@@ -43,6 +44,13 @@ const gadgets: GadgetProp[] = [
     title: 'Timer',
     path: '/timer',
     children: <TimerTool />,
+  },
+  {
+    key: 'gad-interval',
+    icon: 'hourglass_empty',
+    title: 'Interval',
+    path: '/interval',
+    children: <IntervalTool />,
   },
   {
     key: 'gad-parrot',

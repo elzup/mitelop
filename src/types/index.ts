@@ -22,6 +22,10 @@ export type TimerConfig = {
   total: number
 }
 
+export type IntervalConfig = {
+  total: number
+}
+
 export type ColorConfig = {
   color: string
 }
