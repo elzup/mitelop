@@ -1,29 +1,22 @@
 import { useState, useEffect } from 'react'
 import { useSeconds } from 'use-seconds'
 
-type IntervalState =
-  | { status: 'init'; time: number }
-  | { status: 'run'; startTime: number }
-  | { status: 'pause'; time: number }
-  | { status: 'end'; time: number }
-
-export type IntervalStatus = 'run' | 'pause' | 'init' | 'end'
+type IntervalGen = { name: string; len: number }
+export type IntervalStatus = 'stop' | 'run'
 type UseInterval = {
   status: IntervalStatus
   start: (time?: number) => void
-  setTime: (time: number) => void
   pause: () => void
-  resume: () => void
   reset: () => void
   time: number
   startTime: number
   flootTime: number
   progress: number
+  gens: IntervalGen[]
 }
 
 const initialInterval: IntervalState = {
-  status: 'init',
-  time: 0,
+  status: 'run',
 }
 
 function calcTime(
@@ -43,7 +36,7 @@ function calcTime(
 }
 
 export function useInterval(): UseInterval {
-  const [sw, setInterval] = useState<IntervalState>(initialInterval)
+  const [status, setStatus] = useState<IntervalStatus>('run')
   const [diff, setDiff] = useState<number>(0)
   const [total, setTotal] = useState<number>(0)
   const [now] = useSeconds(diff)
@@ -52,14 +45,14 @@ export function useInterval(): UseInterval {
     const startTime = +new Date() + offset
 
     setDiff(startTime % 1000)
-    setInterval({ status: 'run', startTime })
+    setStatus({ status: 'run', startTime })
   }
 
-  const [time, flootTime] = calcTime(sw, total, +now)
+  const [time, flootTime] = calcTime(status, total, +now)
 
   useEffect(() => {
-    if (time > 0 || sw.status === 'init') return
-    setInterval({
+    if (time > 0 || status.status === 'init') return
+    setStatus({
       status: 'end',
       time: total,
     })
@@ -68,11 +61,11 @@ export function useInterval(): UseInterval {
   const progress = (1 - flootTime / total) * 100
 
   return {
-    status: sw.status,
+    status: status.status,
     flootTime: flootTime,
     progress,
     setTime: setTotal,
-    startTime: sw.status === 'run' ? sw.startTime : 0,
+    startTime: status.status === 'run' ? status.startTime : 0,
     start: (time?: number) => {
       if (time !== undefined) {
         setTotal(time)
@@ -80,15 +73,15 @@ export function useInterval(): UseInterval {
       startRun(0)
     },
     pause: () => {
-      if (sw.status !== 'run') return
-      setInterval({ status: 'pause', time: +new Date() - sw.startTime })
+      if (status.status !== 'run') return
+      setStatus({ status: 'pause', time: +new Date() - status.startTime })
     },
     resume: () => {
-      if (sw.status !== 'pause') return
-      startRun(-sw.time)
+      if (status.status !== 'pause') return
+      startRun(-status.time)
     },
     reset: () => {
-      setInterval({
+      setStatus({
         status: 'init',
         time: 0,
       })
