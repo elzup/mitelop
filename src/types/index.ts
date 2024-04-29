@@ -22,8 +22,9 @@ export type TimerConfig = {
   total: number
 }
 
+export type IntervalStep = { name: string; sec: number }
 export type IntervalConfig = {
-  total: number
+  steps: IntervalStep[]
 }
 
 export type ColorConfig = {

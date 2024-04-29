@@ -4,7 +4,6 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow'
 import RotateLeftIcon from '@material-ui/icons/RotateLeft'
 import SettingsIcon from '@material-ui/icons/Settings'
 import StopIcon from '@material-ui/icons/Stop'
-import { useEffect } from 'react'
 import styled from 'styled-components'
 import { IntervalConfig } from '../../types'
 import { ConfigModal } from '../ConfigModal'
@@ -14,19 +13,17 @@ import IntervalAtom from './IntervalAtom'
 import { useInterval } from './useInterval'
 
 function IntervalTool() {
-  const sw = useInterval()
-
   const { config, setConfig, mode, setMode } = useConfig<IntervalConfig>(
-    'timer',
+    'interval',
     {
-      total: 10,
+      steps: [
+        { name: 'A', sec: 30 },
+        { name: 'B', sec: 30 },
+      ],
     }
   )
+  const sw = useInterval(config.steps)
   const [timeStr, timeMilliStr] = useTimeStr(sw.time, sw.status)
-
-  useEffect(() => {
-    sw.setTime(config.total)
-  }, [config.total])
 
   return (
     <Style
