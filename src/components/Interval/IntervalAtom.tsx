@@ -1,22 +1,21 @@
 import { LinearProgress } from '@material-ui/core'
 import styled from 'styled-components'
-import { DummyMs } from '../DummyMs'
+import { IntervalStep } from '../../types'
 import SizeDef from '../SizeDef'
 import { IntervalStatus } from './useInterval'
 
 type Props = {
   timeStr: string
-  timeMilliStr: string
-  total: number
+  timeMiliStr: string
   progress: number
-  startTime: number
+  steps: IntervalStep[]
   status: IntervalStatus
 }
 
 function IntervalAtom({
   timeStr,
-  timeMilliStr,
-  startTime,
+  timeMiliStr,
+  steps,
   progress,
   status,
 }: Props) {
@@ -24,21 +23,21 @@ function IntervalAtom({
     <SizeDef>
       <Style data-status={status}>
         <div className="frame">
-          <span className="time">
-            {timeStr}.
-            <span className="time-ms">
-              {status === 'run' ? <DummyMs inv ms={startTime} /> : timeMilliStr}
-            </span>
-          </span>
+          {steps.map((step, i) => (
+            <div className="step" key={i}>
+              <div className="time">{step.name}</div>
+              <div className="time-ms">
+                {timeStr}/{step.sec}
+              </div>
+            </div>
+          ))}
           <LinearProgress variant="determinate" value={progress} />
         </div>
       </Style>
     </SizeDef>
   )
 }
-IntervalAtom.defaultProps = {
-  total: 60,
-}
+IntervalAtom.defaultProps = {}
 
 const Style = styled.div`
   height: 100%;

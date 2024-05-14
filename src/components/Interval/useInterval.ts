@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { useSeconds } from 'use-seconds'
 import { IntervalStep } from '../../types'
 
-type IntervalGen = { name: string; len: number }
 export type IntervalStatus = 'stop' | 'run'
 type UseInterval = {
   status: IntervalStatus
@@ -17,6 +16,8 @@ export function useInterval(steps: IntervalStep[]): UseInterval {
   const [status, setStatus] = useState<IntervalStatus>('run')
   const [diff, setDiff] = useState<number>(0)
   const [now] = useSeconds(diff)
+
+  useEffect(() => {}, [+now])
 
   const startRun = (offset = 0) => {
     const startTime = +new Date() + offset
