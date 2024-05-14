@@ -19,7 +19,7 @@ function IntervalAtom({
   progress,
   status,
 }: Props) {
-  const gridTemplateColumns = steps.map((s) => `${s.sec}fr`).join(' ')
+  const gridTemplateColumns = steps.map((s) => `${s.sec - 0.01}fr`).join(' ')
   const activeStep = steps.find((s) => s.active)
 
   return (
@@ -34,11 +34,7 @@ function IntervalAtom({
               </div>
             ))}
           </div>
-          <div>{activeStep ? activeStep.name : ''}</div>
-          <LinearProgress
-            variant="determinate"
-            value={(activeStep?.par || 0) * 100}
-          />
+          <LinearProgress value={(activeStep?.par || 0) * 100} />
         </div>
       </Style>
     </SizeDef>
@@ -51,9 +47,7 @@ const Style = styled.div`
   width: 100%;
   box-sizing: border-box;
   padding: 2%;
-  .time {
-    width: 20%;
-    text-align: center;
+  .name {
     font-size: calc(var(--w) / 11);
     /* font-family: 'Roboto', 'Helvetica', 'Arial', monospace, sans-serif; */
     margin: 5%;
@@ -67,7 +61,7 @@ const Style = styled.div`
     display: grid;
     grid-auto-flow: row;
     height: 100%;
-    grid-template-rows: 2fr 1fr 1fr;
+    grid-template-rows: 2fr 1fr;
     /* border: solid 0.5px gray; */
   }
   .steps {
@@ -83,19 +77,12 @@ const Style = styled.div`
     align-items: center;
     text-align: center;
     &[data-active='true'] {
-      border-bottom: solid 2px red;
+      border-bottom: solid 1rem red;
+      background: #ffaaaa;
     }
   }
   &[data-status='end'] {
     animation: blinkAnimeS2 0.5s infinite alternate;
-  }
-  @keyframes blinkAnimeS2 {
-    0% {
-      background: white;
-    }
-    100% {
-      background: red;
-    }
   }
 `
 
