@@ -19,18 +19,21 @@ function IntervalAtom({
   progress,
   status,
 }: Props) {
+  const gridTemplateColumns = steps.map((s) => `${s.sec}fr`).join(' ')
+
   return (
     <SizeDef>
       <Style data-status={status}>
         <div className="frame">
-          {steps.map((step, i) => (
-            <div className="step" key={i}>
-              <div className="time">{step.name}</div>
-              <div className="time-ms">
-                {timeStr}/{step.sec}
+          <div className="steps" style={{ gridTemplateColumns }}>
+            {steps.map((step, i) => (
+              <div className="step" key={i}>
+                <div className="name">{step.name}</div>
+                <div className="time-ms">{step.sec}s</div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+          <div>hoge</div>
           <LinearProgress variant="determinate" value={progress} />
         </div>
       </Style>
@@ -43,7 +46,7 @@ const Style = styled.div`
   height: 100%;
   width: 100%;
   box-sizing: border-box;
-  padding: 3%;
+  padding: 2%;
   .time {
     width: 20%;
     text-align: center;
@@ -58,12 +61,26 @@ const Style = styled.div`
   }
   .frame {
     display: grid;
+    grid-auto-flow: row;
     height: 100%;
-    grid-template-columns: max-content 1fr;
-    gap: 2%;
+    grid-template-rows: 2fr 1fr 1fr;
+    /* border: solid 0.5px gray; */
+  }
+  .steps {
+    display: grid;
+    height: 100%;
+    gap: 0.2%;
     align-items: center;
     justify-content: center;
-    /* border: solid 0.5px gray; */
+  }
+  .step {
+    height: 100%;
+    border: solid 1px gray;
+    align-items: center;
+    text-align: center;
+    &[data-active='true'] {
+      border-bottom: solid 2px red;
+    }
   }
   &[data-status='end'] {
     animation: blinkAnimeS2 0.5s infinite alternate;
