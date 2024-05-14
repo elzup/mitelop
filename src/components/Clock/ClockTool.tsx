@@ -35,7 +35,6 @@ function ClockTool({ windowMode }: Props) {
     diffMinutes: offsetMinutes,
   })
 
-  console.log({ offsetMinutes })
   const { dateStr, tStrs } = useTimeStr(config.diffMinutes)
   const [touched, setTouched] = useState<boolean>(false)
 
