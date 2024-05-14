@@ -35,7 +35,7 @@ function IntervalTool() {
         timeStr={ts[0]}
         timeMiliStr={ts[1]}
         progress={int.progress}
-        steps={steps}
+        steps={int.steps}
         status={int.status}
       />
 

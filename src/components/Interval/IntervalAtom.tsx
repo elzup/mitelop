@@ -20,6 +20,7 @@ function IntervalAtom({
   status,
 }: Props) {
   const gridTemplateColumns = steps.map((s) => `${s.sec}fr`).join(' ')
+  const activeStep = steps.find((s) => s.active)
 
   return (
     <SizeDef>
@@ -27,14 +28,17 @@ function IntervalAtom({
         <div className="frame">
           <div className="steps" style={{ gridTemplateColumns }}>
             {steps.map((step, i) => (
-              <div className="step" key={i}>
+              <div className="step" key={i} data-active={step.active}>
                 <div className="name">{step.name}</div>
                 <div className="time-ms">{step.sec}s</div>
               </div>
             ))}
           </div>
-          <div>hoge</div>
-          <LinearProgress variant="determinate" value={progress} />
+          <div>{activeStep ? activeStep.name : ''}</div>
+          <LinearProgress
+            variant="determinate"
+            value={(activeStep?.par || 0) * 100}
+          />
         </div>
       </Style>
     </SizeDef>

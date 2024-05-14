@@ -22,9 +22,15 @@ export type TimerConfig = {
   total: number
 }
 
-export type IntervalStep = { name: string; sec: number }
+export type IntervalStepBase = { name: string; sec: number }
+export type IntervalStep = {
+  name: string
+  sec: number
+  active: boolean
+  par: number
+}
 export type IntervalConfig = {
-  steps: IntervalStep[]
+  steps: IntervalStepBase[]
 }
 
 export type ColorConfig = {
