@@ -34,7 +34,6 @@ function IntervalTool() {
       <IntervalAtom
         timeStr={ts[0]}
         timeMiliStr={ts[1]}
-        progress={int.progress}
         steps={int.steps}
         status={int.status}
       />

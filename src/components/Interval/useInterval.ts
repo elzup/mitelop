@@ -60,6 +60,7 @@ export function useInterval(steps: IntervalStepBase[]): UseInterval {
         ...step,
         active: start <= pos && pos < end,
         par: (pos - start) / (step.sec - 1),
+        pos: pos - start,
       }
     }),
     startTime: 0,

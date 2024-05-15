@@ -1,4 +1,4 @@
-import { LinearProgress } from '@material-ui/core'
+import { Box, LinearProgress, Typography } from '@material-ui/core'
 import styled from 'styled-components'
 import { IntervalStep } from '../../types'
 import SizeDef from '../SizeDef'
@@ -7,19 +7,12 @@ import { IntervalStatus } from './useInterval'
 type Props = {
   timeStr: string
   timeMiliStr: string
-  progress: number
   steps: IntervalStep[]
   status: IntervalStatus
 }
 
-function IntervalAtom({
-  timeStr,
-  timeMiliStr,
-  steps,
-  progress,
-  status,
-}: Props) {
-  const gridTemplateColumns = steps.map((s) => `${s.sec - 0.01}fr`).join(' ')
+function IntervalAtom({ steps, status }: Props) {
+  const gridTemplateColumns = steps.map((s) => `${s.sec}fr`).join(' ')
   const activeStep = steps.find((s) => s.active)
 
   return (
@@ -34,7 +27,20 @@ function IntervalAtom({
               </div>
             ))}
           </div>
-          <LinearProgress value={(activeStep?.par || 0) * 100} />
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Box sx={{ width: '100%', mr: 1 }}>
+              <LinearProgress
+                variant="determinate"
+                value={(activeStep?.par || 0) * 100}
+                style={{ height: '10vh' }}
+              />
+            </Box>
+            <Box sx={{ minWidth: '10%' }}>
+              <Typography variant="body2" className="remain">
+                {activeStep ? activeStep.sec - activeStep.pos : '-'}s
+              </Typography>
+            </Box>
+          </Box>
         </div>
       </Style>
     </SizeDef>
@@ -46,22 +52,22 @@ const Style = styled.div`
   height: 100%;
   width: 100%;
   box-sizing: border-box;
-  padding: 2%;
+  padding: 2% 1%;
   .name {
-    font-size: calc(var(--w) / 11);
+    font-size: calc(var(--w) / 30);
     /* font-family: 'Roboto', 'Helvetica', 'Arial', monospace, sans-serif; */
     margin: 5%;
     line-height: 1.05em;
   }
   .time-ms {
     /* display: none; */
-    font-size: calc(var(--w) / 10 / 2);
+    font-size: calc(var(--w) / 30);
   }
   .frame {
     display: grid;
-    grid-auto-flow: row;
     height: 100%;
     grid-template-rows: 2fr 1fr;
+    gap: 5%;
     /* border: solid 0.5px gray; */
   }
   .steps {
@@ -80,6 +86,10 @@ const Style = styled.div`
       border-bottom: solid 1rem red;
       background: #ffaaaa;
     }
+  }
+  .remain {
+    text-align: right;
+    font-size: calc(var(--w) / 30);
   }
   &[data-status='end'] {
     animation: blinkAnimeS2 0.5s infinite alternate;
