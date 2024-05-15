@@ -27,7 +27,7 @@ export function useInterval(steps: IntervalStepBase[]): UseInterval {
   }
   const total = steps.reduce((acc, step) => acc + step.sec, 0)
 
-  const pos = Math.floor(+now / 1000) % total
+  const pos = status === 'run' ? Math.floor(+now / 1000) % total : 0
   const progress = pos / total
 
   const sums: number[] = []
