@@ -71,3 +71,25 @@ export type RulerConfig = {
 }
 
 export type PianoConfig = {}
+
+export type BroadcastItem = {
+  id: string
+  gadgetKey: string
+  x: number
+  y: number
+  width: number
+  height: number
+}
+
+export type BroadcastBand = {
+  visible: boolean
+  activeIndex: number
+  phrases: string[]
+  bgColor: string
+  fontColor: string
+}
+
+export type BroadcastConfig = {
+  items: BroadcastItem[]
+  band: BroadcastBand
+}
