@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useSeconds } from 'use-seconds'
 import { IntervalStep, IntervalStepBase } from '../../types'
 
