@@ -2,7 +2,7 @@
   "name": "mitelop",
   "version": "1.0.0",
   "scripts": {
-    "dev": "next -H localhost.mitelop",
+    "dev": "portless run --name mitelop next dev",
     "test": "jest",
     "storybook": "start-storybook -p 6006",
     "build": "next build",
