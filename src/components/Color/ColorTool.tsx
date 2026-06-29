@@ -1,13 +1,13 @@
 import { IconButton } from '@material-ui/core'
 import { Close } from '@material-ui/icons'
 import colorfn from 'color'
-import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { ColorConfig } from '../../types'
 import { ConfigModal } from '../ConfigModal'
 import ColorField from '../forms/ColorField'
 import { useConfig } from '../hooks/useConfig'
+import { useDocumentTitle, useThemeColor } from '../hooks/useDocumentMeta'
 import ColorAtom from './ColorAtom'
 
 type Props = {
@@ -19,6 +19,9 @@ function ColorTool(props: Props) {
   })
   const [isDark, setIsDark] = useState<boolean>(false)
   const [touched, setTouched] = useState<boolean>(false)
+
+  useThemeColor(props.windowMode ? config.color : undefined)
+  useDocumentTitle(props.windowMode ? `Color-${config.color}` : undefined)
 
   useEffect(() => {
     try {
@@ -38,12 +41,6 @@ function ColorTool(props: Props) {
       // @ts-ignore
       style={{ '--color': fontColor }}
     >
-      {props.windowMode && (
-        <Head>
-          <meta name="theme-color" content={config.color} />
-          <title>Color-{config.color}</title>
-        </Head>
-      )}
       <ColorAtom config={config} />
 
       <ConfigModal mode={mode} miniOver>

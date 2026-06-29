@@ -1,21 +1,28 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="ja">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="theme-color" content="#2B0065" />
+    <link rel="shortcut icon" href="/images/icon.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/images/icon-4x.png"
+      sizes="192x192"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <link href="https://unpkg.com/sanitize.css/forms.css" rel="stylesheet" />
+    <title>Mitelop</title>
   </head>
   <body>
-    <h1 class="text-3xl font-bold underline">ネイティブアプリ起動デモ</h1>
-    <a
-      href="mitelop://timer"
-      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-      >timer</a
-    >
-    <a
-      href="mitelop://clock"
-      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-      >clock</a
-    >
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

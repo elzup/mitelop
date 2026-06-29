@@ -1,4 +1,4 @@
-import React from 'react'
+import { ReactNode } from 'react'
 import styled from 'styled-components'
 import { GadgetMode } from '../types'
 
@@ -50,13 +50,14 @@ export const Style = styled.div`
   }
 `
 
-export const ConfigModal: React.FC<{
+type ConfigModalProps = {
+  children: ReactNode
   mode: GadgetMode
   miniOver?: boolean
-}> = (props) => (
+}
+
+export const ConfigModal = (props: ConfigModalProps) => (
   <Style data-mode={props.mode} data-mini_over={props.miniOver}>
     {props.children}
   </Style>
 )
-
-ConfigModal.defaultProps = { miniOver: false }

@@ -1,11 +1,12 @@
-import React from 'react'
+import { ComponentType } from 'react'
+import { Size } from '../types'
 import ChecksTool from './Checks/ChecksTool'
-import Clock from './Clock/ClockTool'
+import ClockTool from './Clock/ClockTool'
 import ColorTool from './Color/ColorTool'
 import CounterTool from './Counter/CounterTool'
 import IntervalTool from './Interval/IntervalTool'
 import Katinko from './Katinko'
-import Midokoro from './Midokoro/MidokoroTool'
+import MidokoroTool from './Midokoro/MidokoroTool'
 import MirrorTool from './Mirror/MirrorTool'
 import ParrotTool from './Parrot/ParrotTool'
 import PianoTool from './Piano/PianoTool'
@@ -13,13 +14,22 @@ import RulerTool from './Ruler/RulerTool'
 import StopwatchTool from './Stopwatch/StopwatchTool'
 import TimerTool from './Timer/TimerTool'
 
+/** すべての gadget Tool が受けられる共通 props。windowMode 非対応の Tool は無視する。 */
+export type GadgetToolProps = { windowMode?: boolean }
+
 export type GadgetDef = {
   key: string
   icon: string
   title: string
   path: string
-  render: () => React.ReactNode
+  Component: ComponentType<GadgetToolProps>
+  /** 単独ページ (route) で開くときに windowMode を渡すか */
+  windowMode?: boolean
+  /** Broadcast に配置したときの初期サイズ */
+  defaultSize?: Size
 }
+
+const DEFAULT_SIZE: Size = { width: 320, height: 240 }
 
 export const gadgets: GadgetDef[] = [
   {
@@ -27,94 +37,99 @@ export const gadgets: GadgetDef[] = [
     icon: 'checklist',
     title: 'Checks',
     path: '/checks',
-    render: () => <ChecksTool />,
+    Component: ChecksTool,
   },
   {
     key: 'gad-clock',
     icon: 'schedule',
     title: 'Clock',
     path: '/clock',
-    render: () => <Clock />,
+    Component: ClockTool,
+    windowMode: true,
   },
   {
     key: 'gad-stopwatch',
     icon: 'timer',
     title: 'StopWatch',
     path: '/stopwatch',
-    render: () => <StopwatchTool />,
+    Component: StopwatchTool,
   },
   {
     key: 'gad-timer',
     icon: 'hourglass_empty',
     title: 'Timer',
     path: '/timer',
-    render: () => <TimerTool />,
+    Component: TimerTool,
   },
   {
     key: 'gad-interval',
     icon: 'hourglass_empty',
     title: 'Interval',
     path: '/interval',
-    render: () => <IntervalTool />,
+    Component: IntervalTool,
   },
   {
     key: 'gad-parrot',
     icon: 'speaker',
     title: 'Parrot',
     path: '/parrot',
-    render: () => <ParrotTool />,
+    Component: ParrotTool,
   },
   {
     key: 'gad-color',
     icon: 'palette',
     title: 'Color',
     path: '/color',
-    render: () => <ColorTool />,
+    Component: ColorTool,
+    windowMode: true,
   },
   {
     key: 'gad-midokoro',
     icon: 'assessment',
     title: 'Midokoro',
     path: '/midokoro',
-    render: () => <Midokoro />,
+    Component: MidokoroTool,
   },
   {
     key: 'gad-katinko',
     icon: 'movie',
     title: 'Katinko',
     path: '/katinko',
-    render: () => <Katinko />,
+    Component: Katinko,
   },
   {
     key: 'gad-mirror',
     icon: 'camera',
     title: 'Mirror',
     path: '/mirror',
-    render: () => <MirrorTool />,
+    Component: MirrorTool,
   },
   {
     key: 'gad-ruler',
     icon: 'ruler',
     title: 'Ruler',
     path: '/ruler',
-    render: () => <RulerTool />,
+    Component: RulerTool,
   },
   {
     key: 'gad-counter',
     icon: 'exposure',
     title: 'Counter',
     path: '/counter',
-    render: () => <CounterTool />,
+    Component: CounterTool,
   },
   {
     key: 'gad-piano',
     icon: 'piano',
     title: 'Piano',
     path: '/piano',
-    render: () => <PianoTool />,
+    Component: PianoTool,
   },
 ]
 
 export const gadgetMap: Record<string, GadgetDef> = Object.fromEntries(
   gadgets.map((g) => [g.key, g])
 )
+
+export const gadgetDefaultSize = (key: string): Size =>
+  gadgetMap[key]?.defaultSize ?? DEFAULT_SIZE

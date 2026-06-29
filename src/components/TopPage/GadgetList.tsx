@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 import { gadgets } from '../gadgets'
 import GadgetCard from './GadgetCard'
@@ -6,9 +5,9 @@ import GadgetCard from './GadgetCard'
 function GadgetList() {
   return (
     <Style>
-      {gadgets.map(({ key, icon, title, path, render }) => (
+      {gadgets.map(({ key, icon, title, path, Component }) => (
         <GadgetCard key={key} icon={icon} title={title} path={path}>
-          {render()}
+          <Component />
         </GadgetCard>
       ))}
     </Style>

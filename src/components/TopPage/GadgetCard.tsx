@@ -1,13 +1,18 @@
 import { Icon, IconButton, Typography } from '@material-ui/core'
 import LaunchIcon from '@material-ui/icons/Launch'
-import React from 'react'
+import { ReactNode } from 'react'
 import styled from 'styled-components'
 import { isDev } from '@elzup/kit/lib/constants'
 import { windowOpen } from '../../utils/browser'
 
-type Props = { icon: string; title: string; path: string }
+type Props = {
+  children: ReactNode
+  icon: string
+  title: string
+  path: string
+}
 
-const GadgetCard: React.FC<Props> = ({ icon, title, children, path }) => {
+const GadgetCard = ({ icon, title, children, path }: Props) => {
   const size = { width: 400, height: 300 }
 
   return (

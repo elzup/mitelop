@@ -1,12 +1,12 @@
 import { IconButton, TextField } from '@material-ui/core'
 import { Close } from '@material-ui/icons'
-import Head from 'next/head'
 import { useState } from 'react'
 import { useSeconds } from 'use-seconds'
 import { ClockConfig } from '../../types'
 import { ConfigModal } from '../ConfigModal'
 import ColorField from '../forms/ColorField'
 import { useConfig } from '../hooks/useConfig'
+import { useThemeColor } from '../hooks/useDocumentMeta'
 import ClockAtom from './ClockAtom'
 
 const pad2 = (n: number) => `${n}`.padStart(2, '0')
@@ -38,6 +38,8 @@ function ClockTool({ windowMode }: Props) {
   const { dateStr, tStrs } = useTimeStr(config.diffMinutes)
   const [touched, setTouched] = useState<boolean>(false)
 
+  useThemeColor(windowMode ? config.bgColor : undefined)
+
   return (
     <div
       style={{ position: 'relative', height: '100%', overflow: 'hidden' }}
@@ -47,11 +49,6 @@ function ClockTool({ windowMode }: Props) {
         setMode('main')
       }}
     >
-      {windowMode && (
-        <Head>
-          <meta name="theme-color" content={config.bgColor} />
-        </Head>
-      )}
       <ClockAtom config={config} dateStr={dateStr} tStrs={tStrs} />
 
       <ConfigModal mode={mode} miniOver>
