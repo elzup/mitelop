@@ -3,7 +3,9 @@ import { Edit, Visibility } from '@material-ui/icons'
 import { useState } from 'react'
 import styled from 'styled-components'
 import { BroadcastConfig, BroadcastItem } from '../../types'
+import { tokens } from '../../utils/tokens'
 import { useLocalStorage } from '../../utils/useLocalStorage'
+import { gadgetDefaultSize } from '../gadgets'
 import BroadcastBand from './BroadcastBand'
 import BroadcastFrame from './BroadcastFrame'
 import BroadcastPanel from './BroadcastPanel'
@@ -36,8 +38,7 @@ function BroadcastTool() {
       gadgetKey,
       x: 40,
       y: 40,
-      width: 320,
-      height: 240,
+      ...gadgetDefaultSize(gadgetKey),
     }
 
     setConfig((v) => ({ ...v, items: [...v.items, item] }))
@@ -58,7 +59,7 @@ function BroadcastTool() {
 
   return (
     <Style>
-      <Canvas onMouseDown={() => setSelectedId(null)}>
+      <Canvas data-edit={editMode} onMouseDown={() => setSelectedId(null)}>
         {config.items.map((item) => (
           <BroadcastFrame
             key={item.id}
@@ -97,6 +98,8 @@ function BroadcastTool() {
   )
 }
 
+const PANEL_WIDTH = 320
+
 const Style = styled.div`
   position: relative;
   width: 100%;
@@ -106,14 +109,17 @@ const Style = styled.div`
 const Canvas = styled.div`
   position: absolute;
   inset: 0;
+  &[data-edit='true'] {
+    background: ${tokens.color.overlayScrim};
+  }
 `
 const ToggleFab = styled(Fab)`
   position: absolute;
-  bottom: 16px;
+  bottom: ${tokens.space.md};
   z-index: 20;
-  right: 16px;
+  right: ${tokens.space.md};
   &[data-edit='true'] {
-    right: 336px;
+    right: ${PANEL_WIDTH + 16}px;
   }
 `
 

@@ -13,6 +13,7 @@ import { Add, Close, PlayArrow } from '@material-ui/icons'
 import { useState } from 'react'
 import styled from 'styled-components'
 import { BroadcastConfig, BroadcastItem } from '../../types'
+import { tokens } from '../../utils/tokens'
 import ColorField from '../forms/ColorField'
 import { gadgetMap, gadgets } from '../gadgets'
 
@@ -167,9 +168,9 @@ const Style = styled.div`
   right: 0;
   width: 320px;
   height: 100%;
-  background: white;
-  border-left: solid 1px #2b0065;
-  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.15);
+  background: ${tokens.color.surface};
+  border-left: solid 1px ${tokens.color.border};
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.08);
   overflow-y: auto;
   z-index: 10;
 `
@@ -193,7 +194,7 @@ const Section = styled.div`
     cursor: pointer;
   }
   .item-row[data-selected='true'] {
-    background: rgba(43, 0, 101, 0.1);
+    background: ${tokens.color.primaryWeak};
   }
   .item-title {
     flex-grow: 1;
@@ -214,8 +215,8 @@ const Section = styled.div`
     gap: 4px;
   }
   .phrase-row[data-active='true'] {
-    background: rgba(43, 0, 101, 0.08);
-    border-radius: 4px;
+    background: ${tokens.color.primaryWeak};
+    border-radius: ${tokens.radius.sm};
   }
 `
 

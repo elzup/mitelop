@@ -3,6 +3,7 @@ import { Close } from '@material-ui/icons'
 import { Rnd } from 'react-rnd'
 import styled from 'styled-components'
 import { BroadcastItem } from '../../types'
+import { tokens } from '../../utils/tokens'
 import { gadgetMap } from '../gadgets'
 
 type Props = {
@@ -23,6 +24,7 @@ function BroadcastFrame({
   onRemove,
 }: Props) {
   const gadget = gadgetMap[item.gadgetKey]
+  const Component = gadget?.Component
 
   return (
     <Rnd
@@ -55,7 +57,7 @@ function BroadcastFrame({
             </IconButton>
           </div>
         )}
-        <div className="body">{gadget?.render() ?? null}</div>
+        <div className="body">{Component ? <Component /> : null}</div>
       </Style>
     </Rnd>
   )
@@ -67,28 +69,34 @@ const Style = styled.div`
   display: grid;
   grid-template-rows: auto 1fr;
   overflow: hidden;
+  border-radius: ${tokens.radius.sm};
 
   &[data-edit='true'] {
-    outline: 1px dashed rgba(43, 0, 101, 0.4);
+    box-shadow: 0 0 0 1px ${tokens.color.border};
+  }
+  &[data-edit='true']:hover {
+    box-shadow: 0 0 0 1px ${tokens.color.primaryRing};
   }
   &[data-selected='true'] {
-    outline: 2px solid #2b0065;
+    box-shadow: 0 0 0 2px ${tokens.color.primaryRing};
   }
 
   .header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 4px;
-    background: rgba(43, 0, 101, 0.85);
-    color: white;
+    height: 24px;
+    padding: 0 ${tokens.space.xs};
+    background: ${tokens.color.surface};
+    border-bottom: 1px solid ${tokens.color.border};
+    color: ${tokens.color.textWeak};
     cursor: move;
     user-select: none;
   }
   .title {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: ${tokens.space.xs};
     font-size: 12px;
   }
   .body {
