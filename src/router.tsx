@@ -28,7 +28,17 @@ const broadcastRoute = createRoute({
   path: '/broadcast',
   component: () => (
     <GadgetLayout title="Broadcast">
-      <BroadcastTool />
+      <BroadcastTool mode="display" />
+    </GadgetLayout>
+  ),
+})
+
+const broadcastEditRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/broadcast/edit',
+  component: () => (
+    <GadgetLayout title="Broadcast - Edit">
+      <BroadcastTool mode="edit" />
     </GadgetLayout>
   ),
 })
@@ -48,6 +58,7 @@ const gadgetRoutes = gadgets.map((g) =>
 const routeTree = rootRoute.addChildren([
   indexRoute,
   broadcastRoute,
+  broadcastEditRoute,
   ...gadgetRoutes,
 ])
 
