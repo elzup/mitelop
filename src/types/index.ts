@@ -54,6 +54,7 @@ export type ChecksConfig = {
   text: string
   checks: string[]
   layout: ChecksLayout
+  fontSize: number
 }
 
 export type MirrorConfig = {
@@ -79,17 +80,109 @@ export type BroadcastItem = {
   y: number
   width: number
   height: number
-}
-
-export type BroadcastBand = {
-  visible: boolean
-  activeIndex: number
-  phrases: string[]
-  bgColor: string
-  fontColor: string
+  /** リサイズ時にアス比を固定する */
+  lockAspect?: boolean
+  /** 自動サイズ (SizeDef 系) gadget の文字スケール倍率。既定 1 */
+  fontScale?: number
 }
 
 export type BroadcastConfig = {
   items: BroadcastItem[]
-  band: BroadcastBand
+}
+
+export type FrameRatio =
+  | '16:9'
+  | '4:3'
+  | '1:1'
+  | '3:2'
+  | '9:16'
+  | '21:9'
+  | 'free'
+
+/** アス比ガイド枠 gadget。カメラやキャプチャの配置ガイドに使う。 */
+export type FrameGadgetConfig = {
+  ratio: FrameRatio
+  label: string
+  borderColor: string
+  borderWidth: number
+  filled: boolean
+  bgColor: string
+  rounded: boolean
+}
+
+export type TextAlign = 'left' | 'center' | 'right'
+export type TextVAlign = 'top' | 'middle' | 'bottom'
+export type TextScroll = 'none' | 'vertical' | 'marquee'
+
+/** テロップの 1 プリセット (行×列のセル内容)。 */
+export type TextPreset = {
+  id: string
+  label: string
+  cells: string[]
+}
+
+/**
+ * 表ベースのテキスト/テロップ gadget。全幅で下に置けば lower-third になる。
+ * presets に複数のテキストを持ち、activeId のものを表示する (OBS のテロップ切替相当)。
+ */
+export type TextGadgetConfig = {
+  rows: number
+  cols: number
+  presets: TextPreset[]
+  activeId: string
+  fontSize: number
+  /** セル内テキストの揃え */
+  align: TextAlign
+  /** 表(グリッド)ブロック自体の水平位置 */
+  blockAlign: TextAlign
+  /** 表(グリッド)ブロック自体の垂直位置 */
+  vAlign: TextVAlign
+  /** セル間に罫線を引くか */
+  border: boolean
+  /** 表を枠の横幅いっぱいに広げ、列を均等(1fr)配分するか */
+  fullWidth: boolean
+  scroll: TextScroll
+  bgColor: string
+  fontColor: string
+}
+
+export const THUMBNAIL_ANCHORS = [
+  'top-left',
+  'top-center',
+  'top-right',
+  'middle-left',
+  'middle-center',
+  'middle-right',
+  'bottom-left',
+  'bottom-center',
+  'bottom-right',
+] as const
+export type ThumbnailAnchor = (typeof THUMBNAIL_ANCHORS)[number]
+
+/** サムネイル上の 1 テキストレイヤー (改行で複数行)。 */
+export type ThumbnailTextLayer = {
+  text: string
+  fontSize: number
+  color: string
+  strokeColor: string
+  strokeWidth: number
+  bold: boolean
+  anchor: ThumbnailAnchor
+}
+
+export type ThumbnailImageFit = 'cover' | 'contain'
+
+/**
+ * サムネイル作成ツールの設定。背景(色/画像) + 2 つのテキストレイヤーを
+ * canvas に描画し PNG として書き出す。放送 gadget とは独立した制作ツール。
+ */
+export type ThumbnailConfig = {
+  width: number
+  height: number
+  bgColor: string
+  /** 背景画像 (data URL)。空文字なら無し。 */
+  bgImage: string
+  imageFit: ThumbnailImageFit
+  title: ThumbnailTextLayer
+  subtitle: ThumbnailTextLayer
 }

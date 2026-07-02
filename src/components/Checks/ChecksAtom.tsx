@@ -1,9 +1,9 @@
 import CheckedIcon from '@material-ui/icons/CheckCircle'
 import NoCheckIcon from '@material-ui/icons/RadioButtonUnchecked'
+import { Dispatch, SetStateAction } from 'react'
 import styled from 'styled-components'
 import { ChecksConfig } from '../../types'
-import { arrayToObj } from '../../utils'
-import SizeDef from '../SizeDef'
+import { arrayToObj, arrToggle } from '../../utils'
 
 function CheckItem(props: {
   title: string
@@ -22,50 +22,57 @@ function CheckItem(props: {
 
 type Props = {
   config: ChecksConfig
-  onClickItem: (id: string) => void
-  onChangeText: (text: string) => void
+  setConfig: Dispatch<SetStateAction<ChecksConfig>>
 }
-function ChecksAtom({ config, onClickItem, onChangeText }: Props) {
+
+function ChecksAtom({ config, setConfig }: Props) {
   const titles = config.text.split('\n')
   const checks = arrayToObj(config.checks)
 
+  const toggle = (title: string) =>
+    setConfig((v) => ({ ...v, checks: arrToggle(v.checks, title) }))
+
   return (
-    <SizeDef>
-      <Style data-layout={config.layout}>
-        <div className="list">
-          {titles.map((title, i) => (
-            <CheckItem
-              key={i}
-              onClick={() => onClickItem(title)}
-              checked={checks[title]}
-              title={title}
-            />
-          ))}
-        </div>
-      </Style>
-    </SizeDef>
+    <Style
+      data-layout={config.layout}
+      style={{ fontSize: `${config.fontSize}px` }}
+    >
+      <div className="list">
+        {titles.map((title, i) => (
+          <CheckItem
+            key={i}
+            onClick={() => toggle(title)}
+            checked={checks[title]}
+            title={title}
+          />
+        ))}
+      </div>
+    </Style>
   )
 }
-
-ChecksAtom.defaultProps = {}
 
 const Style = styled.div`
   height: 100%;
   width: 100%;
   box-sizing: border-box;
-  overflow: scroll;
+  overflow: auto;
 
   .list {
     display: grid;
   }
   .item {
     display: flex;
-    height: 2rem;
-    width: 100%;
-    font-size: 1.2rem;
     align-items: center;
-    padding-left: 8px;
-    gap: 8px;
+    min-height: 1.6em;
+    width: 100%;
+    /* アイコン・文字とも親 (config.fontSize) に追従させる */
+    font-size: 1em;
+    padding-left: 0.4em;
+    gap: 0.4em;
+    cursor: pointer;
+    .MuiSvgIcon-root {
+      font-size: 1.2em;
+    }
     &[data-checked='true'] {
       background: #dfdfdf;
       color: #656565;
@@ -75,7 +82,7 @@ const Style = styled.div`
     }
   }
   &[data-layout='vertical'] {
-    div {
+    .list {
       grid-auto-flow: column;
     }
   }

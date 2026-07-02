@@ -3,8 +3,9 @@ import { ReactNode } from 'react'
 import { useMeasure } from 'react-use'
 
 const SizeDefStyle = styled.div<{ height: number; width: number }>`
-  --w: ${(p) => p.width}px;
-  --h: ${(p) => p.height}px;
+  /* 祖先 (Broadcast フレーム等) が --font-scale を与えると文字基準が一括で伸縮する */
+  --w: calc(${(p) => p.width}px * var(--font-scale, 1));
+  --h: calc(${(p) => p.height}px * var(--font-scale, 1));
   height: 100%;
   width: 100%;
   box-sizing: border-box;
