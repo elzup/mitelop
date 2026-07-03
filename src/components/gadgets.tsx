@@ -54,13 +54,6 @@ import {
 } from './Protractor/protractorConfig'
 import ProtractorTool from './Protractor/ProtractorTool'
 import RulerTool from './Ruler/RulerTool'
-import SetSquareAtom from './SetSquare/SetSquareAtom'
-import SetSquareConfigEditor from './SetSquare/SetSquareConfigEditor'
-import {
-  setSquareAspectRatio,
-  setSquareDefaultConfig,
-} from './SetSquare/setSquareConfig'
-import SetSquareTool from './SetSquare/SetSquareTool'
 import StopwatchTool from './Stopwatch/StopwatchTool'
 import ThumbnailTool from './Thumbnail/ThumbnailTool'
 import TimerConfigAtom from './Timer/TimerConfigAtom'
@@ -112,9 +105,13 @@ export type GadgetDef = {
   configId?: string
   /**
    * ネイティブ (Tauri) 版でだけ動く gadget。web ビルドでは無効表示にする。
-   * 現状は三角定規・コンパス・分度器のみが該当予定。
    */
   nativeOnly?: boolean
+  /**
+   * 単独窓で開くときに窓を透過にする。定規・コンパス・分度器・フレームなど
+   * 背後を透かしたい gadget のみ true。それ以外は背景色ありの不透明窓にする。
+   */
+  transparentWindow?: boolean
 }
 
 const DEFAULT_SIZE: Size = { width: 320, height: 240 }
@@ -241,25 +238,11 @@ export const gadgets: GadgetDef[] = [
     path: '/ruler',
     Component: RulerTool,
     configId: 'ruler',
+    transparentWindow: true,
     config: {
       defaultConfig: rulerDefaultConfig,
       Atom: RulerConfigAtom,
       ConfigEditor: RulerConfigEditor,
-    },
-  },
-  {
-    key: 'gad-setsquare',
-    icon: 'square_foot',
-    title: 'SetSquare',
-    path: '/setsquare',
-    Component: SetSquareTool,
-    nativeOnly: true,
-    defaultSize: { width: 320, height: 320 },
-    config: {
-      defaultConfig: setSquareDefaultConfig,
-      Atom: SetSquareAtom,
-      ConfigEditor: SetSquareConfigEditor,
-      getAspectRatio: setSquareAspectRatio,
     },
   },
   {
@@ -269,6 +252,7 @@ export const gadgets: GadgetDef[] = [
     path: '/compass',
     Component: CompassTool,
     nativeOnly: true,
+    transparentWindow: true,
     defaultSize: { width: 320, height: 320 },
     config: {
       defaultConfig: compassDefaultConfig,
@@ -284,7 +268,8 @@ export const gadgets: GadgetDef[] = [
     path: '/protractor',
     Component: ProtractorTool,
     nativeOnly: true,
-    defaultSize: { width: 400, height: 200 },
+    transparentWindow: true,
+    defaultSize: { width: 320, height: 320 },
     config: {
       defaultConfig: protractorDefaultConfig,
       Atom: ProtractorAtom,
@@ -333,6 +318,7 @@ export const gadgets: GadgetDef[] = [
     title: 'Frame',
     path: '/frame',
     Component: FrameTool,
+    transparentWindow: true,
     defaultSize: { width: 480, height: 270 },
     config: {
       defaultConfig: frameDefaultConfig,

@@ -15,11 +15,15 @@
       {
         "label": "main",
         "title": "Mitelop",
-        "width": 1280,
-        "height": 760,
+        "url": "/launcher",
+        "width": 300,
+        "height": 600,
+        "minWidth": 240,
         "resizable": true,
         "fullscreen": false,
-        "transparent": true
+        "decorations": false,
+        "transparent": true,
+        "alwaysOnTop": true
       }
     ],
     "security": {

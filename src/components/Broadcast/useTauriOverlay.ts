@@ -19,16 +19,13 @@ export function useOverlayConfig() {
 }
 
 /**
- * stage 窓に Tauri のオーバーレイ挙動を適用する。
- * - CssBaseline が塗る body 背景を透過に上書き (透過ウィンドウで背後が抜ける)
- * - コントロール窓で切り替えた 最前面/クリックスルー を自ウィンドウへ反映
- * web では何もしない。
+ * CssBaseline が塗る body 背景を透過に上書きする (Tauri 透過ウィンドウで背後が抜ける)。
+ * stage 窓・単独ガジェット窓・ランチャーなど、透過で浮かせたい窓で使う。
+ * enabled=false (透過が無意味なガジェット) や web では何もしない。
  */
-export function useTauriOverlay() {
-  const [overlay] = useOverlayConfig()
-
+export function useTransparentBody(enabled = true) {
   useEffect(() => {
-    if (!isTauri()) return
+    if (!isTauri() || !enabled) return
     const el = document.body
     const prev = el.style.background
 
@@ -37,7 +34,19 @@ export function useTauriOverlay() {
     return () => {
       el.style.background = prev
     }
-  }, [])
+  }, [enabled])
+}
+
+/**
+ * stage 窓に Tauri のオーバーレイ挙動を適用する。
+ * - body 背景を透過に (useTransparentBody)
+ * - コントロール窓で切り替えた 最前面/クリックスルー を自ウィンドウへ反映
+ * web では何もしない。
+ */
+export function useTauriOverlay() {
+  const [overlay] = useOverlayConfig()
+
+  useTransparentBody()
 
   useEffect(() => {
     if (!isTauri()) return

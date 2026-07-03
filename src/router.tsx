@@ -7,7 +7,9 @@ import {
 import BroadcastControlWindow from './components/Broadcast/BroadcastControlWindow'
 import BroadcastTool from './components/Broadcast/BroadcastTool'
 import ConfigWindow from './components/Broadcast/ConfigWindow'
+import GadgetWindow from './components/GadgetWindow'
 import { gadgets } from './components/gadgets'
+import Launcher from './components/Launcher/Launcher'
 import { GadgetLayout, TopLayout } from './components/Layout'
 import TopPage from './components/TopPage'
 
@@ -23,6 +25,18 @@ const indexRoute = createRoute({
       <TopPage />
     </TopLayout>
   ),
+})
+
+const launcherRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/launcher',
+  component: () => <Launcher />,
+})
+
+const gadgetWindowRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/gadget/$gadgetKey',
+  component: () => <GadgetWindow />,
 })
 
 const broadcastRoute = createRoute({
@@ -73,6 +87,8 @@ const gadgetRoutes = gadgets.map((g) =>
 
 const routeTree = rootRoute.addChildren([
   indexRoute,
+  launcherRoute,
+  gadgetWindowRoute,
   broadcastRoute,
   broadcastControlRoute,
   configRoute,

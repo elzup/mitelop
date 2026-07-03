@@ -1,8 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { isTauri } from '../../utils/platform'
+import { gadgetDefaultSize, gadgetMap } from '../gadgets'
 
 const CONFIG_SIZE = { w: 360, h: 680 }
 const CONTROL_SIZE = { w: 380, h: 720 }
+const BOARD_SIZE = { w: 1280, h: 760 }
+
+/** 枠なし透過 (ガジェット単体 / ボード) か、通常の装飾窓 (設定 / コントロール) か */
+type WinOpts = { transparent?: boolean; decorations?: boolean }
 
 /**
  * Tauri ではブラウザの window.open が使えない (別 WebView になり localStorage も
@@ -11,7 +16,8 @@ const CONTROL_SIZE = { w: 380, h: 720 }
 async function openTauriWindow(
   url: string,
   label: string,
-  size: { w: number; h: number }
+  size: { w: number; h: number },
+  opts?: WinOpts
 ) {
   const { WebviewWindow } = await import('@tauri-apps/api/webviewWindow')
   const existing = await WebviewWindow.getByLabel(label)
@@ -22,7 +28,13 @@ async function openTauriWindow(
     return
   }
   // eslint-disable-next-line no-new
-  new WebviewWindow(label, { url, width: size.w, height: size.h })
+  new WebviewWindow(label, {
+    url,
+    width: size.w,
+    height: size.h,
+    transparent: opts?.transparent,
+    decorations: opts?.decorations,
+  })
 }
 
 /** (key, instanceId) ごとに安定した window name。同名 open はブラウザが既存窓を再フォーカスする */
@@ -56,9 +68,14 @@ export function useGadgetWindow() {
   }, [sync])
 
   const openWindow = useCallback(
-    (url: string, name: string, size: { w: number; h: number }) => {
+    (
+      url: string,
+      name: string,
+      size: { w: number; h: number },
+      opts?: WinOpts
+    ) => {
       if (isTauri()) {
-        void openTauriWindow(url, name, size)
+        void openTauriWindow(url, name, size, opts)
         // Tauri 側の開閉追跡は行わない (開く操作は label dedupe に任せる)
         setOpenNames((v) => (v.includes(name) ? v : [...v, name]))
 
@@ -97,11 +114,46 @@ export function useGadgetWindow() {
     [openWindow]
   )
 
+  /**
+   * ガジェット単体を枠なし窓で浮かべる (ネイティブのランチャーから)。
+   * 透過が意味を持つ gadget のみ transparent、それ以外は背景色ありの不透明窓。
+   */
+  const openGadgetWindow = useCallback(
+    (key: string) => {
+      const size = gadgetDefaultSize(key)
+      const transparent = Boolean(gadgetMap[key]?.transparentWindow)
+
+      return openWindow(
+        `/gadget/${key}`,
+        `mitelop-gadget-${key}`,
+        { w: size.width, h: size.height },
+        { transparent, decorations: false }
+      )
+    },
+    [openWindow]
+  )
+
+  /** 他ガジェットを載せるボード (broadcast stage) を開く。枠 (window border) は残す */
+  const openBoardWindow = useCallback(
+    () =>
+      openWindow('/broadcast', 'mitelop-board', BOARD_SIZE, {
+        transparent: true,
+        decorations: true,
+      }),
+    [openWindow]
+  )
+
   const isConfigOpen = useCallback(
     (key: string, instanceId?: string) =>
       openNames.includes(configWindowName(key, instanceId)),
     [openNames]
   )
 
-  return { openConfigWindow, openControlWindow, isConfigOpen }
+  return {
+    openConfigWindow,
+    openControlWindow,
+    openGadgetWindow,
+    openBoardWindow,
+    isConfigOpen,
+  }
 }
