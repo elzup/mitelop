@@ -84,10 +84,29 @@ export type BroadcastItem = {
   lockAspect?: boolean
   /** 自動サイズ (SizeDef 系) gadget の文字スケール倍率。既定 1 */
   fontScale?: number
+  /** 参照する設定スロット (config-slots-<gadgetKey>) の id。未設定なら先頭スロット */
+  slotId?: string
 }
 
 export type BroadcastConfig = {
   items: BroadcastItem[]
+}
+
+/** stage (配信枠) のアス比プリセット。window に対して contain 表示する。 */
+export const BROADCAST_RATIOS = [
+  '16:9',
+  '9:16',
+  '4:3',
+  '3:2',
+  '1:1',
+  '21:9',
+] as const
+export type BroadcastRatio = (typeof BROADCAST_RATIOS)[number]
+
+export type BroadcastFrameConfig = {
+  ratio: BroadcastRatio
+  /** 比率の誤操作防止ロック */
+  locked: boolean
 }
 
 export type FrameRatio =
