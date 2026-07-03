@@ -1,12 +1,16 @@
 {
   "name": "mitelop",
   "version": "1.0.0",
+  "packageManager": "pnpm@10.26.2",
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild", "fsevents"]
+  },
   "scripts": {
     "dev": "portless run --name mitelop --app-port 5173 vite",
     "test": "jest --watchman=false",
     "storybook": "start-storybook -p 6006",
     "build": "tsc && vite build",
-    "export": "yarn build",
+    "export": "pnpm build",
     "start": "portless run --name mitelop --app-port 5173 vite preview",
     "lint": "eslint --ext .ts,.tsx src vite.config.ts --ignore-pattern '**/*.stories.tsx' --ignore-pattern '**/__tests__/**'",
     "type-check": "tsc",
