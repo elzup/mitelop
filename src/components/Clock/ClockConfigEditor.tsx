@@ -1,7 +1,13 @@
-import { FormControlLabel, Switch, TextField } from '@material-ui/core'
+import {
+  FormControlLabel,
+  MenuItem,
+  Switch,
+  TextField,
+} from '@material-ui/core'
 import { Dispatch, SetStateAction } from 'react'
 import { ClockConfig } from '../../types'
 import ColorField from '../forms/ColorField'
+import { CLOCK_TIMEZONES } from './clockConfig'
 
 type Props = {
   config: ClockConfig
@@ -22,13 +28,17 @@ function ClockConfigEditor({ config, setConfig }: Props) {
         onChange={(fontColor) => setConfig((v) => ({ ...v, fontColor }))}
       />
       <TextField
-        type="number"
-        label="diffMinutes"
-        value={config.diffMinutes}
-        onChange={(e) =>
-          setConfig((v) => ({ ...v, diffMinutes: Number(e.target.value) }))
-        }
-      />
+        select
+        label="タイムゾーン"
+        value={config.timeZone}
+        onChange={(e) => setConfig((v) => ({ ...v, timeZone: e.target.value }))}
+      >
+        {CLOCK_TIMEZONES.map((tz) => (
+          <MenuItem key={tz.value || 'local'} value={tz.value}>
+            {tz.label}
+          </MenuItem>
+        ))}
+      </TextField>
       <FormControlLabel
         control={
           <Switch

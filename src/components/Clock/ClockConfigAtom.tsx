@@ -10,7 +10,7 @@ type Props = {
 
 /** 時刻は runtime 派生なので Atom 側で自前計算する。 */
 function ClockConfigAtom({ config }: Props) {
-  const { dateStr, tStrs } = useClockTime(config.diffMinutes)
+  const { dateStr, tStrs } = useClockTime(config.timeZone)
 
   return <ClockAtom config={config} dateStr={dateStr} tStrs={tStrs} />
 }

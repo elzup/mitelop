@@ -7,7 +7,8 @@ export type ClockConfig = {
   dateVisible: boolean
   bgColor: string
   fontColor: string
-  diffMinutes: number
+  /** IANA タイムゾーン名 (空文字 = 端末ローカル) */
+  timeZone: string
 }
 export type GadgetMode = 'main' | 'over' | 'conf'
 

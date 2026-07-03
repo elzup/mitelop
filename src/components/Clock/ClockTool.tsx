@@ -17,7 +17,7 @@ function ClockTool({ windowMode }: Props) {
     'clock'
   )
 
-  const { dateStr, tStrs } = useClockTime(config.diffMinutes)
+  const { dateStr, tStrs } = useClockTime(config.timeZone)
 
   useThemeColor(windowMode ? config.bgColor : undefined)
 
