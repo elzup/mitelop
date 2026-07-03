@@ -16,17 +16,6 @@ function ClockAtom(props: React.PropsWithChildren<Props>) {
   // 「時刻のみ大」レイアウトは日付を出さない
   const showDate = config.dateVisible && layout !== 'time'
 
-  const time = (
-    <div className="time">
-      {hs}
-      <span>:</span>
-      {ms}
-      <span>:</span>
-      {ss}
-    </div>
-  )
-  const date = showDate ? <div className="date">{dateStr}</div> : null
-
   return (
     <SizeDef portRate={1.8}>
       <Style
@@ -37,10 +26,14 @@ function ClockAtom(props: React.PropsWithChildren<Props>) {
           '--font-color': config.fontColor,
         }}
       >
-        <div className="outer">
-          <div className="inner">
-            {date}
-            {time}
+        <div className="inner">
+          {showDate && <div className="date">{dateStr}</div>}
+          <div className="time">
+            {hs}
+            <span>:</span>
+            {ms}
+            <span>:</span>
+            {ss}
           </div>
         </div>
       </Style>
@@ -51,55 +44,54 @@ function ClockAtom(props: React.PropsWithChildren<Props>) {
 const Style = styled.div`
   width: 100%;
   height: 100%;
-  padding: 0 3%;
-  font-family: 'Roboto';
-  position: relative;
-  background: var(--bg-color);
   box-sizing: border-box;
+  padding: 2% 3%;
+  font-family: 'Roboto';
+  background: var(--bg-color);
+  color: var(--font-color);
+  display: grid;
+  place-items: center;
 
-  .outer {
-    color: var(--font-color);
-    display: grid;
-    height: 100%;
-    place-items: center;
-  }
   .inner {
+    max-width: 100%;
     text-align: center;
-    max-width: var(--w);
   }
   .time {
-    font-size: calc(var(--w) * 0.24);
-    line-height: 1.1;
+    font-size: calc(var(--w) * 0.22);
+    line-height: 1.05;
+    white-space: nowrap;
+  }
+  .time span {
+    margin: 0 0.02em;
   }
   .date {
-    font-size: calc(var(--w) * 0.1);
-    margin-bottom: -4%;
-    text-align: left;
+    font-size: calc(var(--w) * 0.09);
+    white-space: nowrap;
   }
 
-  /* 日付+時刻 (既定): 中央に縦積み。上の date は現状踏襲 */
-  &[data-layout='stack'] .inner {
-    text-align: center;
+  /* 日付+時刻 (既定): 日付を上に、時刻を下に中央寄せ */
+  &[data-layout='stack'] .date {
+    margin-bottom: 2%;
   }
 
-  /* 時刻のみ大: 枠いっぱいに大きく */
+  /* 時刻のみ大: 幅いっぱいまで大きく */
   &[data-layout='time'] .time {
-    font-size: calc(var(--w) * 0.32);
+    font-size: calc(var(--w) * 0.24);
   }
 
-  /* 横並び: 時刻を大きく、日付を右にインラインで添える */
+  /* 横並び: 時刻の右に日付を小さく添える (横長向き) */
   &[data-layout='row'] .inner {
     display: flex;
     align-items: baseline;
     justify-content: center;
-    gap: 4%;
+    gap: 0.4em;
   }
   &[data-layout='row'] .time {
-    font-size: calc(var(--w) * 0.16);
+    font-size: calc(var(--w) * 0.15);
   }
   &[data-layout='row'] .date {
     margin-bottom: 0;
-    font-size: calc(var(--w) * 0.06);
+    font-size: calc(var(--w) * 0.07);
   }
 `
 
