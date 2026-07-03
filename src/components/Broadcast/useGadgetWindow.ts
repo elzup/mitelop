@@ -7,7 +7,29 @@ const CONTROL_SIZE = { w: 380, h: 720 }
 const BOARD_SIZE = { w: 1280, h: 760 }
 
 /** 枠なし透過 (ガジェット単体 / ボード) か、通常の装飾窓 (設定 / コントロール) か */
-type WinOpts = { transparent?: boolean; decorations?: boolean }
+type WinOpts = {
+  transparent?: boolean
+  decorations?: boolean
+  /** 呼び出し元 (ガジェット) 窓の右隣に、被らないよう配置する */
+  beside?: boolean
+}
+
+/** 呼び出し元窓の右隣 (論理座標) を返す。取得に失敗したら undefined。 */
+async function besidePosition(): Promise<{ x: number; y: number } | undefined> {
+  try {
+    const { getCurrentWindow } = await import('@tauri-apps/api/window')
+    const cur = getCurrentWindow()
+    const [pos, size, scale] = await Promise.all([
+      cur.outerPosition(),
+      cur.outerSize(),
+      cur.scaleFactor(),
+    ])
+
+    return { x: (pos.x + size.width) / scale + 8, y: pos.y / scale }
+  } catch {
+    return undefined
+  }
+}
 
 /**
  * Tauri ではブラウザの window.open が使えない (別 WebView になり localStorage も
@@ -27,6 +49,8 @@ async function openTauriWindow(
 
     return
   }
+  const pos = opts?.beside ? await besidePosition() : undefined
+
   // eslint-disable-next-line no-new
   new WebviewWindow(label, {
     url,
@@ -34,6 +58,7 @@ async function openTauriWindow(
     height: size.h,
     transparent: opts?.transparent,
     decorations: opts?.decorations,
+    ...(pos ? { x: pos.x, y: pos.y } : {}),
   })
 }
 
@@ -104,7 +129,8 @@ export function useGadgetWindow() {
       openWindow(
         configWindowUrl(key, instanceId),
         configWindowName(key, instanceId),
-        CONFIG_SIZE
+        CONFIG_SIZE,
+        { beside: true }
       ),
     [openWindow]
   )

@@ -26,6 +26,14 @@ const Grip = styled.div`
   height: 16px;
   z-index: 50;
   cursor: nwse-resize;
+  opacity: 0;
+  transition: opacity 0.12s;
+
+  /* 窓にマウスが乗っているときだけ表示 */
+  body:hover & {
+    opacity: 0.9;
+  }
+
   background: linear-gradient(
     135deg,
     transparent 45%,
