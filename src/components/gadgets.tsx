@@ -1,5 +1,5 @@
 import { ComponentType, Dispatch, SetStateAction } from 'react'
-import { Size } from '../types'
+import { GadgetLayout, Size } from '../types'
 import ChecksAtom from './Checks/ChecksAtom'
 import ChecksConfigEditor from './Checks/ChecksConfigEditor'
 import { checksDefaultConfig } from './Checks/checksConfig'
@@ -14,7 +14,7 @@ import { textDefaultConfig } from './Text/textConfig'
 import ChecksTool from './Checks/ChecksTool'
 import ClockConfigAtom from './Clock/ClockConfigAtom'
 import ClockConfigEditor from './Clock/ClockConfigEditor'
-import { clockDefaultConfig } from './Clock/clockConfig'
+import { CLOCK_LAYOUTS, clockDefaultConfig } from './Clock/clockConfig'
 import ClockTool from './Clock/ClockTool'
 import ColorConfigAtom from './Color/ColorConfigAtom'
 import ColorConfigEditor from './Color/ColorConfigEditor'
@@ -82,6 +82,11 @@ export type GadgetConfigSpec<T = any> = {
   ConfigEditor: ComponentType<ConfigEditorProps<T>>
   /** 固定アス比 (width/height) を返す gadget は枠自体をその比率に固定できる */
   getAspectRatio?: (config: T) => number | undefined
+  /**
+   * 表示レイアウト候補 (推奨アス比つき)。config.layout で切り替える。
+   * 設定窓に LayoutPicker が出て、今の窓のアス比が推奨内かを示す。
+   */
+  layouts?: GadgetLayout[]
 }
 
 export type GadgetDef = {
@@ -142,6 +147,7 @@ export const gadgets: GadgetDef[] = [
       defaultConfig: clockDefaultConfig,
       Atom: ClockConfigAtom,
       ConfigEditor: ClockConfigEditor,
+      layouts: CLOCK_LAYOUTS,
     },
   },
   {

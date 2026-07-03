@@ -1,10 +1,18 @@
-import { ClockConfig } from '../../types'
+import { ClockConfig, GadgetLayout } from '../../types'
+
+/** Clock の表示レイアウト。推奨アス比 (width/height) つき。 */
+export const CLOCK_LAYOUTS: GadgetLayout[] = [
+  { id: 'stack', name: '日付+時刻', aspect: [1.0, 2.2] },
+  { id: 'time', name: '時刻のみ大', aspect: [1.2, 3.2] },
+  { id: 'row', name: '横並び', aspect: [2.4, 5.0] },
+]
 
 export const clockDefaultConfig: ClockConfig = {
   dateVisible: true,
   bgColor: '#aaaaff',
   fontColor: '#000066',
   timeZone: '',
+  layout: 'stack',
 }
 
 /** 設定で選べる主要タイムゾーン (先頭は端末ローカル) */

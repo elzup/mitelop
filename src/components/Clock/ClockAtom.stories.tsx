@@ -13,6 +13,7 @@ export default {
       fontColor: '#ddd',
       dateVisible: true,
       timeZone: '',
+      layout: 'stack',
     },
     dateStr: '2999-01-01',
     tStrs: ['12', '34', '56'],
@@ -32,6 +33,7 @@ Color.args = {
     fontColor: '#ddd',
     dateVisible: true,
     timeZone: '',
+    layout: 'stack',
   },
   dateStr: '2999-01-01',
   tStrs: ['12', '34', '56'],
@@ -45,5 +47,6 @@ DateUnvisible.args = {
     fontColor: '#ddd',
     dateVisible: false,
     timeZone: '',
+    layout: 'stack',
   },
 }

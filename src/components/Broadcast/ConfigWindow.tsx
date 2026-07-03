@@ -18,6 +18,7 @@ import { tokens } from '../../utils/tokens'
 import { useLocalStorage } from '../../utils/useLocalStorage'
 import { GadgetDef, gadgetMap } from '../gadgets'
 import { useSlots } from '../hooks/useSlots'
+import { LayoutPicker } from '../LayoutPicker'
 import { useBroadcast } from './useBroadcast'
 
 type Slots = ReturnType<typeof useSlots>
@@ -183,6 +184,18 @@ function ConfigWindowInner({
           <ItemControls
             item={item}
             onUpdate={(patch) => updateItem(item.id, patch)}
+          />
+        )}
+        {spec?.layouts && spec.layouts.length > 0 && (
+          <LayoutPicker
+            layouts={spec.layouts}
+            value={
+              (slot.config as { layout?: string }).layout ?? spec.layouts[0].id
+            }
+            currentAspect={item ? item.width / item.height : undefined}
+            onSelect={(id) =>
+              slots.setSlotConfig(currentId, { ...slot.config, layout: id })
+            }
           />
         )}
         {Editor ? (

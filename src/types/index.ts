@@ -3,12 +3,22 @@ import { Note as ToneNote } from 'tone/build/esm/core/type/NoteUnits'
 export type Frequency = ToneNote
 export type Size = { width: number; height: number }
 
+/** ガジェットの表示レイアウト候補。推奨アス比 (width/height) の範囲つき。 */
+export type GadgetLayout = {
+  id: string
+  name: string
+  /** 推奨アス比 (width / height) の範囲 [min, max] */
+  aspect: [number, number]
+}
+
 export type ClockConfig = {
   dateVisible: boolean
   bgColor: string
   fontColor: string
   /** IANA タイムゾーン名 (空文字 = 端末ローカル) */
   timeZone: string
+  /** 表示レイアウト (CLOCK_LAYOUTS の id) */
+  layout: string
 }
 export type GadgetMode = 'main' | 'over' | 'conf'
 
