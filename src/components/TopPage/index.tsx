@@ -46,31 +46,30 @@ const TopPage = () => {
             startIcon={<LaunchIcon />}
             href="/broadcast"
           >
-            表示を開く
-          </Button>
-          <Button
-            size="small"
-            variant="outlined"
-            startIcon={<EditIcon />}
-            href="/broadcast/edit"
-          >
-            編集を開く
+            開く
           </Button>
         </div>
         <Typography variant="body2" color="textSecondary">
           ページ全体にガジェットを自由配置できるカスタムの放送枠。Text
-          ガジェットを全幅で下に置けばテロップにもなります。
+          ガジェットを全幅で下に置けばテロップにもなります。表示・操作・設定を
+          別々のウィンドウに分け、OBS では表示ウィンドウ (stage)
+          だけをキャプチャします。
         </Typography>
         <ul className="how">
           <li>
-            <b>表示</b> (/broadcast) … ガジェットだけのクリーンな画面。OBS
-            などでこのウィンドウをキャプチャします。右下にカーソルを寄せると出る
-            編集ボタンからも操作画面を開けます。
+            <b>表示 (stage)</b> …
+            ガジェットだけのクリーンな画面。右下にカーソルを
+            寄せると出るボタンからコントロール窓を開けます。
           </li>
           <li>
-            <b>編集</b> (/broadcast/edit) …
-            子ウィンドウで配置・サイズ・各ガジェットの設定を操作。変更は表示側に
-            リアルタイム反映されます (同じブラウザの別ウィンドウ間で同期)。
+            <EditIcon fontSize="inherit" /> <b>コントロール窓</b> …
+            出しっぱなしにできる別窓。ガジェットの追加・配置一覧・stage
+            編集トグルを操作します。
+          </li>
+          <li>
+            <b>設定窓</b> …
+            配置した各ガジェットの歯車から、そのガジェット専用の設定窓を開きます
+            (複数同時可)。すべての変更はウィンドウ間でリアルタイム同期。
           </li>
         </ul>
       </Section>

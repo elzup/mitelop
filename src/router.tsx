@@ -4,7 +4,9 @@ import {
   createRouter,
   Outlet,
 } from '@tanstack/react-router'
+import BroadcastControlWindow from './components/Broadcast/BroadcastControlWindow'
 import BroadcastTool from './components/Broadcast/BroadcastTool'
+import ConfigWindow from './components/Broadcast/ConfigWindow'
 import { gadgets } from './components/gadgets'
 import { GadgetLayout, TopLayout } from './components/Layout'
 import TopPage from './components/TopPage'
@@ -28,17 +30,31 @@ const broadcastRoute = createRoute({
   path: '/broadcast',
   component: () => (
     <GadgetLayout title="Broadcast">
-      <BroadcastTool mode="display" />
+      <BroadcastTool />
     </GadgetLayout>
   ),
 })
 
-const broadcastEditRoute = createRoute({
+const broadcastControlRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: '/broadcast/edit',
+  path: '/broadcast/control',
   component: () => (
-    <GadgetLayout title="Broadcast - Edit">
-      <BroadcastTool mode="edit" />
+    <GadgetLayout title="Broadcast - Control">
+      <BroadcastControlWindow />
+    </GadgetLayout>
+  ),
+})
+
+const configRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/config/$gadgetKey',
+  validateSearch: (search: Record<string, unknown>) => ({
+    instanceId:
+      typeof search.instanceId === 'string' ? search.instanceId : undefined,
+  }),
+  component: () => (
+    <GadgetLayout title="Gadget Config">
+      <ConfigWindow />
     </GadgetLayout>
   ),
 })
@@ -58,7 +74,8 @@ const gadgetRoutes = gadgets.map((g) =>
 const routeTree = rootRoute.addChildren([
   indexRoute,
   broadcastRoute,
-  broadcastEditRoute,
+  broadcastControlRoute,
+  configRoute,
   ...gadgetRoutes,
 ])
 

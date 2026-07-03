@@ -1,26 +1,14 @@
 import { Fab } from '@material-ui/core'
-import { Edit, OpenInNew } from '@material-ui/icons'
+import { Tune } from '@material-ui/icons'
 import { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
-import { BroadcastConfig, BroadcastItem } from '../../types'
 import { tokens } from '../../utils/tokens'
-import { useLocalStorage } from '../../utils/useLocalStorage'
-import { gadgetDefaultSize } from '../gadgets'
 import BroadcastFrame from './BroadcastFrame'
-import BroadcastPanel from './BroadcastPanel'
+import { ratioDims, useBroadcast } from './useBroadcast'
+import { useGadgetWindow } from './useGadgetWindow'
 
-type Props = { mode?: 'display' | 'edit' }
-
-/** 配信の基準解像度。編集/表示の両モードでこの座標系を共有し、WYSIWYG を担保する。 */
-const DESIGN_WIDTH = 1280
-const DESIGN_HEIGHT = 720
-
-const initialConfig: BroadcastConfig = {
-  items: [],
-}
-
-/** stage の実サイズに収まるよう設計座標系を等倍スケールする係数を測る */
-function useStageScale() {
+/** stage の実サイズに設計座標系 (dw×dh) を contain させるスケール係数を測る */
+function useStageScale(dw: number, dh: number) {
   const ref = useRef<HTMLDivElement>(null)
   const [scale, setScale] = useState(1)
 
@@ -31,7 +19,7 @@ function useStageScale() {
     const update = () => {
       const { width, height } = el.getBoundingClientRect()
 
-      setScale(Math.min(width / DESIGN_WIDTH, height / DESIGN_HEIGHT) || 1)
+      setScale(Math.min(width / dw, height / dh) || 1)
     }
 
     update()
@@ -40,66 +28,44 @@ function useStageScale() {
     observer.observe(el)
 
     return () => observer.disconnect()
-  }, [])
+  }, [dw, dh])
 
   return { ref, scale }
 }
 
-const genId = () =>
-  `bc-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`
-
-const openEditor = () =>
-  window.open(
-    '/broadcast/edit',
-    'mitelop-bc-edit',
-    'popup,width=1180,height=760'
-  )
-const openOverlay = () =>
-  window.open('/broadcast', 'mitelop-bc-overlay', 'width=1280,height=720')
-
-function BroadcastTool({ mode = 'display' }: Props) {
-  const editMode = mode === 'edit'
-  const [config, setConfig] = useLocalStorage<BroadcastConfig>(
-    'broadcast',
-    initialConfig
-  )
-  const [selectedId, setSelectedId] = useState<string | null>(null)
-  const { ref: stageRef, scale } = useStageScale()
-
-  const addGadget = (gadgetKey: string) => {
-    const item: BroadcastItem = {
-      id: genId(),
-      gadgetKey,
-      x: 40,
-      y: 40,
-      ...gadgetDefaultSize(gadgetKey),
-    }
-
-    setConfig((v) => ({ ...v, items: [...v.items, item] }))
-    setSelectedId(item.id)
-  }
-
-  const updateItem = (id: string, patch: Partial<BroadcastItem>) =>
-    setConfig((v) => ({
-      ...v,
-      items: v.items.map((it) => (it.id === id ? { ...it, ...patch } : it)),
-    }))
-
-  const removeItem = (id: string) =>
-    setConfig((v) => ({ ...v, items: v.items.filter((it) => it.id !== id) }))
+/**
+ * 配信表示ウィンドウ (/broadcast)。stage だけを描く OBS キャプチャ対象。
+ * 編集は別窓 (/broadcast/control) が担い、その編集トグルは `broadcast-editing` を
+ * 通じてこの stage に同期する。editing=false のときは完全にクリーン。
+ */
+function BroadcastTool() {
+  const {
+    config,
+    selectedId,
+    setSelectedId,
+    editing,
+    frame,
+    updateItem,
+    removeItem,
+  } = useBroadcast()
+  const dims = ratioDims(frame.ratio)
+  const { ref: stageRef, scale: fitScale } = useStageScale(dims.w, dims.h)
+  // ロック時は枠サイズを等倍固定 (ウィンドウリサイズで変わらない)、非ロックは contain フィット
+  const scale = frame.locked ? 1 : fitScale
+  const { openControlWindow } = useGadgetWindow()
 
   return (
     <Style>
-      <Stage ref={stageRef} data-edit={editMode}>
+      <Stage ref={stageRef}>
         <Design
           style={{
-            width: DESIGN_WIDTH,
-            height: DESIGN_HEIGHT,
+            width: dims.w,
+            height: dims.h,
             transform: `scale(${scale})`,
           }}
         >
           <Canvas
-            data-edit={editMode}
+            data-edit={editing}
             onMouseDown={(e) => {
               // 枠ではなく空のキャンバスを押したときだけ選択解除 (バブリング対策)
               if (e.target === e.currentTarget) setSelectedId(null)
@@ -109,7 +75,7 @@ function BroadcastTool({ mode = 'display' }: Props) {
               <BroadcastFrame
                 key={item.id}
                 item={item}
-                editMode={editMode}
+                editMode={editing}
                 scale={scale}
                 selected={selectedId === item.id}
                 onSelect={() => setSelectedId(item.id)}
@@ -121,40 +87,18 @@ function BroadcastTool({ mode = 'display' }: Props) {
         </Design>
       </Stage>
 
-      {editMode ? (
-        <>
-          <BroadcastPanel
-            config={config}
-            selectedId={selectedId}
-            onAddGadget={addGadget}
-            onRemoveItem={removeItem}
-            onSelectItem={setSelectedId}
-            onUpdateItem={updateItem}
-          />
-          <OverlayFab
-            size="small"
-            color="primary"
-            onClick={openOverlay}
-            title="表示ウィンドウを開く"
-          >
-            <OpenInNew />
-          </OverlayFab>
-        </>
-      ) : (
-        <EditFab
-          size="small"
-          color="primary"
-          onClick={openEditor}
-          title="編集ウィンドウを開く"
-        >
-          <Edit />
-        </EditFab>
-      )}
+      {/* 配信中はカーソルのない OBS で隠れたまま。ホバーでだけ出るコントロール窓ボタン */}
+      <ControlFab
+        size="small"
+        color="primary"
+        onClick={openControlWindow}
+        title="コントロール窓を開く"
+      >
+        <Tune />
+      </ControlFab>
     </Style>
   )
 }
-
-const PANEL_WIDTH = 320
 
 const Style = styled.div`
   position: relative;
@@ -162,23 +106,23 @@ const Style = styled.div`
   height: 100%;
   overflow: hidden;
 `
-/** 設計座標系を画面に収めるための器。編集時はパネル幅ぶん右を空ける。 */
+/** 設計座標系を画面に収めるための器。配信枠は左上アンカー (キャプチャ位置を固定)。 */
 const Stage = styled.div`
   position: absolute;
   inset: 0;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
   overflow: hidden;
-  &[data-edit='true'] {
-    right: ${PANEL_WIDTH}px;
-  }
 `
-/** 1280x720 の固定サイズ面。中心基点で等倍スケールされる。 */
+/** 比率プリセットで決まる設計面。左上基点で contain スケールされる。
+    outline が配信枠 (broadcast border)。scale で薄くなるので太めに引く。 */
 const Design = styled.div`
   position: relative;
   flex: none;
-  transform-origin: center center;
+  transform-origin: top left;
+  outline: 3px solid ${tokens.color.primaryRing};
+  outline-offset: -1px;
 `
 const Canvas = styled.div`
   position: absolute;
@@ -188,14 +132,7 @@ const Canvas = styled.div`
     box-shadow: 0 0 0 1px ${tokens.color.border};
   }
 `
-const OverlayFab = styled(Fab)`
-  position: absolute;
-  bottom: ${tokens.space.md};
-  z-index: 20;
-  right: ${PANEL_WIDTH + 16}px;
-`
-/** 表示(配信)モードの編集ボタン。カーソルが無い OBS では隠れたまま。 */
-const EditFab = styled(Fab)`
+const ControlFab = styled(Fab)`
   position: absolute;
   bottom: ${tokens.space.md};
   right: ${tokens.space.md};

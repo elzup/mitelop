@@ -5,7 +5,7 @@ import { Rnd } from 'react-rnd'
 import styled from 'styled-components'
 import { BroadcastItem } from '../../types'
 import { tokens } from '../../utils/tokens'
-import { useConfig } from '../hooks/useConfig'
+import { useSlots } from '../hooks/useSlots'
 import { gadgetMap } from '../gadgets'
 
 type Props = {
@@ -31,11 +31,18 @@ function BroadcastFrame({
   const gadget = gadgetMap[item.gadgetKey]
   const Component = gadget?.Component
   const spec = gadget?.config
-  const { config, setConfig } = useConfig(
+  const slots = useSlots(
     item.gadgetKey,
     spec?.defaultConfig ?? {},
-    item.id
+    gadget?.configId
   )
+  const slotId = item.slotId ?? slots.firstId
+  const config = slots.getSlot(slotId).config
+  const setConfig = (updater: unknown) =>
+    slots.setSlotConfig(
+      slotId,
+      updater as Parameters<typeof slots.setSlotConfig>[1]
+    )
   const ratio = spec?.getAspectRatio?.(config)
   const lockAspectRatio =
     typeof ratio === 'number' ? ratio : Boolean(item.lockAspect)
