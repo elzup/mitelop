@@ -9,6 +9,7 @@ import {
 import { Close, Settings } from '@material-ui/icons'
 import styled from 'styled-components'
 import { BroadcastConfig } from '../../types'
+import { isTauri } from '../../utils/platform'
 import { denseTheme } from '../../utils/theme'
 import { tokens } from '../../utils/tokens'
 import { gadgetMap, gadgets } from '../gadgets'
@@ -39,13 +40,25 @@ function BroadcastPanel({
         <Section>
           <Typography variant="subtitle2">ガジェット追加</Typography>
           <div className="add-grid">
-            {gadgets.map((g) => (
-              <Tooltip key={g.key} title={g.title}>
-                <IconButton onClick={() => onAddGadget(g.key)}>
-                  <Icon>{g.icon}</Icon>
-                </IconButton>
-              </Tooltip>
-            ))}
+            {gadgets.map((g) => {
+              const disabled = Boolean(g.nativeOnly) && !isTauri()
+
+              return (
+                <Tooltip
+                  key={g.key}
+                  title={disabled ? `${g.title} (ネイティブ版のみ)` : g.title}
+                >
+                  <span>
+                    <IconButton
+                      disabled={disabled}
+                      onClick={() => onAddGadget(g.key)}
+                    >
+                      <Icon>{g.icon}</Icon>
+                    </IconButton>
+                  </span>
+                </Tooltip>
+              )
+            })}
           </div>
         </Section>
 

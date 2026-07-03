@@ -73,6 +73,38 @@ export type RulerConfig = {
 
 export type PianoConfig = {}
 
+/** 三角定規の種類 (45-45-90 / 30-60-90) */
+export type SetSquareVariant = '45' | '30-60'
+export type SetSquareConfig = {
+  variant: SetSquareVariant
+  /** 回転 (deg) */
+  rotation: number
+  flipped: boolean
+  color: string
+  /** 塗りの不透明度 0-1 */
+  opacity: number
+}
+
+export type CompassConfig = {
+  /** 同心円の本数 */
+  rings: number
+  crosshair: boolean
+  color: string
+  lineWidth: number
+}
+
+export type ProtractorShape = 'half' | 'full'
+export type ProtractorConfig = {
+  shape: ProtractorShape
+  /** 度数ラベルの刻み (deg) */
+  labelStep: number
+  /** 回転 (deg) */
+  rotation: number
+  color: string
+  /** 塗りの不透明度 0-1 */
+  opacity: number
+}
+
 export type BroadcastItem = {
   id: string
   gadgetKey: string

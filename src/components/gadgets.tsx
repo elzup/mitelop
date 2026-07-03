@@ -26,6 +26,13 @@ import { mirrorDefaultConfig } from './Mirror/mirrorConfig'
 import RulerConfigAtom from './Ruler/RulerConfigAtom'
 import RulerConfigEditor from './Ruler/RulerConfigEditor'
 import { rulerDefaultConfig } from './Ruler/rulerConfig'
+import CompassAtom from './Compass/CompassAtom'
+import CompassConfigEditor from './Compass/CompassConfigEditor'
+import {
+  compassAspectRatio,
+  compassDefaultConfig,
+} from './Compass/compassConfig'
+import CompassTool from './Compass/CompassTool'
 import CounterTool from './Counter/CounterTool'
 import IntervalConfigAtom from './Interval/IntervalConfigAtom'
 import IntervalConfigEditor from './Interval/IntervalConfigEditor'
@@ -39,7 +46,21 @@ import ParrotConfigEditor from './Parrot/ParrotConfigEditor'
 import { parrotDefaultConfig } from './Parrot/parrotConfig'
 import ParrotTool from './Parrot/ParrotTool'
 import PianoTool from './Piano/PianoTool'
+import ProtractorAtom from './Protractor/ProtractorAtom'
+import ProtractorConfigEditor from './Protractor/ProtractorConfigEditor'
+import {
+  protractorAspectRatio,
+  protractorDefaultConfig,
+} from './Protractor/protractorConfig'
+import ProtractorTool from './Protractor/ProtractorTool'
 import RulerTool from './Ruler/RulerTool'
+import SetSquareAtom from './SetSquare/SetSquareAtom'
+import SetSquareConfigEditor from './SetSquare/SetSquareConfigEditor'
+import {
+  setSquareAspectRatio,
+  setSquareDefaultConfig,
+} from './SetSquare/setSquareConfig'
+import SetSquareTool from './SetSquare/SetSquareTool'
 import StopwatchTool from './Stopwatch/StopwatchTool'
 import ThumbnailTool from './Thumbnail/ThumbnailTool'
 import TimerConfigAtom from './Timer/TimerConfigAtom'
@@ -224,6 +245,51 @@ export const gadgets: GadgetDef[] = [
       defaultConfig: rulerDefaultConfig,
       Atom: RulerConfigAtom,
       ConfigEditor: RulerConfigEditor,
+    },
+  },
+  {
+    key: 'gad-setsquare',
+    icon: 'square_foot',
+    title: 'SetSquare',
+    path: '/setsquare',
+    Component: SetSquareTool,
+    nativeOnly: true,
+    defaultSize: { width: 320, height: 320 },
+    config: {
+      defaultConfig: setSquareDefaultConfig,
+      Atom: SetSquareAtom,
+      ConfigEditor: SetSquareConfigEditor,
+      getAspectRatio: setSquareAspectRatio,
+    },
+  },
+  {
+    key: 'gad-compass',
+    icon: 'architecture',
+    title: 'Compass',
+    path: '/compass',
+    Component: CompassTool,
+    nativeOnly: true,
+    defaultSize: { width: 320, height: 320 },
+    config: {
+      defaultConfig: compassDefaultConfig,
+      Atom: CompassAtom,
+      ConfigEditor: CompassConfigEditor,
+      getAspectRatio: compassAspectRatio,
+    },
+  },
+  {
+    key: 'gad-protractor',
+    icon: 'data_usage',
+    title: 'Protractor',
+    path: '/protractor',
+    Component: ProtractorTool,
+    nativeOnly: true,
+    defaultSize: { width: 400, height: 200 },
+    config: {
+      defaultConfig: protractorDefaultConfig,
+      Atom: ProtractorAtom,
+      ConfigEditor: ProtractorConfigEditor,
+      getAspectRatio: protractorAspectRatio,
     },
   },
   {
