@@ -1,15 +1,16 @@
 import styled from 'styled-components'
 import { RulerConfig } from '../../types'
 import { ConfigModal } from '../ConfigModal'
-import { useConfig } from '../hooks/useConfig'
+import { useActiveSlot } from '../hooks/useActiveSlot'
+import { OpenConfigButton } from '../OpenConfigButton'
 import RulerAtom from './RulerAtom'
-import RulerConfigEditor from './RulerConfigEditor'
 import { rulerDefaultConfig } from './rulerConfig'
 
 function RulerTool() {
-  const { config, setConfig, mode, setMode } = useConfig<RulerConfig>(
-    'ruler',
-    rulerDefaultConfig
+  const { config, mode, setMode } = useActiveSlot<RulerConfig>(
+    'gad-ruler',
+    rulerDefaultConfig,
+    'ruler'
   )
 
   return (
@@ -20,7 +21,7 @@ function RulerTool() {
       <RulerAtom {...config} />
       <ConfigModal miniOver mode={mode}>
         <div className="over">
-          <RulerConfigEditor config={config} setConfig={setConfig} />
+          <OpenConfigButton gadgetKey="gad-ruler" />
         </div>
       </ConfigModal>
     </Style>

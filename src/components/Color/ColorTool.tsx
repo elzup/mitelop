@@ -1,26 +1,24 @@
-import { IconButton } from '@material-ui/core'
-import { Close } from '@material-ui/icons'
 import colorfn from 'color'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { ColorConfig } from '../../types'
 import { ConfigModal } from '../ConfigModal'
-import { useConfig } from '../hooks/useConfig'
+import { useActiveSlot } from '../hooks/useActiveSlot'
 import { useDocumentTitle, useThemeColor } from '../hooks/useDocumentMeta'
+import { OpenConfigButton } from '../OpenConfigButton'
 import ColorAtom from './ColorAtom'
-import ColorConfigEditor from './ColorConfigEditor'
 import { colorDefaultConfig } from './colorConfig'
 
 type Props = {
   windowMode?: boolean
 }
 function ColorTool(props: Props) {
-  const { mode, setMode, config, setConfig } = useConfig<ColorConfig>(
-    'color',
-    colorDefaultConfig
+  const { mode, setMode, config } = useActiveSlot<ColorConfig>(
+    'gad-color',
+    colorDefaultConfig,
+    'color'
   )
   const [isDark, setIsDark] = useState<boolean>(false)
-  const [touched, setTouched] = useState<boolean>(false)
 
   useThemeColor(props.windowMode ? config.color : undefined)
   useDocumentTitle(props.windowMode ? `Color-${config.color}` : undefined)
@@ -36,26 +34,15 @@ function ColorTool(props: Props) {
   return (
     <Style
       onMouseEnter={() => setMode('over')}
-      onMouseLeave={() => {
-        if (touched) return
-        setMode('main')
-      }}
+      onMouseLeave={() => setMode('main')}
       // @ts-ignore
       style={{ '--color': fontColor }}
     >
       <ColorAtom config={config} />
 
       <ConfigModal mode={mode} miniOver>
-        <div className="over" onMouseDown={() => setTouched(true)}>
-          <ColorConfigEditor config={config} setConfig={setConfig} />
-          <IconButton
-            onClick={() => {
-              setMode('main')
-              setTouched(false)
-            }}
-          >
-            <Close />
-          </IconButton>
+        <div className="over">
+          <OpenConfigButton gadgetKey="gad-color" />
         </div>
       </ConfigModal>
     </Style>

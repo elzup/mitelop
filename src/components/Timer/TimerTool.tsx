@@ -2,25 +2,25 @@ import { IconButton } from '@material-ui/core'
 import PauseIcon from '@material-ui/icons/Pause'
 import PlayArrowIcon from '@material-ui/icons/PlayArrow'
 import RotateLeftIcon from '@material-ui/icons/RotateLeft'
-import SettingsIcon from '@material-ui/icons/Settings'
 import StopIcon from '@material-ui/icons/Stop'
 import { useEffect } from 'react'
 import styled from 'styled-components'
 import { TimerConfig } from '../../types'
 import { ConfigModal } from '../ConfigModal'
-import { useConfig } from '../hooks/useConfig'
+import { useActiveSlot } from '../hooks/useActiveSlot'
 import { useTimeStr } from '../hooks/useTimeStr'
+import { OpenConfigButton } from '../OpenConfigButton'
 import TimerAtom from './TimerAtom'
-import TimerConfigEditor from './TimerConfigEditor'
 import { timerDefaultConfig } from './timerConfig'
 import { useTimer } from './useTimer'
 
 function TimerTool() {
   const sw = useTimer()
 
-  const { config, setConfig, mode, setMode } = useConfig<TimerConfig>(
-    'timer',
-    timerDefaultConfig
+  const { config, mode, setMode } = useActiveSlot<TimerConfig>(
+    'gad-timer',
+    timerDefaultConfig,
+    'timer'
   )
   const [timeStr, timeMilliStr] = useTimeStr(sw.time, sw.status)
 
@@ -44,12 +44,7 @@ function TimerTool() {
 
       <ConfigModal mode={mode}>
         <div className="over">
-          <IconButton
-            disabled={sw.status === 'run'}
-            onClick={() => setMode('conf')}
-          >
-            <SettingsIcon />
-          </IconButton>
+          <OpenConfigButton gadgetKey="gad-timer" />
           <div className="controls">
             {sw.status === 'init' && (
               <IconButton onClick={() => sw.start()}>
@@ -77,10 +72,6 @@ function TimerTool() {
               </IconButton>
             )}
           </div>
-        </div>
-
-        <div className="conf">
-          <TimerConfigEditor config={config} setConfig={setConfig} />
         </div>
       </ConfigModal>
     </Style>

@@ -2,15 +2,16 @@ import { useState } from 'react'
 import styled from 'styled-components'
 import { MirrorConfig } from '../../types'
 import { ConfigModal } from '../ConfigModal'
-import { useConfig } from '../hooks/useConfig'
+import { useActiveSlot } from '../hooks/useActiveSlot'
+import { OpenConfigButton } from '../OpenConfigButton'
 import MirrorAtom from './MirrorAtom'
-import MirrorConfigEditor from './MirrorConfigEditor'
 import { mirrorDefaultConfig } from './mirrorConfig'
 
 function MirrorTool() {
-  const { config, setConfig, mode, setMode } = useConfig<MirrorConfig>(
-    'mirror',
-    mirrorDefaultConfig
+  const { config, mode, setMode } = useActiveSlot<MirrorConfig>(
+    'gad-mirror',
+    mirrorDefaultConfig,
+    'mirror'
   )
   const [allowed, setAllowed] = useState<boolean>(false)
 
@@ -29,7 +30,7 @@ function MirrorTool() {
       />
       <ConfigModal miniOver mode={mode}>
         <div className="over">
-          <MirrorConfigEditor config={config} setConfig={setConfig} />
+          <OpenConfigButton gadgetKey="gad-mirror" />
         </div>
       </ConfigModal>
     </Style>

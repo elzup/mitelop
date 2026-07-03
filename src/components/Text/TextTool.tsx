@@ -1,43 +1,28 @@
-import { IconButton } from '@material-ui/core'
-import { Close } from '@material-ui/icons'
-import { useState } from 'react'
 import { TextGadgetConfig } from '../../types'
 import { ConfigModal } from '../ConfigModal'
-import { useConfig } from '../hooks/useConfig'
+import { useActiveSlot } from '../hooks/useActiveSlot'
+import { OpenConfigButton } from '../OpenConfigButton'
 import TextAtom from './TextAtom'
-import TextConfigEditor from './TextConfigEditor'
 import { textDefaultConfig } from './textConfig'
 
 type Props = { windowMode?: boolean }
 
 function TextTool(_props: Props) {
-  const { config, setConfig, mode, setMode } = useConfig<TextGadgetConfig>(
+  const { config, mode, setMode } = useActiveSlot<TextGadgetConfig>(
     'gad-text',
     textDefaultConfig
   )
-  const [touched, setTouched] = useState(false)
 
   return (
     <div
       style={{ position: 'relative', height: '100%', overflow: 'hidden' }}
       onMouseEnter={() => setMode('over')}
-      onMouseLeave={() => {
-        if (touched) return
-        setMode('main')
-      }}
+      onMouseLeave={() => setMode('main')}
     >
       <TextAtom config={config} />
       <ConfigModal mode={mode} miniOver>
-        <div className="over" onMouseDown={() => setTouched(true)}>
-          <TextConfigEditor config={config} setConfig={setConfig} />
-          <IconButton
-            onClick={() => {
-              setMode('main')
-              setTouched(false)
-            }}
-          >
-            <Close />
-          </IconButton>
+        <div className="over">
+          <OpenConfigButton gadgetKey="gad-text" />
         </div>
       </ConfigModal>
     </div>

@@ -1,21 +1,21 @@
 import { IconButton } from '@material-ui/core'
 import PauseIcon from '@material-ui/icons/Pause'
 import PlayArrowIcon from '@material-ui/icons/PlayArrow'
-import SettingsIcon from '@material-ui/icons/Settings'
 import styled from 'styled-components'
 import { IntervalConfig } from '../../types'
 import { ConfigModal } from '../ConfigModal'
-import { useConfig } from '../hooks/useConfig'
+import { useActiveSlot } from '../hooks/useActiveSlot'
 import { timeToStr } from '../hooks/useTimeStr'
+import { OpenConfigButton } from '../OpenConfigButton'
 import IntervalAtom from './IntervalAtom'
-import IntervalConfigEditor from './IntervalConfigEditor'
 import { intervalDefaultConfig } from './intervalConfig'
 import { useInterval } from './useInterval'
 
 function IntervalTool() {
-  const { config, setConfig, mode, setMode } = useConfig<IntervalConfig>(
-    'interval',
-    intervalDefaultConfig
+  const { config, mode, setMode } = useActiveSlot<IntervalConfig>(
+    'gad-interval',
+    intervalDefaultConfig,
+    'interval'
   )
 
   const steps = config.steps.filter((v) => v.name !== '')
@@ -36,19 +36,12 @@ function IntervalTool() {
 
       <ConfigModal mode={mode}>
         <div className="over">
-          <IconButton
-            disabled={int.status === 'run'}
-            onClick={() => setMode('conf')}
-          >
-            <SettingsIcon />
-          </IconButton>
+          <OpenConfigButton gadgetKey="gad-interval" />
           <div className="controls">
             {int.status === 'stop' && (
-              <>
-                <IconButton onClick={() => int.start()}>
-                  <PlayArrowIcon />
-                </IconButton>
-              </>
+              <IconButton onClick={() => int.start()}>
+                <PlayArrowIcon />
+              </IconButton>
             )}
             {int.status === 'run' && (
               <IconButton onClick={int.pause}>
@@ -56,10 +49,6 @@ function IntervalTool() {
               </IconButton>
             )}
           </div>
-        </div>
-
-        <div className="conf">
-          <IntervalConfigEditor config={config} setConfig={setConfig} />
         </div>
       </ConfigModal>
     </Style>

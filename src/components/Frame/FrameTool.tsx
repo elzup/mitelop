@@ -1,43 +1,28 @@
-import { IconButton } from '@material-ui/core'
-import { Close } from '@material-ui/icons'
-import { useState } from 'react'
 import { FrameGadgetConfig } from '../../types'
 import { ConfigModal } from '../ConfigModal'
-import { useConfig } from '../hooks/useConfig'
+import { useActiveSlot } from '../hooks/useActiveSlot'
+import { OpenConfigButton } from '../OpenConfigButton'
 import FrameAtom from './FrameAtom'
-import FrameConfigEditor from './FrameConfigEditor'
 import { frameDefaultConfig } from './frameConfig'
 
 type Props = { windowMode?: boolean }
 
 function FrameTool(_props: Props) {
-  const { config, setConfig, mode, setMode } = useConfig<FrameGadgetConfig>(
+  const { config, mode, setMode } = useActiveSlot<FrameGadgetConfig>(
     'gad-frame',
     frameDefaultConfig
   )
-  const [touched, setTouched] = useState(false)
 
   return (
     <div
       style={{ position: 'relative', height: '100%', overflow: 'hidden' }}
       onMouseEnter={() => setMode('over')}
-      onMouseLeave={() => {
-        if (touched) return
-        setMode('main')
-      }}
+      onMouseLeave={() => setMode('main')}
     >
       <FrameAtom config={config} />
       <ConfigModal mode={mode} miniOver>
-        <div className="over" onMouseDown={() => setTouched(true)}>
-          <FrameConfigEditor config={config} setConfig={setConfig} />
-          <IconButton
-            onClick={() => {
-              setMode('main')
-              setTouched(false)
-            }}
-          >
-            <Close />
-          </IconButton>
+        <div className="over">
+          <OpenConfigButton gadgetKey="gad-frame" />
         </div>
       </ConfigModal>
     </div>
