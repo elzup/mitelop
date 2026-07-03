@@ -45,8 +45,18 @@ export type IntervalConfig = {
   steps: IntervalStepBase[]
 }
 
+export const COLOR_SHAPES = [
+  'fill',
+  'rounded',
+  'circle',
+  'diamond',
+  'triangle',
+] as const
+export type ColorShape = (typeof COLOR_SHAPES)[number]
 export type ColorConfig = {
   color: string
+  /** 表示する形 (COLOR_SHAPES) */
+  shape: ColorShape
 }
 
 export type ParrotConfig = {
