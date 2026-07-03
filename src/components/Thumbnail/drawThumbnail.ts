@@ -64,6 +64,7 @@ const drawTextLayer = (
 
   lines.forEach((line, i) => {
     const baseY = topY + lineHeight * i + layer.fontSize
+
     if (layer.strokeWidth > 0) {
       ctx.strokeStyle = layer.strokeColor
       ctx.lineWidth = layer.strokeWidth
@@ -94,6 +95,7 @@ export const drawThumbnail = (
       width,
       height
     )
+
     ctx.drawImage(image, x, y, w, h)
   }
 

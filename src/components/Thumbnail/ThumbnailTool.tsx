@@ -18,6 +18,7 @@ type Props = { windowMode?: boolean }
 const readFileAsDataUrl = (file: File): Promise<string> =>
   new Promise((resolve, reject) => {
     const reader = new FileReader()
+
     reader.onload = () => resolve(String(reader.result))
     reader.onerror = () => reject(reader.error)
     reader.readAsDataURL(file)
@@ -36,6 +37,7 @@ function ThumbnailTool(_props: Props) {
 
   const onUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
+
     if (!file) return
     patch({ bgImage: await readFileAsDataUrl(file) })
     e.target.value = ''
@@ -43,11 +45,13 @@ function ThumbnailTool(_props: Props) {
 
   const onDownload = () => {
     const canvas = canvasRef.current
+
     if (!canvas) return
     canvas.toBlob((blob) => {
       if (!blob) return
       const url = URL.createObjectURL(blob)
       const a = document.createElement('a')
+
       a.href = url
       a.download = `thumbnail-${config.width}x${config.height}.png`
       a.click()
@@ -74,6 +78,7 @@ function ThumbnailTool(_props: Props) {
             const preset = THUMBNAIL_SIZE_PRESETS.find(
               (p) => `${p.size.width}x${p.size.height}` === e.target.value
             )
+
             if (preset) onSelectSize(preset.size)
           }}
         >

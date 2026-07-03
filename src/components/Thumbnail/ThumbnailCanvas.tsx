@@ -31,6 +31,7 @@ const ThumbnailCanvas = forwardRef<HTMLCanvasElement, Props>(
         return
       }
       const img = new Image()
+
       img.onload = () => setImage(img)
       img.src = config.bgImage
     }, [config.bgImage])
@@ -38,6 +39,7 @@ const ThumbnailCanvas = forwardRef<HTMLCanvasElement, Props>(
     useEffect(() => {
       const canvas = innerRef.current
       const ctx = canvas?.getContext('2d')
+
       if (!ctx) return
       drawThumbnail(ctx, config, image)
     }, [config, image])
