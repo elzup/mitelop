@@ -29,8 +29,14 @@ export type MidokoroPlot = {
   label: string
 }
 
+export type TimerMode = 'duration' | 'target'
 export type TimerConfig = {
+  /** duration = 総時間からカウントダウン / target = 絶対時刻までカウントダウン */
+  mode: TimerMode
+  /** duration モードの総時間 (ms) */
   total: number
+  /** target モードの目標時刻 'HH:MM' (端末ローカル) */
+  targetTime: string
 }
 
 export type IntervalStepBase = { name: string; sec: number }

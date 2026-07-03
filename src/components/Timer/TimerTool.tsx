@@ -12,6 +12,7 @@ import { useTimeStr } from '../hooks/useTimeStr'
 import { OpenConfigButton } from '../OpenConfigButton'
 import TimerAtom from './TimerAtom'
 import { timerDefaultConfig } from './timerConfig'
+import { useTargetCountdown } from './useTargetCountdown'
 import { useTimer } from './useTimer'
 
 function TimerTool() {
@@ -22,7 +23,10 @@ function TimerTool() {
     timerDefaultConfig,
     'timer'
   )
-  const [timeStr, timeMilliStr] = useTimeStr(sw.time, sw.status)
+  const isTarget = config.mode === 'target'
+  const target = useTargetCountdown(config.targetTime)
+  const [durStr, durMs] = useTimeStr(sw.time, sw.status)
+  const [tgtStr, tgtMs] = useTimeStr(target.remaining)
 
   useEffect(() => {
     sw.setTime(config.total)
@@ -33,20 +37,31 @@ function TimerTool() {
       onMouseEnter={() => setMode('over')}
       onMouseLeave={() => setMode('main')}
     >
-      <TimerAtom
-        total={config.total}
-        timeStr={timeStr}
-        timeMilliStr={timeMilliStr}
-        progress={sw.progress}
-        startTime={sw.startTime}
-        status={sw.status}
-      />
+      {isTarget ? (
+        <TimerAtom
+          total={1}
+          timeStr={tgtStr}
+          timeMilliStr={tgtMs}
+          progress={0}
+          startTime={0}
+          status={target.active ? 'pause' : 'init'}
+        />
+      ) : (
+        <TimerAtom
+          total={config.total}
+          timeStr={durStr}
+          timeMilliStr={durMs}
+          progress={sw.progress}
+          startTime={sw.startTime}
+          status={sw.status}
+        />
+      )}
 
       <ConfigModal mode={mode}>
         <div className="over">
           <OpenConfigButton gadgetKey="gad-timer" />
           <div className="controls">
-            {sw.status === 'init' && (
+            {!isTarget && sw.status === 'init' && (
               <IconButton onClick={() => sw.start()}>
                 <PlayArrowIcon />
               </IconButton>
