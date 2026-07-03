@@ -6,6 +6,7 @@ import { tokens } from '../../utils/tokens'
 import BroadcastFrame from './BroadcastFrame'
 import { ratioDims, useBroadcast } from './useBroadcast'
 import { useGadgetWindow } from './useGadgetWindow'
+import { useTauriOverlay } from './useTauriOverlay'
 
 /** stage の実サイズに設計座標系 (dw×dh) を contain させるスケール係数を測る */
 function useStageScale(dw: number, dh: number) {
@@ -48,6 +49,8 @@ function BroadcastTool() {
     updateItem,
     removeItem,
   } = useBroadcast()
+
+  useTauriOverlay()
   const dims = ratioDims(frame.ratio)
   const { ref: stageRef, scale: fitScale } = useStageScale(dims.w, dims.h)
   // ロック時は枠サイズを等倍固定 (ウィンドウリサイズで変わらない)、非ロックは contain フィット

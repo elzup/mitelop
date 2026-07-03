@@ -1,7 +1,29 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { isTauri } from '../../utils/platform'
 
 const CONFIG_SIZE = { w: 360, h: 680 }
 const CONTROL_SIZE = { w: 380, h: 720 }
+
+/**
+ * Tauri ではブラウザの window.open が使えない (別 WebView になり localStorage も
+ * 分かれる) ので、同一アプリ内の WebviewWindow として開く。同 label は再フォーカス。
+ */
+async function openTauriWindow(
+  url: string,
+  label: string,
+  size: { w: number; h: number }
+) {
+  const { WebviewWindow } = await import('@tauri-apps/api/webviewWindow')
+  const existing = await WebviewWindow.getByLabel(label)
+
+  if (existing) {
+    await existing.setFocus()
+
+    return
+  }
+  // eslint-disable-next-line no-new
+  new WebviewWindow(label, { url, width: size.w, height: size.h })
+}
 
 /** (key, instanceId) ごとに安定した window name。同名 open はブラウザが既存窓を再フォーカスする */
 const configWindowName = (key: string, instanceId?: string) =>
@@ -35,6 +57,14 @@ export function useGadgetWindow() {
 
   const openWindow = useCallback(
     (url: string, name: string, size: { w: number; h: number }) => {
+      if (isTauri()) {
+        void openTauriWindow(url, name, size)
+        // Tauri 側の開閉追跡は行わない (開く操作は label dedupe に任せる)
+        setOpenNames((v) => (v.includes(name) ? v : [...v, name]))
+
+        return null
+      }
+
       const win = window.open(
         url,
         name,

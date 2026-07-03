@@ -9,11 +9,13 @@ import {
 import { Lock, LockOpen } from '@material-ui/icons'
 import styled from 'styled-components'
 import { BROADCAST_RATIOS } from '../../types'
+import { isTauri } from '../../utils/platform'
 import { denseTheme } from '../../utils/theme'
 import { tokens } from '../../utils/tokens'
 import BroadcastPanel from './BroadcastPanel'
 import { useBroadcast } from './useBroadcast'
 import { useGadgetWindow } from './useGadgetWindow'
+import { useOverlayConfig } from './useTauriOverlay'
 
 /**
  * /broadcast/control で開く「出しっぱなし」のコントロール窓。
@@ -34,6 +36,7 @@ function BroadcastControlWindow() {
     removeItem,
   } = useBroadcast()
   const { openConfigWindow, isConfigOpen } = useGadgetWindow()
+  const [overlay, setOverlay] = useOverlayConfig()
 
   return (
     <Style>
@@ -86,6 +89,38 @@ function BroadcastControlWindow() {
             )}
           </IconButton>
         </FrameBar>
+        {isTauri() && (
+          <FrameBar>
+            <Typography variant="caption" color="textSecondary">
+              オーバーレイ
+            </Typography>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={overlay.alwaysOnTop}
+                  onChange={(e) =>
+                    setOverlay((v) => ({ ...v, alwaysOnTop: e.target.checked }))
+                  }
+                />
+              }
+              label="最前面"
+            />
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={overlay.clickThrough}
+                  onChange={(e) =>
+                    setOverlay((v) => ({
+                      ...v,
+                      clickThrough: e.target.checked,
+                    }))
+                  }
+                />
+              }
+              label="クリック透過"
+            />
+          </FrameBar>
+        )}
       </ThemeProvider>
       <BroadcastPanel
         config={config}

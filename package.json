@@ -3,10 +3,15 @@
   "version": "1.0.0",
   "packageManager": "pnpm@10.26.2",
   "pnpm": {
-    "onlyBuiltDependencies": ["esbuild", "fsevents"]
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "fsevents"
+    ]
   },
   "scripts": {
     "dev": "portless run --name mitelop --app-port 5173 vite",
+    "dev:vite": "vite --port 5173 --strictPort",
+    "tauri": "tauri",
     "test": "jest --watchman=false",
     "storybook": "start-storybook -p 6006",
     "build": "tsc && vite build",
@@ -23,6 +28,7 @@
     "@material-ui/icons": "4.11.3",
     "@material-ui/styles": "4.11.5",
     "@tanstack/react-router": "^1.121.2",
+    "@tauri-apps/api": "^2.11.1",
     "color": "4.2.1",
     "fitty": "2.3.6",
     "formik": "2.2.9",
@@ -48,6 +54,7 @@
     "@storybook/builder-webpack5": "6.5.16",
     "@storybook/manager-webpack5": "6.5.16",
     "@storybook/react": "6.5.16",
+    "@tauri-apps/cli": "^2.11.4",
     "@testing-library/react-hooks": "7.0.2",
     "@types/color": "3.0.3",
     "@types/jest": "^29.5.12",
