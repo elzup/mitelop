@@ -1,4 +1,4 @@
-import { IconButton, TextField } from '@material-ui/core'
+import { IconButton } from '@material-ui/core'
 import PauseIcon from '@material-ui/icons/Pause'
 import PlayArrowIcon from '@material-ui/icons/PlayArrow'
 import RotateLeftIcon from '@material-ui/icons/RotateLeft'
@@ -11,14 +11,17 @@ import { ConfigModal } from '../ConfigModal'
 import { useConfig } from '../hooks/useConfig'
 import { useTimeStr } from '../hooks/useTimeStr'
 import TimerAtom from './TimerAtom'
+import TimerConfigEditor from './TimerConfigEditor'
+import { timerDefaultConfig } from './timerConfig'
 import { useTimer } from './useTimer'
 
 function TimerTool() {
   const sw = useTimer()
 
-  const { config, setConfig, mode, setMode } = useConfig<TimerConfig>('timer', {
-    total: 10,
-  })
+  const { config, setConfig, mode, setMode } = useConfig<TimerConfig>(
+    'timer',
+    timerDefaultConfig
+  )
   const [timeStr, timeMilliStr] = useTimeStr(sw.time, sw.status)
 
   useEffect(() => {
@@ -77,32 +80,7 @@ function TimerTool() {
         </div>
 
         <div className="conf">
-          <div>
-            <TextField
-              label="min"
-              type="number"
-              value={Math.floor(config.total / 1000 / 60)}
-              onChange={(e) =>
-                setConfig((v) => ({
-                  ...v,
-                  total: parseInt(e.target.value || '') * 1000 * 60,
-                }))
-              }
-            />
-          </div>
-          <div>
-            <TextField
-              label="sec"
-              type="number"
-              value={Math.floor(config.total / 1000)}
-              onChange={(e) =>
-                setConfig((v) => ({
-                  ...v,
-                  total: parseInt(e.target.value || '') * 1000,
-                }))
-              }
-            />
-          </div>
+          <TimerConfigEditor config={config} setConfig={setConfig} />
         </div>
       </ConfigModal>
     </Style>

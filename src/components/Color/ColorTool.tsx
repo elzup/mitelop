@@ -5,18 +5,20 @@ import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { ColorConfig } from '../../types'
 import { ConfigModal } from '../ConfigModal'
-import ColorField from '../forms/ColorField'
 import { useConfig } from '../hooks/useConfig'
 import { useDocumentTitle, useThemeColor } from '../hooks/useDocumentMeta'
 import ColorAtom from './ColorAtom'
+import ColorConfigEditor from './ColorConfigEditor'
+import { colorDefaultConfig } from './colorConfig'
 
 type Props = {
   windowMode?: boolean
 }
 function ColorTool(props: Props) {
-  const { mode, setMode, config, setConfig } = useConfig<ColorConfig>('color', {
-    color: '#2B0065',
-  })
+  const { mode, setMode, config, setConfig } = useConfig<ColorConfig>(
+    'color',
+    colorDefaultConfig
+  )
   const [isDark, setIsDark] = useState<boolean>(false)
   const [touched, setTouched] = useState<boolean>(false)
 
@@ -44,13 +46,8 @@ function ColorTool(props: Props) {
       <ColorAtom config={config} />
 
       <ConfigModal mode={mode} miniOver>
-        <div className="over">
-          <ColorField
-            label="Color"
-            onChange={(color) => setConfig((v) => ({ ...v, color }))}
-            onMouseDown={() => setTouched(true)}
-            value={config.color}
-          />
+        <div className="over" onMouseDown={() => setTouched(true)}>
+          <ColorConfigEditor config={config} setConfig={setConfig} />
           <IconButton
             onClick={() => {
               setMode('main')

@@ -12,18 +12,39 @@ import TextConfigEditor from './Text/TextConfigEditor'
 import TextTool from './Text/TextTool'
 import { textDefaultConfig } from './Text/textConfig'
 import ChecksTool from './Checks/ChecksTool'
+import ClockConfigAtom from './Clock/ClockConfigAtom'
+import ClockConfigEditor from './Clock/ClockConfigEditor'
+import { clockDefaultConfig } from './Clock/clockConfig'
 import ClockTool from './Clock/ClockTool'
+import ColorConfigAtom from './Color/ColorConfigAtom'
+import ColorConfigEditor from './Color/ColorConfigEditor'
+import { colorDefaultConfig } from './Color/colorConfig'
 import ColorTool from './Color/ColorTool'
+import MirrorConfigAtom from './Mirror/MirrorConfigAtom'
+import MirrorConfigEditor from './Mirror/MirrorConfigEditor'
+import { mirrorDefaultConfig } from './Mirror/mirrorConfig'
+import RulerConfigAtom from './Ruler/RulerConfigAtom'
+import RulerConfigEditor from './Ruler/RulerConfigEditor'
+import { rulerDefaultConfig } from './Ruler/rulerConfig'
 import CounterTool from './Counter/CounterTool'
+import IntervalConfigAtom from './Interval/IntervalConfigAtom'
+import IntervalConfigEditor from './Interval/IntervalConfigEditor'
+import { intervalDefaultConfig } from './Interval/intervalConfig'
 import IntervalTool from './Interval/IntervalTool'
 import Katinko from './Katinko'
 import MidokoroTool from './Midokoro/MidokoroTool'
 import MirrorTool from './Mirror/MirrorTool'
+import ParrotAtom from './Parrot/ParrotAtom'
+import ParrotConfigEditor from './Parrot/ParrotConfigEditor'
+import { parrotDefaultConfig } from './Parrot/parrotConfig'
 import ParrotTool from './Parrot/ParrotTool'
 import PianoTool from './Piano/PianoTool'
 import RulerTool from './Ruler/RulerTool'
 import StopwatchTool from './Stopwatch/StopwatchTool'
 import ThumbnailTool from './Thumbnail/ThumbnailTool'
+import TimerConfigAtom from './Timer/TimerConfigAtom'
+import TimerConfigEditor from './Timer/TimerConfigEditor'
+import { timerDefaultConfig } from './Timer/timerConfig'
 import TimerTool from './Timer/TimerTool'
 
 /** すべての gadget Tool が受けられる共通 props。windowMode 非対応の Tool は無視する。 */
@@ -61,6 +82,18 @@ export type GadgetDef = {
   defaultSize?: Size
   /** 設定を Atom/ConfigEditor に分離した gadget のみ持つ */
   config?: GadgetConfigSpec
+  /**
+   * 単独 (standalone) の設定を保存する useConfig の id。既定は key。
+   * 標準ページの Tool が短い id (例 'clock') で useConfig しているものは、
+   * その id を指定して設定窓 (instanceId なし) が同じ localStorage を指すようにする。
+   * Broadcast の per-instance 設定は常に key + instanceId を使うのでこの値は無関係。
+   */
+  configId?: string
+  /**
+   * ネイティブ (Tauri) 版でだけ動く gadget。web ビルドでは無効表示にする。
+   * 現状は三角定規・コンパス・分度器のみが該当予定。
+   */
+  nativeOnly?: boolean
 }
 
 const DEFAULT_SIZE: Size = { width: 320, height: 240 }
@@ -72,6 +105,7 @@ export const gadgets: GadgetDef[] = [
     title: 'Checks',
     path: '/checks',
     Component: ChecksTool,
+    configId: 'checks',
     config: {
       defaultConfig: checksDefaultConfig,
       Atom: ChecksAtom,
@@ -85,6 +119,12 @@ export const gadgets: GadgetDef[] = [
     path: '/clock',
     Component: ClockTool,
     windowMode: true,
+    configId: 'clock',
+    config: {
+      defaultConfig: clockDefaultConfig,
+      Atom: ClockConfigAtom,
+      ConfigEditor: ClockConfigEditor,
+    },
   },
   {
     key: 'gad-stopwatch',
@@ -99,6 +139,12 @@ export const gadgets: GadgetDef[] = [
     title: 'Timer',
     path: '/timer',
     Component: TimerTool,
+    configId: 'timer',
+    config: {
+      defaultConfig: timerDefaultConfig,
+      Atom: TimerConfigAtom,
+      ConfigEditor: TimerConfigEditor,
+    },
   },
   {
     key: 'gad-interval',
@@ -106,6 +152,12 @@ export const gadgets: GadgetDef[] = [
     title: 'Interval',
     path: '/interval',
     Component: IntervalTool,
+    configId: 'interval',
+    config: {
+      defaultConfig: intervalDefaultConfig,
+      Atom: IntervalConfigAtom,
+      ConfigEditor: IntervalConfigEditor,
+    },
   },
   {
     key: 'gad-parrot',
@@ -113,6 +165,12 @@ export const gadgets: GadgetDef[] = [
     title: 'Parrot',
     path: '/parrot',
     Component: ParrotTool,
+    configId: 'parrot',
+    config: {
+      defaultConfig: parrotDefaultConfig,
+      Atom: ParrotAtom,
+      ConfigEditor: ParrotConfigEditor,
+    },
   },
   {
     key: 'gad-color',
@@ -121,6 +179,12 @@ export const gadgets: GadgetDef[] = [
     path: '/color',
     Component: ColorTool,
     windowMode: true,
+    configId: 'color',
+    config: {
+      defaultConfig: colorDefaultConfig,
+      Atom: ColorConfigAtom,
+      ConfigEditor: ColorConfigEditor,
+    },
   },
   {
     key: 'gad-midokoro',
@@ -142,6 +206,12 @@ export const gadgets: GadgetDef[] = [
     title: 'Mirror',
     path: '/mirror',
     Component: MirrorTool,
+    configId: 'mirror',
+    config: {
+      defaultConfig: mirrorDefaultConfig,
+      Atom: MirrorConfigAtom,
+      ConfigEditor: MirrorConfigEditor,
+    },
   },
   {
     key: 'gad-ruler',
@@ -149,6 +219,12 @@ export const gadgets: GadgetDef[] = [
     title: 'Ruler',
     path: '/ruler',
     Component: RulerTool,
+    configId: 'ruler',
+    config: {
+      defaultConfig: rulerDefaultConfig,
+      Atom: RulerConfigAtom,
+      ConfigEditor: RulerConfigEditor,
+    },
   },
   {
     key: 'gad-counter',

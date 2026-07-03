@@ -1,4 +1,4 @@
-import { IconButton, TextField } from '@material-ui/core'
+import { IconButton } from '@material-ui/core'
 import PauseIcon from '@material-ui/icons/Pause'
 import PlayArrowIcon from '@material-ui/icons/PlayArrow'
 import SettingsIcon from '@material-ui/icons/Settings'
@@ -8,18 +8,14 @@ import { ConfigModal } from '../ConfigModal'
 import { useConfig } from '../hooks/useConfig'
 import { timeToStr } from '../hooks/useTimeStr'
 import IntervalAtom from './IntervalAtom'
+import IntervalConfigEditor from './IntervalConfigEditor'
+import { intervalDefaultConfig } from './intervalConfig'
 import { useInterval } from './useInterval'
 
 function IntervalTool() {
   const { config, setConfig, mode, setMode } = useConfig<IntervalConfig>(
     'interval',
-    {
-      steps: [
-        { name: 'A', sec: 5 },
-        { name: 'B', sec: 10 },
-        { name: 'C', sec: 15 },
-      ],
-    }
+    intervalDefaultConfig
   )
 
   const steps = config.steps.filter((v) => v.name !== '')
@@ -63,22 +59,7 @@ function IntervalTool() {
         </div>
 
         <div className="conf">
-          <div>
-            <TextField
-              label="steps"
-              multiline
-              value={config.steps.map((v) => `${v.name}:${v.sec}`).join('\n')}
-              onChange={(e) =>
-                setConfig({
-                  steps: e.target.value.split('\n').map((v, i) => {
-                    const [name, sec] = v.split(':')
-
-                    return { name: name || '', sec: +sec || 0 }
-                  }),
-                })
-              }
-            />
-          </div>
+          <IntervalConfigEditor config={config} setConfig={setConfig} />
         </div>
       </ConfigModal>
     </Style>

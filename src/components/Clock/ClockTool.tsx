@@ -1,41 +1,25 @@
-import { IconButton, TextField } from '@material-ui/core'
+import { IconButton } from '@material-ui/core'
 import { Close } from '@material-ui/icons'
 import { useState } from 'react'
-import { useSeconds } from 'use-seconds'
 import { ClockConfig } from '../../types'
 import { ConfigModal } from '../ConfigModal'
-import ColorField from '../forms/ColorField'
 import { useConfig } from '../hooks/useConfig'
 import { useThemeColor } from '../hooks/useDocumentMeta'
 import ClockAtom from './ClockAtom'
-
-const pad2 = (n: number) => `${n}`.padStart(2, '0')
-const toDateStr = (t: Date) =>
-  `${t.getFullYear()}-${pad2(t.getMonth() + 1)}-${pad2(t.getDate())}`
-const timeStr = (t: Date) =>
-  [t.getHours(), t.getMinutes(), t.getSeconds()].map(pad2)
-
-const offsetMinutes = new Date().getTimezoneOffset() || -540
-
-function useTimeStr(diffMinutes: number) {
-  const [localeTime] = useSeconds()
-  const time = new Date(+localeTime + (offsetMinutes - diffMinutes) * 1000 * 60)
-
-  return { dateStr: toDateStr(time), tStrs: timeStr(time) }
-}
+import ClockConfigEditor from './ClockConfigEditor'
+import { clockDefaultConfig } from './clockConfig'
+import { useClockTime } from './useClockTime'
 
 type Props = {
   windowMode?: boolean
 }
 function ClockTool({ windowMode }: Props) {
-  const { mode, setMode, config, setConfig } = useConfig<ClockConfig>('clock', {
-    dateVisible: true,
-    bgColor: '#aaaaff',
-    fontColor: '#000066',
-    diffMinutes: offsetMinutes,
-  })
+  const { mode, setMode, config, setConfig } = useConfig<ClockConfig>(
+    'clock',
+    clockDefaultConfig
+  )
 
-  const { dateStr, tStrs } = useTimeStr(config.diffMinutes)
+  const { dateStr, tStrs } = useClockTime(config.diffMinutes)
   const [touched, setTouched] = useState<boolean>(false)
 
   useThemeColor(windowMode ? config.bgColor : undefined)
@@ -53,24 +37,7 @@ function ClockTool({ windowMode }: Props) {
 
       <ConfigModal mode={mode} miniOver>
         <div className="over" onMouseDown={() => setTouched(true)}>
-          <ColorField
-            label="Back"
-            onChange={(bgColor) => setConfig((v) => ({ ...v, bgColor }))}
-            value={config.bgColor}
-          />
-          <ColorField
-            label="Font"
-            onChange={(fontColor) => setConfig((v) => ({ ...v, fontColor }))}
-            value={config.fontColor}
-          />
-          <TextField
-            type="number"
-            label="diffMinutes"
-            onChange={(e) =>
-              setConfig((v) => ({ ...v, diffMinutes: Number(e.target.value) }))
-            }
-            value={config.diffMinutes}
-          />
+          <ClockConfigEditor config={config} setConfig={setConfig} />
           <IconButton
             onClick={() => {
               setMode('main')

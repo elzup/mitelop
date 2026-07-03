@@ -1,15 +1,16 @@
 import styled from 'styled-components'
-import { RulerConfig, RULER_ORIGINS, RULER_UNITS } from '../../types'
+import { RulerConfig } from '../../types'
 import { ConfigModal } from '../ConfigModal'
-import { RadioGroup } from '../forms/RadioGroup'
 import { useConfig } from '../hooks/useConfig'
 import RulerAtom from './RulerAtom'
+import RulerConfigEditor from './RulerConfigEditor'
+import { rulerDefaultConfig } from './rulerConfig'
 
 function RulerTool() {
-  const { config, setConfig, mode, setMode } = useConfig<RulerConfig>('ruler', {
-    unit: 'px',
-    origin: 'center',
-  })
+  const { config, setConfig, mode, setMode } = useConfig<RulerConfig>(
+    'ruler',
+    rulerDefaultConfig
+  )
 
   return (
     <Style
@@ -19,19 +20,7 @@ function RulerTool() {
       <RulerAtom {...config} />
       <ConfigModal miniOver mode={mode}>
         <div className="over">
-          <RadioGroup
-            name="origin"
-            value={config.origin}
-            divStyle={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}
-            options={RULER_ORIGINS}
-            onSelect={(origin) => setConfig((v) => ({ ...v, origin }))}
-          />
-          <RadioGroup
-            name="unit"
-            value={config.unit}
-            options={RULER_UNITS}
-            onSelect={(unit) => setConfig((v) => ({ ...v, unit }))}
-          />
+          <RulerConfigEditor config={config} setConfig={setConfig} />
         </div>
       </ConfigModal>
     </Style>
