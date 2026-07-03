@@ -69,21 +69,11 @@ export type RulerConfigOrigin = (typeof RULER_ORIGINS)[number]
 export type RulerConfig = {
   unit: RulerConfigUnit
   origin: RulerConfigOrigin
+  /** 背景を透過にする (オーバーレイ用途) */
+  transparent: boolean
 }
 
 export type PianoConfig = {}
-
-/** 三角定規の種類 (45-45-90 / 30-60-90) */
-export type SetSquareVariant = '45' | '30-60'
-export type SetSquareConfig = {
-  variant: SetSquareVariant
-  /** 回転 (deg) */
-  rotation: number
-  flipped: boolean
-  color: string
-  /** 塗りの不透明度 0-1 */
-  opacity: number
-}
 
 export type CompassConfig = {
   /** 同心円の本数 */
