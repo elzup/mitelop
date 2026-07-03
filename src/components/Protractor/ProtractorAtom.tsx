@@ -10,9 +10,10 @@ type Props = { config: ProtractorConfig }
 function ProtractorAtom({ config }: Props) {
   const { shape, labelStep, rotation, color, opacity } = config
   const isHalf = shape === 'half'
-  const cy = isHalf ? 98 : 100
+  // 回転で枠外に消えないよう、half/full とも中心(100,100)・正方 viewBox で描く
+  const cy = 100
   const maxDeg = isHalf ? 180 : 360
-  const vb = isHalf ? '0 0 200 100' : '0 0 200 200'
+  const vb = '0 0 200 200'
 
   // svg 座標: 0° = 右 (東)、反時計回りに増える (分度器の慣習)
   const pt = (deg: number, r: number): [number, number] => {
@@ -34,6 +35,15 @@ function ProtractorAtom({ config }: Props) {
   const outline = isHalf
     ? `M ${CX - R},${cy} A ${R},${R} 0 0,1 ${CX + R},${cy} Z`
     : undefined
+
+  // 中心を通る分割線。0-180 / 90-270 (=90°刻みの軸) は必ず、30°刻みで細かくも引く
+  const spokeStep = 30
+  const spokes: number[] = []
+
+  for (let deg = 0; deg <= maxDeg; deg += spokeStep) {
+    if (!isHalf && deg === 360) continue
+    spokes.push(deg)
+  }
 
   return (
     <Style>
@@ -58,6 +68,23 @@ function ProtractorAtom({ config }: Props) {
               strokeWidth={1.2}
             />
           )}
+          {spokes.map((deg) => {
+            const [x, y] = pt(deg, R)
+            const isAxis = deg % 90 === 0
+
+            return (
+              <line
+                key={`spoke-${deg}`}
+                x1={CX}
+                y1={cy}
+                x2={x}
+                y2={y}
+                stroke={color}
+                strokeWidth={isAxis ? 0.7 : 0.4}
+                strokeOpacity={isAxis ? 0.6 : 0.3}
+              />
+            )
+          })}
           {ticks.map(({ deg, len }) => {
             const [x1, y1] = pt(deg, R)
             const [x2, y2] = pt(deg, R - len)

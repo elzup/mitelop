@@ -1,4 +1,4 @@
-import { Slider, TextField, Typography } from '@material-ui/core'
+import { Slider, Typography } from '@material-ui/core'
 import { Dispatch, SetStateAction } from 'react'
 import { ProtractorConfig } from '../../types'
 import ColorField from '../forms/ColorField'
@@ -18,21 +18,30 @@ function ProtractorConfigEditor({ config, setConfig }: Props) {
         options={['half', 'full']}
         onSelect={(shape) => setConfig((v) => ({ ...v, shape }))}
       />
-      <TextField
-        type="number"
-        label="ラベル刻み (deg)"
-        value={config.labelStep}
-        inputProps={{ min: 0, max: 90, step: 5 }}
-        onChange={(e) =>
-          setConfig((v) => ({ ...v, labelStep: Number(e.target.value) }))
+      <Typography variant="caption" color="textSecondary">
+        ラベル刻み (deg)
+      </Typography>
+      <RadioGroup
+        name="labelStep"
+        value={String(config.labelStep)}
+        options={['10', '30', '45', '90', '180']}
+        onSelect={(step) =>
+          setConfig((v) => ({ ...v, labelStep: Number(step) }))
         }
       />
-      <TextField
-        type="number"
-        label="回転 (deg)"
+      <Typography variant="caption" color="textSecondary">
+        回転 {config.rotation}°
+      </Typography>
+      <Slider
+        min={0}
+        max={360}
+        step={1}
         value={config.rotation}
-        onChange={(e) =>
-          setConfig((v) => ({ ...v, rotation: Number(e.target.value) }))
+        onChange={(_e, val) =>
+          setConfig((v) => ({
+            ...v,
+            rotation: Array.isArray(val) ? val[0] : val,
+          }))
         }
       />
       <ColorField
