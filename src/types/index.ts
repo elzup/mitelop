@@ -51,6 +51,8 @@ export type IntervalStep = {
 }
 export type IntervalConfig = {
   steps: IntervalStepBase[]
+  /** 表示レイアウト (INTERVAL_LAYOUTS の id) */
+  layout: string
 }
 
 export const COLOR_SHAPES = [

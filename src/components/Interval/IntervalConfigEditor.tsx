@@ -15,13 +15,14 @@ function IntervalConfigEditor({ config, setConfig }: Props) {
       multiline
       value={config.steps.map((v) => `${v.name}:${v.sec}`).join('\n')}
       onChange={(e) =>
-        setConfig({
+        setConfig((prev) => ({
+          ...prev,
           steps: e.target.value.split('\n').map((v) => {
             const [name, sec] = v.split(':')
 
             return { name: name || '', sec: +sec || 0 }
           }),
-        })
+        }))
       }
     />
   )

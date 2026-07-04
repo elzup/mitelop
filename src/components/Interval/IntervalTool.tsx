@@ -32,6 +32,7 @@ function IntervalTool() {
         timeMiliStr={ts[1]}
         steps={int.steps}
         status={int.status}
+        layout={config.layout}
       />
 
       <ConfigModal mode={mode}>

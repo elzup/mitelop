@@ -21,6 +21,7 @@ function IntervalConfigAtom({ config }: Props) {
       timeMiliStr={ts[1]}
       steps={int.steps}
       status={int.status}
+      layout={config.layout}
     />
   )
 }

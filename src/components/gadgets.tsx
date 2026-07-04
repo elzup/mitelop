@@ -36,7 +36,10 @@ import CompassTool from './Compass/CompassTool'
 import CounterTool from './Counter/CounterTool'
 import IntervalConfigAtom from './Interval/IntervalConfigAtom'
 import IntervalConfigEditor from './Interval/IntervalConfigEditor'
-import { intervalDefaultConfig } from './Interval/intervalConfig'
+import {
+  INTERVAL_LAYOUTS,
+  intervalDefaultConfig,
+} from './Interval/intervalConfig'
 import IntervalTool from './Interval/IntervalTool'
 import Katinko from './Katinko'
 import MidokoroTool from './Midokoro/MidokoroTool'
@@ -177,6 +180,7 @@ export const gadgets: GadgetDef[] = [
       defaultConfig: intervalDefaultConfig,
       Atom: IntervalConfigAtom,
       ConfigEditor: IntervalConfigEditor,
+      layouts: INTERVAL_LAYOUTS,
     },
   },
   {

@@ -8,18 +8,25 @@ type Props = {
   timeMiliStr: string
   steps: IntervalStep[]
   status: IntervalStatus
+  /** 表示レイアウト (INTERVAL_LAYOUTS の id) */
+  layout?: string
 }
 
-function IntervalAtom({ steps, status }: Props) {
-  const gridTemplateColumns = steps.map((s) => `${s.sec}fr`).join(' ')
+function IntervalAtom({ steps, status, layout = 'bar' }: Props) {
+  const weights = steps.map((s) => `${s.sec}fr`).join(' ')
+  // stack は行方向、それ以外 (bar/focus) は列方向に sec 比で配分する
+  const stepsStyle =
+    layout === 'stack'
+      ? { gridTemplateColumns: '1fr', gridTemplateRows: weights }
+      : { gridTemplateColumns: weights }
   const activeStep = steps.find((s) => s.active)
   const remain = activeStep ? activeStep.sec - activeStep.pos : null
 
   return (
     <SizeDef>
-      <Style data-status={status}>
+      <Style data-status={status} data-layout={layout}>
         <div className="frame">
-          <div className="steps" style={{ gridTemplateColumns }}>
+          <div className="steps" style={stepsStyle}>
             {steps.map((step, i) => (
               <div className="step" key={i} data-active={step.active}>
                 <span
@@ -117,6 +124,32 @@ const Style = styled.div`
   .remain .unit {
     font-size: calc(var(--w) / 24);
     opacity: 0.7;
+  }
+
+  /* 現ステップのみ: 他ステップを畳んで active を大きく見せる */
+  &[data-layout='focus'] {
+    .step:not([data-active='true']) {
+      display: none;
+    }
+    .steps {
+      grid-template-columns: 1fr !important;
+    }
+    .name {
+      font-size: calc(var(--w) / 10);
+    }
+    .sec {
+      font-size: calc(var(--w) / 20);
+    }
+  }
+
+  /* ステップ(縦): 縦積みでも fill は左→右の進捗バーとして機能する */
+  &[data-layout='stack'] {
+    .name {
+      font-size: calc(var(--w) / 14);
+    }
+    .sec {
+      font-size: calc(var(--w) / 22);
+    }
   }
 
   &[data-status='end'] {
