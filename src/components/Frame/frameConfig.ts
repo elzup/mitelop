@@ -1,12 +1,13 @@
 import { FrameGadgetConfig, FrameRatio } from '../../types'
+import { THEME_ACCENT, THEME_BG } from '../../utils/themes'
 
 export const frameDefaultConfig: FrameGadgetConfig = {
   ratio: '16:9',
   label: '',
-  borderColor: '#ffffff',
+  borderColor: THEME_ACCENT,
   borderWidth: 2,
   filled: false,
-  bgColor: '#000000',
+  bgColor: THEME_BG,
   rounded: false,
 }
 

@@ -1,6 +1,7 @@
 import { useMeasure } from 'react-use'
 import styled from 'styled-components'
 import { FrameGadgetConfig } from '../../types'
+import { useAppTheme } from '../hooks/useAppTheme'
 import { FRAME_RATIOS } from './frameConfig'
 
 type Props = { config: FrameGadgetConfig }
@@ -29,9 +30,11 @@ const computeSize = (
 }
 
 function FrameAtom({ config }: Props) {
+  const { resolve } = useAppTheme()
   const [ref, { width, height }] = useMeasure<HTMLDivElement>()
-  const { ratio, label, borderColor, borderWidth, filled, bgColor, rounded } =
-    config
+  const { ratio, label, borderWidth, filled, rounded } = config
+  const borderColor = resolve(config.borderColor)
+  const bgColor = resolve(config.bgColor)
   const size = computeSize(ratio, width, height)
 
   return (

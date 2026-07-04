@@ -7,7 +7,9 @@ import {
 import { Dispatch, SetStateAction } from 'react'
 import styled from 'styled-components'
 import { FrameGadgetConfig, FrameRatio } from '../../types'
+import { THEME_ACCENT, THEME_BG } from '../../utils/themes'
 import ColorField from '../forms/ColorField'
+import { useAppTheme } from '../hooks/useAppTheme'
 import { FRAME_RATIO_HINTS, FRAME_RATIO_OPTIONS } from './frameConfig'
 
 type Props = {
@@ -16,6 +18,7 @@ type Props = {
 }
 
 function FrameConfigEditor({ config, setConfig }: Props) {
+  const { resolve } = useAppTheme()
   const patch = (p: Partial<FrameGadgetConfig>) =>
     setConfig((v) => ({ ...v, ...p }))
 
@@ -56,6 +59,8 @@ function FrameConfigEditor({ config, setConfig }: Props) {
         <ColorField
           label="枠線色"
           value={config.borderColor}
+          themeSentinel={THEME_ACCENT}
+          resolve={resolve}
           onChange={(borderColor) => patch({ borderColor })}
         />
       </div>
@@ -73,6 +78,8 @@ function FrameConfigEditor({ config, setConfig }: Props) {
         <ColorField
           label="塗り色"
           value={config.bgColor}
+          themeSentinel={THEME_BG}
+          resolve={resolve}
           onChange={(bgColor) => patch({ bgColor })}
         />
       )}
