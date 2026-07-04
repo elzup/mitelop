@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { isMac, isTauri } from '../../utils/platform'
 import { denseTheme } from '../../utils/theme'
 import { tokens } from '../../utils/tokens'
+import { useBoards } from '../Broadcast/useBroadcast'
 import { useGadgetWindow } from '../Broadcast/useGadgetWindow'
 import { useTransparentBody } from '../Broadcast/useTauriOverlay'
 import { gadgetMap, gadgets } from '../gadgets'
@@ -40,6 +41,7 @@ function useGroupedGadgets() {
  */
 function Launcher() {
   const { openGadgetWindow, openBoardWindow } = useGadgetWindow()
+  const { boards, addBoard, removeBoard } = useBoards()
   const groups = useGroupedGadgets()
 
   useTransparentBody()
@@ -58,10 +60,34 @@ function Launcher() {
           </IconButton>
         </Bar>
 
-        <BoardButton onClick={() => openBoardWindow()}>
-          <Dashboard fontSize="small" />
-          <span>Board を開く</span>
-        </BoardButton>
+        <div className="boards">
+          <BoardButton onClick={() => openBoardWindow('main')}>
+            <Dashboard fontSize="small" />
+            <span>メインボード</span>
+          </BoardButton>
+          {boards.map((b) => (
+            <div className="board-row" key={b.id}>
+              <button
+                type="button"
+                className="board-open"
+                onClick={() => openBoardWindow(b.id)}
+              >
+                <Icon fontSize="small">dashboard</Icon>
+                <span>{b.name}</span>
+              </button>
+              <IconButton size="small" onClick={() => removeBoard(b.id)}>
+                <Close fontSize="small" />
+              </IconButton>
+            </div>
+          ))}
+          <button
+            type="button"
+            className="board-new"
+            onClick={() => openBoardWindow(addBoard())}
+          >
+            ＋ 新規ボード
+          </button>
+        </div>
 
         <div className="theme">
           <ThemeSwitcher />
@@ -112,6 +138,43 @@ const Root = styled.div`
   .theme {
     padding: 4px 8px 0;
   }
+  .boards {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px 8px 0;
+  }
+  .board-row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .board-open {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 8px;
+    border: 1px solid ${tokens.color.border};
+    border-radius: ${tokens.radius.sm};
+    background: ${tokens.color.surface};
+    color: ${tokens.color.text};
+    font-size: 13px;
+    text-align: left;
+    cursor: pointer;
+  }
+  .board-open:hover {
+    background: ${tokens.color.primaryWeak};
+  }
+  .board-new {
+    padding: 6px 8px;
+    border: 1px dashed ${tokens.color.border};
+    border-radius: ${tokens.radius.sm};
+    background: transparent;
+    color: ${tokens.color.primary};
+    font-size: 12px;
+    cursor: pointer;
+  }
 `
 const Bar = styled.div`
   display: flex;
@@ -140,7 +203,6 @@ const DragZone = styled.div`
   user-select: none;
 `
 const BoardButton = styled.button`
-  margin: 8px;
   padding: 8px;
   display: flex;
   align-items: center;

@@ -140,13 +140,15 @@ function ItemControls({
 function ConfigWindowInner({
   def,
   instanceId,
+  boardId,
 }: {
   def: GadgetDef
   instanceId?: string
+  boardId: string
 }) {
   const spec = def.config
   const slots = useSlots(def.key, spec?.defaultConfig ?? {}, def.configId)
-  const { config: broadcast, updateItem } = useBroadcast()
+  const { config: broadcast, updateItem } = useBroadcast(boardId)
   const item = instanceId
     ? broadcast.items.find((it) => it.id === instanceId)
     : undefined
@@ -247,6 +249,10 @@ function ConfigWindow() {
     'instanceId' in search && typeof search.instanceId === 'string'
       ? search.instanceId
       : undefined
+  const boardId =
+    'board' in search && typeof search.board === 'string'
+      ? search.board
+      : 'main'
   const def = gadgetKey ? gadgetMap[gadgetKey] : undefined
 
   if (!def) {
@@ -257,7 +263,9 @@ function ConfigWindow() {
     )
   }
 
-  return <ConfigWindowInner def={def} instanceId={instanceId} />
+  return (
+    <ConfigWindowInner def={def} instanceId={instanceId} boardId={boardId} />
+  )
 }
 
 const Body = styled.div`

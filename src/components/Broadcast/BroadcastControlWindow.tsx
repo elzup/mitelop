@@ -7,6 +7,7 @@ import {
   Typography,
 } from '@material-ui/core'
 import { Lock, LockOpen } from '@material-ui/icons'
+import { useSearch } from '@tanstack/react-router'
 import styled from 'styled-components'
 import { BROADCAST_RATIOS } from '../../types'
 import { isTauri } from '../../utils/platform'
@@ -24,6 +25,11 @@ import { useOverlayConfig } from './useTauriOverlay'
  * 行の歯車から更に別窓 (/config) で開く。全て localStorage 経由で stage 窓に同期。
  */
 function BroadcastControlWindow() {
+  const search = useSearch({ strict: false })
+  const boardId =
+    'board' in search && typeof search.board === 'string'
+      ? search.board
+      : 'main'
   const {
     config,
     selectedId,
@@ -36,7 +42,7 @@ function BroadcastControlWindow() {
     setBg,
     addGadget,
     removeItem,
-  } = useBroadcast()
+  } = useBroadcast(boardId)
   const bgTransparent = frame.bg === 'transparent'
   const { openConfigWindow, isConfigOpen } = useGadgetWindow()
   const [overlay, setOverlay] = useOverlayConfig()
@@ -150,8 +156,12 @@ function BroadcastControlWindow() {
         onAddGadget={addGadget}
         onRemoveItem={removeItem}
         onSelectItem={setSelectedId}
-        onOpenConfig={openConfigWindow}
-        isConfigOpen={isConfigOpen}
+        onOpenConfig={(key, instanceId) =>
+          openConfigWindow(key, instanceId, boardId)
+        }
+        isConfigOpen={(key, instanceId) =>
+          isConfigOpen(key, instanceId, boardId)
+        }
       />
     </Style>
   )

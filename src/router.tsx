@@ -46,9 +46,14 @@ const galleryRoute = createRoute({
   component: () => <GalleryPage />,
 })
 
+const boardSearch = (search: Record<string, unknown>) => ({
+  board: typeof search.board === 'string' ? search.board : undefined,
+})
+
 const broadcastRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/broadcast',
+  validateSearch: boardSearch,
   component: () => (
     <GadgetLayout title="Broadcast">
       <BroadcastTool />
@@ -59,6 +64,7 @@ const broadcastRoute = createRoute({
 const broadcastControlRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/broadcast/control',
+  validateSearch: boardSearch,
   component: () => (
     <GadgetLayout title="Broadcast - Control">
       <BroadcastControlWindow />
@@ -72,6 +78,7 @@ const configRoute = createRoute({
   validateSearch: (search: Record<string, unknown>) => ({
     instanceId:
       typeof search.instanceId === 'string' ? search.instanceId : undefined,
+    board: typeof search.board === 'string' ? search.board : undefined,
   }),
   component: () => (
     <GadgetLayout title="Gadget Config">

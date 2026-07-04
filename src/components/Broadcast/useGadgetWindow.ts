@@ -62,12 +62,28 @@ async function openTauriWindow(
   })
 }
 
-/** (key, instanceId) ごとに安定した window name。同名 open はブラウザが既存窓を再フォーカスする */
-const configWindowName = (key: string, instanceId?: string) =>
-  `mitelop-config-${key}-${instanceId ?? 'std'}`
+const withParams = (
+  path: string,
+  params: Record<string, string | undefined>
+) => {
+  const qs = Object.entries(params)
+    .filter(([, v]) => v)
+    .map(([key, v]) => `${key}=${encodeURIComponent(v as string)}`)
+    .join('&')
 
-const configWindowUrl = (key: string, instanceId?: string) =>
-  `/config/${key}${instanceId ? `?instanceId=${instanceId}` : ''}`
+  return qs ? `${path}?${qs}` : path
+}
+
+/** main ボードは URL パラメータを省いて既存挙動を保つ */
+const boardParam = (boardId: string) =>
+  boardId === 'main' ? undefined : boardId
+
+/** (key, instanceId, boardId) ごとに安定した window name。同名 open は既存窓を再フォーカス */
+const configWindowName = (key: string, instanceId?: string, boardId = 'main') =>
+  `mitelop-config-${key}-${instanceId ?? 'std'}-${boardId}`
+
+const configWindowUrl = (key: string, instanceId?: string, boardId = 'main') =>
+  withParams(`/config/${key}`, { instanceId, board: boardParam(boardId) })
 
 /**
  * ガジェット設定窓 / コントロール窓を開く。
@@ -125,10 +141,10 @@ export function useGadgetWindow() {
   )
 
   const openConfigWindow = useCallback(
-    (key: string, instanceId?: string) =>
+    (key: string, instanceId?: string, boardId = 'main') =>
       openWindow(
-        configWindowUrl(key, instanceId),
-        configWindowName(key, instanceId),
+        configWindowUrl(key, instanceId, boardId),
+        configWindowName(key, instanceId, boardId),
         CONFIG_SIZE,
         { beside: true }
       ),
@@ -136,7 +152,12 @@ export function useGadgetWindow() {
   )
 
   const openControlWindow = useCallback(
-    () => openWindow('/broadcast/control', 'mitelop-bc-control', CONTROL_SIZE),
+    (boardId = 'main') =>
+      openWindow(
+        withParams('/broadcast/control', { board: boardParam(boardId) }),
+        `mitelop-bc-control-${boardId}`,
+        CONTROL_SIZE
+      ),
     [openWindow]
   )
 
@@ -160,17 +181,19 @@ export function useGadgetWindow() {
 
   /** 他ガジェットを載せるボード (broadcast stage) を開く。枠 (window border) は残す */
   const openBoardWindow = useCallback(
-    () =>
-      openWindow('/broadcast', 'mitelop-board', BOARD_SIZE, {
-        transparent: true,
-        decorations: true,
-      }),
+    (boardId = 'main') =>
+      openWindow(
+        withParams('/broadcast', { board: boardParam(boardId) }),
+        `mitelop-board-${boardId}`,
+        BOARD_SIZE,
+        { transparent: true, decorations: true }
+      ),
     [openWindow]
   )
 
   const isConfigOpen = useCallback(
-    (key: string, instanceId?: string) =>
-      openNames.includes(configWindowName(key, instanceId)),
+    (key: string, instanceId?: string, boardId = 'main') =>
+      openNames.includes(configWindowName(key, instanceId, boardId)),
     [openNames]
   )
 

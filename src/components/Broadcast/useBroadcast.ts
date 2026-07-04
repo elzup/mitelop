@@ -8,6 +8,27 @@ import { useLocalStorage } from '../../utils/useLocalStorage'
 import { gadgetDefaultSize, gadgetMap } from '../gadgets'
 import { createSlot } from '../hooks/useSlots'
 
+export type BoardMeta = { id: string; name: string }
+
+/** main 以外の追加ボード一覧をランチャーで管理する。 */
+export function useBoards() {
+  const [boards, setBoards] = useLocalStorage<BoardMeta[]>('board-list', [])
+
+  const addBoard = (name?: string): string => {
+    const id = `b-${Date.now().toString(36)}-${Math.random()
+      .toString(36)
+      .slice(2, 5)}`
+
+    setBoards((v) => [...v, { id, name: name ?? `Board ${v.length + 2}` }])
+
+    return id
+  }
+  const removeBoard = (id: string) =>
+    setBoards((v) => v.filter((b) => b.id !== id))
+
+  return { boards, addBoard, removeBoard }
+}
+
 const initialConfig: BroadcastConfig = { items: [] }
 const initialFrame: BroadcastFrameConfig = {
   ratio: '16:9',
@@ -31,28 +52,42 @@ export const ratioDims = (ratio: BroadcastRatio): { w: number; h: number } => {
     : { w: Math.round(DESIGN_LONG * aspect), h: DESIGN_LONG }
 }
 
+/** 既定ボード 'main' は従来キーを使い後方互換。他ボードは board-<id>-* に分離。 */
+const boardKeys = (boardId: string) =>
+  boardId === 'main'
+    ? {
+        items: 'broadcast',
+        sel: 'broadcast-selected',
+        edit: 'broadcast-editing',
+        frame: 'broadcast-frame',
+      }
+    : {
+        items: `board-${boardId}`,
+        sel: `board-${boardId}-selected`,
+        edit: `board-${boardId}-editing`,
+        frame: `board-${boardId}-frame`,
+      }
+
 /**
- * Broadcast の配置状態 (items) と選択中インスタンスを localStorage に束ねる。
- * config も selectedId も storage イベントで他ウィンドウと同期するので、
- * 表示ウィンドウの stage と、ポップアウトした編集パネルが同じ状態を共有する。
+ * Broadcast ボードの配置状態 (items) と選択中インスタンスを localStorage に束ねる。
+ * boardId ごとにキーを分けるので複数ボードを独立に持てる。config も selectedId も
+ * storage イベントで他ウィンドウと同期し、stage と編集パネルが同じ状態を共有する。
  */
-export function useBroadcast() {
+export function useBroadcast(boardId = 'main') {
+  const k = boardKeys(boardId)
   const [config, setConfig] = useLocalStorage<BroadcastConfig>(
-    'broadcast',
+    k.items,
     initialConfig
   )
   const [selectedId, setSelectedId] = useLocalStorage<string | null>(
-    'broadcast-selected',
+    k.sel,
     null
   )
   // stage の編集モード。コントロール窓で切り替え、stage 窓へ storage 同期する
-  const [editing, setEditing] = useLocalStorage<boolean>(
-    'broadcast-editing',
-    false
-  )
+  const [editing, setEditing] = useLocalStorage<boolean>(k.edit, false)
   // 配信枠 (stage のアス比・ロック)。コントロール窓で切り替え stage に同期する
   const [frame, setFrame] = useLocalStorage<BroadcastFrameConfig>(
-    'broadcast-frame',
+    k.frame,
     initialFrame
   )
 

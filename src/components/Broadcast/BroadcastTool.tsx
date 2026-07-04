@@ -1,5 +1,6 @@
 import { Fab } from '@material-ui/core'
 import { Tune } from '@material-ui/icons'
+import { useSearch } from '@tanstack/react-router'
 import { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { tokens } from '../../utils/tokens'
@@ -7,6 +8,14 @@ import BroadcastFrame from './BroadcastFrame'
 import { ratioDims, useBroadcast } from './useBroadcast'
 import { useGadgetWindow } from './useGadgetWindow'
 import { useTauriOverlay } from './useTauriOverlay'
+
+const useBoardId = () => {
+  const search = useSearch({ strict: false })
+
+  return 'board' in search && typeof search.board === 'string'
+    ? search.board
+    : 'main'
+}
 
 /** stage の実サイズに設計座標系 (dw×dh) を contain させるスケール係数を測る */
 function useStageScale(dw: number, dh: number) {
@@ -40,6 +49,7 @@ function useStageScale(dw: number, dh: number) {
  * 通じてこの stage に同期する。editing=false のときは完全にクリーン。
  */
 function BroadcastTool() {
+  const boardId = useBoardId()
   const {
     config,
     selectedId,
@@ -48,7 +58,7 @@ function BroadcastTool() {
     frame,
     updateItem,
     removeItem,
-  } = useBroadcast()
+  } = useBroadcast(boardId)
 
   useTauriOverlay()
   const dims = ratioDims(frame.ratio)
@@ -95,7 +105,7 @@ function BroadcastTool() {
       <ControlFab
         size="small"
         color="primary"
-        onClick={openControlWindow}
+        onClick={() => openControlWindow(boardId)}
         title="コントロール窓を開く"
       >
         <Tune />
