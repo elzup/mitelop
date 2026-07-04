@@ -1,6 +1,7 @@
 import { ClockConfig } from '../../types'
 import { ConfigModal } from '../ConfigModal'
 import { useActiveSlot } from '../hooks/useActiveSlot'
+import { useAppTheme } from '../hooks/useAppTheme'
 import { useThemeColor } from '../hooks/useDocumentMeta'
 import { OpenConfigButton } from '../OpenConfigButton'
 import ClockAtom from './ClockAtom'
@@ -17,9 +18,10 @@ function ClockTool({ windowMode }: Props) {
     'clock'
   )
 
+  const { resolve } = useAppTheme()
   const { dateStr, tStrs } = useClockTime(config.timeZone)
 
-  useThemeColor(windowMode ? config.bgColor : undefined)
+  useThemeColor(windowMode ? resolve(config.bgColor) : undefined)
 
   return (
     <div

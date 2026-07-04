@@ -8,6 +8,7 @@ import { useGadgetWindow } from '../Broadcast/useGadgetWindow'
 import { useTransparentBody } from '../Broadcast/useTauriOverlay'
 import { gadgetMap, gadgets } from '../gadgets'
 import { ResizeGrip } from '../ResizeGrip'
+import { ThemeSwitcher } from '../ThemeSwitcher'
 import { GADGET_GROUPS } from './gadgetGroups'
 
 /** 自ウィンドウ (=ランチャー) を閉じる */
@@ -58,6 +59,10 @@ function Launcher() {
           <span>Board を開く</span>
         </BoardButton>
 
+        <div className="theme">
+          <ThemeSwitcher />
+        </div>
+
         <Groups>
           {groups.map((group) => (
             <section key={group.label}>
@@ -99,6 +104,10 @@ const Root = styled.div`
   display: flex;
   flex-direction: column;
   color: ${tokens.color.text};
+
+  .theme {
+    padding: 4px 8px 0;
+  }
 `
 const Bar = styled.div`
   display: flex;

@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { ClockConfig } from '../../types'
+import { useAppTheme } from '../hooks/useAppTheme'
 import SizeDef from '../SizeDef'
 
 type Props = {
@@ -11,6 +12,7 @@ type Props = {
 
 function ClockAtom(props: React.PropsWithChildren<Props>) {
   const { config, dateStr } = props
+  const { resolve } = useAppTheme()
   const [hs, ms, ss] = props.tStrs
   const layout = config.layout ?? 'stack'
   // 「時刻のみ大」レイアウトは日付を出さない
@@ -22,8 +24,8 @@ function ClockAtom(props: React.PropsWithChildren<Props>) {
         data-layout={layout}
         style={{
           // @ts-ignore
-          '--bg-color': config.bgColor,
-          '--font-color': config.fontColor,
+          '--bg-color': resolve(config.bgColor),
+          '--font-color': resolve(config.fontColor),
         }}
       >
         <div className="inner">

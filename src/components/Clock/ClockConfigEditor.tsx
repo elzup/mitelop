@@ -6,7 +6,9 @@ import {
 } from '@material-ui/core'
 import { Dispatch, SetStateAction } from 'react'
 import { ClockConfig } from '../../types'
+import { THEME_BG, THEME_FG } from '../../utils/themes'
 import ColorField from '../forms/ColorField'
+import { useAppTheme } from '../hooks/useAppTheme'
 import { CLOCK_TIMEZONES } from './clockConfig'
 
 type Props = {
@@ -15,16 +17,22 @@ type Props = {
 }
 
 function ClockConfigEditor({ config, setConfig }: Props) {
+  const { resolve } = useAppTheme()
+
   return (
     <>
       <ColorField
         label="Back"
         value={config.bgColor}
+        themeSentinel={THEME_BG}
+        resolve={resolve}
         onChange={(bgColor) => setConfig((v) => ({ ...v, bgColor }))}
       />
       <ColorField
         label="Font"
         value={config.fontColor}
+        themeSentinel={THEME_FG}
+        resolve={resolve}
         onChange={(fontColor) => setConfig((v) => ({ ...v, fontColor }))}
       />
       <TextField

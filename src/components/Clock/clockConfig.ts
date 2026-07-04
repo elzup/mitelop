@@ -1,4 +1,5 @@
 import { ClockConfig, GadgetLayout } from '../../types'
+import { THEME_BG, THEME_FG } from '../../utils/themes'
 
 /** Clock の表示レイアウト。推奨アス比 (width/height) つき。 */
 export const CLOCK_LAYOUTS: GadgetLayout[] = [
@@ -9,8 +10,8 @@ export const CLOCK_LAYOUTS: GadgetLayout[] = [
 
 export const clockDefaultConfig: ClockConfig = {
   dateVisible: true,
-  bgColor: '#aaaaff',
-  fontColor: '#000066',
+  bgColor: THEME_BG,
+  fontColor: THEME_FG,
   timeZone: '',
   layout: 'stack',
 }
