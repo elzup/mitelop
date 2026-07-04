@@ -1,4 +1,3 @@
-import { Box, LinearProgress, Typography } from '@material-ui/core'
 import styled from 'styled-components'
 import { IntervalStep } from '../../types'
 import SizeDef from '../SizeDef'
@@ -14,6 +13,7 @@ type Props = {
 function IntervalAtom({ steps, status }: Props) {
   const gridTemplateColumns = steps.map((s) => `${s.sec}fr`).join(' ')
   const activeStep = steps.find((s) => s.active)
+  const remain = activeStep ? activeStep.sec - activeStep.pos : null
 
   return (
     <SizeDef>
@@ -22,77 +22,113 @@ function IntervalAtom({ steps, status }: Props) {
           <div className="steps" style={{ gridTemplateColumns }}>
             {steps.map((step, i) => (
               <div className="step" key={i} data-active={step.active}>
-                <div className="name">{step.name}</div>
-                <div className="time-ms">{step.sec}s</div>
+                <span
+                  className="fill"
+                  style={{ width: `${(step.par || 0) * 100}%` }}
+                />
+                <span className="name">{step.name}</span>
+                <span className="sec">{step.sec}s</span>
               </div>
             ))}
           </div>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Box sx={{ width: '100%', mr: 1 }}>
-              <LinearProgress
-                variant="determinate"
-                value={(activeStep?.par || 0) * 100}
-                style={{ height: '10vh' }}
-              />
-            </Box>
-            <Box sx={{ minWidth: '10%' }}>
-              <Typography variant="body2" className="remain">
-                {activeStep ? activeStep.sec - activeStep.pos : '-'}s
-              </Typography>
-            </Box>
-          </Box>
+          <div className="remain">
+            <span className="num">{remain ?? '–'}</span>
+            <span className="unit">s</span>
+          </div>
         </div>
       </Style>
     </SizeDef>
   )
 }
-IntervalAtom.defaultProps = {}
 
 const Style = styled.div`
   height: 100%;
   width: 100%;
   box-sizing: border-box;
-  padding: 2% 1%;
-  .name {
-    font-size: calc(var(--w) / 30);
-    /* font-family: 'Roboto', 'Helvetica', 'Arial', monospace, sans-serif; */
-    margin: 5%;
-    line-height: 1.05em;
-  }
-  .time-ms {
-    /* display: none; */
-    font-size: calc(var(--w) / 30);
-  }
+  padding: 3% 2%;
+  font-family: 'Roboto', sans-serif;
+
   .frame {
     display: grid;
     height: 100%;
-    grid-template-rows: 2fr 1fr;
-    gap: 5%;
-    /* border: solid 0.5px gray; */
+    grid-template-rows: 1fr max-content;
+    gap: 4%;
   }
   .steps {
     display: grid;
-    height: 100%;
-    gap: 0.2%;
-    align-items: center;
-    justify-content: center;
+    gap: 1.5%;
+    align-items: stretch;
   }
   .step {
-    height: 100%;
-    border: solid 1px gray;
+    position: relative;
+    overflow: hidden;
+    border-radius: calc(var(--w) * 0.02);
+    background: #e9e9f2;
+    color: #3a3a52;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    text-align: center;
-    &[data-active='true'] {
-      border-bottom: solid 1rem red;
-      background: #ffaaaa;
-    }
+    gap: 4%;
   }
+  .fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background: #b9c2ff;
+    z-index: 0;
+  }
+  .name,
+  .sec {
+    position: relative;
+    z-index: 1;
+    line-height: 1.1;
+  }
+  .name {
+    font-size: calc(var(--w) / 22);
+    font-weight: 700;
+  }
+  .sec {
+    font-size: calc(var(--w) / 34);
+    opacity: 0.7;
+  }
+  .step[data-active='true'] {
+    background: #dfe4ff;
+    color: #1b2a8a;
+    box-shadow: inset 0 0 0 2px #2b6cff;
+  }
+  .step[data-active='true'] .fill {
+    background: #7d92ff;
+  }
+
   .remain {
-    text-align: right;
-    font-size: calc(var(--w) / 30);
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-end;
+    gap: 2%;
+    color: #1b2a8a;
   }
+  .remain .num {
+    font-size: calc(var(--w) / 12);
+    font-weight: 700;
+    line-height: 1;
+  }
+  .remain .unit {
+    font-size: calc(var(--w) / 24);
+    opacity: 0.7;
+  }
+
   &[data-status='end'] {
     animation: blinkAnimeS2 0.5s infinite alternate;
+  }
+  @keyframes blinkAnimeS2 {
+    0% {
+      background: transparent;
+    }
+    100% {
+      background: #ffd5d5;
+    }
   }
 `
 
