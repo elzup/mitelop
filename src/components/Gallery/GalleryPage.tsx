@@ -20,7 +20,6 @@ function GalleryItem({ def }: { def: GadgetDef }) {
         <b>{def.title}</b>
         <code>{def.key}</code>
         {def.nativeOnly && <span className="badge">Native</span>}
-        {def.transparentWindow && <span className="badge t">透過</span>}
       </header>
       <div className="preview">
         {Atom ? (

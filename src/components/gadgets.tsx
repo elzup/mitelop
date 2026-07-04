@@ -112,11 +112,6 @@ export type GadgetDef = {
    * ネイティブ (Tauri) 版でだけ動く gadget。web ビルドでは無効表示にする。
    */
   nativeOnly?: boolean
-  /**
-   * 単独窓で開くときに窓を透過にする。定規・コンパス・分度器・フレームなど
-   * 背後を透かしたい gadget のみ true。それ以外は背景色ありの不透明窓にする。
-   */
-  transparentWindow?: boolean
 }
 
 const DEFAULT_SIZE: Size = { width: 320, height: 240 }
@@ -244,7 +239,6 @@ export const gadgets: GadgetDef[] = [
     path: '/ruler',
     Component: RulerTool,
     configId: 'ruler',
-    transparentWindow: true,
     config: {
       defaultConfig: rulerDefaultConfig,
       Atom: RulerConfigAtom,
@@ -258,7 +252,6 @@ export const gadgets: GadgetDef[] = [
     path: '/compass',
     Component: CompassTool,
     nativeOnly: true,
-    transparentWindow: true,
     defaultSize: { width: 320, height: 320 },
     config: {
       defaultConfig: compassDefaultConfig,
@@ -274,7 +267,6 @@ export const gadgets: GadgetDef[] = [
     path: '/protractor',
     Component: ProtractorTool,
     nativeOnly: true,
-    transparentWindow: true,
     defaultSize: { width: 320, height: 320 },
     config: {
       defaultConfig: protractorDefaultConfig,
@@ -324,7 +316,6 @@ export const gadgets: GadgetDef[] = [
     title: 'Frame',
     path: '/frame',
     Component: FrameTool,
-    transparentWindow: true,
     defaultSize: { width: 480, height: 270 },
     config: {
       defaultConfig: frameDefaultConfig,

@@ -133,6 +133,8 @@ export type BroadcastItem = {
   lockAspect?: boolean
   /** 自動サイズ (SizeDef 系) gadget の文字スケール倍率。既定 1 */
   fontScale?: number
+  /** 全ガジェット共通の透過度 0-1。既定 1 */
+  opacity?: number
   /** 参照する設定スロット (config-slots-<gadgetKey>) の id。未設定なら先頭スロット */
   slotId?: string
 }

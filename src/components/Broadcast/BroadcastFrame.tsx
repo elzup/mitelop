@@ -97,7 +97,7 @@ function BroadcastFrame({
             </IconButton>
           </div>
         )}
-        <div className="body">
+        <div className="body" style={{ opacity: item.opacity ?? 1 }}>
           {spec ? (
             <spec.Atom config={config} setConfig={setConfig} />
           ) : Component ? (

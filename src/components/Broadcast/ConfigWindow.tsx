@@ -154,6 +154,14 @@ function ConfigWindowInner({
   const [activeStandalone, setActiveStandalone] = useLocalStorage<
     string | null
   >(`config-active-${def.key}`, null)
+  // 全ガジェット共通の透過度。配置インスタンスは item、単独窓は gadget キーで保持
+  const [standaloneOpacity, setStandaloneOpacity] = useLocalStorage<number>(
+    `config-opacity-${def.key}`,
+    1
+  )
+  const opacity = item ? item.opacity ?? 1 : standaloneOpacity
+  const setOpacity = (v: number) =>
+    item ? updateItem(item.id, { opacity: v }) : setStandaloneOpacity(v)
 
   const referenced = instanceId
     ? item?.slotId ?? slots.firstId
@@ -186,6 +194,18 @@ function ConfigWindowInner({
             onUpdate={(patch) => updateItem(item.id, patch)}
           />
         )}
+        <div className="opacity">
+          <Typography variant="caption" color="textSecondary">
+            透過度 {Math.round(opacity * 100)}%
+          </Typography>
+          <Slider
+            min={0.1}
+            max={1}
+            step={0.05}
+            value={opacity}
+            onChange={(_e, v) => setOpacity(Array.isArray(v) ? v[0] : v)}
+          />
+        </div>
         {spec?.layouts && spec.layouts.length > 0 && (
           <LayoutPicker
             layouts={spec.layouts}

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { isTauri } from '../../utils/platform'
-import { gadgetDefaultSize, gadgetMap } from '../gadgets'
+import { gadgetDefaultSize } from '../gadgets'
 
 const CONFIG_SIZE = { w: 360, h: 680 }
 const CONTROL_SIZE = { w: 380, h: 720 }
@@ -141,19 +141,18 @@ export function useGadgetWindow() {
   )
 
   /**
-   * ガジェット単体を枠なし窓で浮かべる (ネイティブのランチャーから)。
-   * 透過が意味を持つ gadget のみ transparent、それ以外は背景色ありの不透明窓。
+   * ガジェット単体を枠なし透過窓で浮かべる (ネイティブのランチャーから)。
+   * 透過度は各ガジェット共通のスライダーで調整する。
    */
   const openGadgetWindow = useCallback(
     (key: string) => {
       const size = gadgetDefaultSize(key)
-      const transparent = Boolean(gadgetMap[key]?.transparentWindow)
 
       return openWindow(
         `/gadget/${key}`,
         `mitelop-gadget-${key}`,
         { w: size.width, h: size.height },
-        { transparent, decorations: false }
+        { transparent: true, decorations: false }
       )
     },
     [openWindow]

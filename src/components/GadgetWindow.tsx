@@ -1,9 +1,11 @@
 import { IconButton } from '@material-ui/core'
 import { Close } from '@material-ui/icons'
 import { useParams } from '@tanstack/react-router'
+import { CSSProperties } from 'react'
 import styled from 'styled-components'
 import { isTauri } from '../utils/platform'
 import { tokens } from '../utils/tokens'
+import { useLocalStorage } from '../utils/useLocalStorage'
 import { useTransparentBody } from './Broadcast/useTauriOverlay'
 import { gadgetMap } from './gadgets'
 import { ResizeGrip } from './ResizeGrip'
@@ -28,16 +30,17 @@ async function closeSelf() {
 function GadgetWindow() {
   const { gadgetKey } = useParams({ strict: false })
   const def = gadgetKey ? gadgetMap[gadgetKey] : undefined
-  const transparentWin = Boolean(def?.transparentWindow)
+  // 全ガジェット共通の透過度 (設定窓のスライダーと同じキー)
+  const [opacity] = useLocalStorage<number>(`config-opacity-${gadgetKey}`, 1)
 
-  useTransparentBody(transparentWin)
+  useTransparentBody(true)
 
   if (!def) return <Unknown>unknown gadget: {String(gadgetKey)}</Unknown>
 
   const Component = def.Component
 
   return (
-    <Root data-transparent={transparentWin}>
+    <Root>
       <Bar>
         <DragZone data-tauri-drag-region>{def.title}</DragZone>
         <Actions>
@@ -46,7 +49,7 @@ function GadgetWindow() {
           </IconButton>
         </Actions>
       </Bar>
-      <Body>
+      <Body style={{ opacity } as CSSProperties}>
         <Component windowMode={def.windowMode} />
       </Body>
       <ResizeGrip />
@@ -59,11 +62,6 @@ const Root = styled.div`
   width: 100%;
   height: 100vh;
   overflow: hidden;
-
-  /* 透過が無意味な gadget は背景色ありの不透明パネルにする */
-  &[data-transparent='false'] {
-    background: ${tokens.color.surface};
-  }
 `
 const Bar = styled.div`
   position: absolute;
