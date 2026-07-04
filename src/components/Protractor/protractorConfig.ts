@@ -1,10 +1,11 @@
 import { ProtractorConfig } from '../../types'
+import { THEME_ACCENT } from '../../utils/themes'
 
 export const protractorDefaultConfig: ProtractorConfig = {
   shape: 'full',
   labelStep: 30,
   rotation: 0,
-  color: '#1f4e9e',
+  color: THEME_ACCENT,
   opacity: 0.12,
 }
 

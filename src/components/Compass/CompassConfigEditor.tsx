@@ -1,7 +1,9 @@
 import { FormControlLabel, Switch, TextField } from '@material-ui/core'
 import { Dispatch, SetStateAction } from 'react'
 import { CompassConfig } from '../../types'
+import { THEME_ACCENT } from '../../utils/themes'
 import ColorField from '../forms/ColorField'
+import { useAppTheme } from '../hooks/useAppTheme'
 
 type Props = {
   config: CompassConfig
@@ -9,6 +11,8 @@ type Props = {
 }
 
 function CompassConfigEditor({ config, setConfig }: Props) {
+  const { resolve } = useAppTheme()
+
   return (
     <>
       <TextField
@@ -43,6 +47,8 @@ function CompassConfigEditor({ config, setConfig }: Props) {
       <ColorField
         label="Color"
         value={config.color}
+        themeSentinel={THEME_ACCENT}
+        resolve={resolve}
         onChange={(color) => setConfig((v) => ({ ...v, color }))}
       />
     </>

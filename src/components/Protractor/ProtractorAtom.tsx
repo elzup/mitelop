@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { ProtractorConfig } from '../../types'
+import { useAppTheme } from '../hooks/useAppTheme'
 
 const R = 95
 const CX = 100
@@ -8,7 +9,9 @@ type Props = { config: ProtractorConfig }
 
 /** 度数目盛りつきの分度器。half は上半円 (基線が下)、full は全円。 */
 function ProtractorAtom({ config }: Props) {
-  const { shape, labelStep, rotation, color, opacity } = config
+  const { resolve } = useAppTheme()
+  const { shape, labelStep, rotation, opacity } = config
+  const color = resolve(config.color)
   const isHalf = shape === 'half'
   // 回転で枠外に消えないよう、half/full とも中心(100,100)・正方 viewBox で描く
   const cy = 100

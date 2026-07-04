@@ -1,11 +1,14 @@
 import styled from 'styled-components'
 import { CompassConfig } from '../../types'
+import { useAppTheme } from '../hooks/useAppTheme'
 
 type Props = { config: CompassConfig }
 
 /** 同心円 + 十字線の円ガイド。中心と半径の目安に使う。 */
 function CompassAtom({ config }: Props) {
-  const { rings, crosshair, color, lineWidth } = config
+  const { resolve } = useAppTheme()
+  const { rings, crosshair, lineWidth } = config
+  const color = resolve(config.color)
   const R = 48
   const radii = Array.from(
     { length: Math.max(1, rings) },
