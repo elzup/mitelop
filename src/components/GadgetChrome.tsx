@@ -43,11 +43,11 @@ export function GadgetChrome({
           title="設定を別窓で開く"
           onClick={onConfig}
         >
-          <Settings fontSize="small" />
+          <Settings fontSize="small" htmlColor="#fff" />
         </IconButton>
       )}
       <IconButton className="gc-close" size="small" onClick={onClose}>
-        <Close fontSize="small" />
+        <Close fontSize="small" htmlColor="#fff" />
       </IconButton>
     </Bar>
   )

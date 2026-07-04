@@ -31,7 +31,7 @@ async function closeSelf() {
 function GadgetWindow() {
   const { gadgetKey } = useParams({ strict: false })
   const def = gadgetKey ? gadgetMap[gadgetKey] : undefined
-  const { openConfigWindow } = useGadgetWindow()
+  const { openConfigWindow, closeConfigWindow } = useGadgetWindow()
   // 全ガジェット共通の透過度 (設定窓のスライダーと同じキー)
   const [opacity] = useLocalStorage<number>(`config-opacity-${gadgetKey}`, 1)
 
@@ -48,7 +48,11 @@ function GadgetWindow() {
         title={def.title}
         icon={def.icon}
         mac={isMac()}
-        onClose={() => void closeSelf()}
+        onClose={() => {
+          // 本体を閉じるとき、開いている関連設定窓も一緒に閉じる
+          if (hasConfig) closeConfigWindow(def.key)
+          void closeSelf()
+        }}
         onConfig={hasConfig ? () => openConfigWindow(def.key) : undefined}
         dragProps={{ 'data-tauri-drag-region': true }}
       />

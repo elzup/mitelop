@@ -151,6 +151,35 @@ export function useGadgetWindow() {
     [openWindow]
   )
 
+  /** 対応する設定窓が開いていれば閉じる (本体ガジェット窓を閉じるときの後始末)。 */
+  const closeConfigWindow = useCallback(
+    (key: string, instanceId?: string, boardId = 'main') => {
+      const name = configWindowName(key, instanceId, boardId)
+
+      if (isTauri()) {
+        void (async () => {
+          const { WebviewWindow } = await import(
+            '@tauri-apps/api/webviewWindow'
+          )
+          const win = await WebviewWindow.getByLabel(name)
+
+          await win?.close()
+        })()
+
+        return
+      }
+
+      const win = wins.current.get(name)
+
+      if (win) {
+        win.close()
+        wins.current.delete(name)
+        setOpenNames([...wins.current.keys()])
+      }
+    },
+    []
+  )
+
   const openControlWindow = useCallback(
     (boardId = 'main') =>
       openWindow(
@@ -199,6 +228,7 @@ export function useGadgetWindow() {
 
   return {
     openConfigWindow,
+    closeConfigWindow,
     openControlWindow,
     openGadgetWindow,
     openBoardWindow,

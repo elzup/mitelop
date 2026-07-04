@@ -56,7 +56,7 @@ function Launcher() {
             size="small"
             onClick={() => void closeSelf()}
           >
-            <Close fontSize="small" />
+            <Close fontSize="small" htmlColor="#fff" />
           </IconButton>
         </Bar>
 
