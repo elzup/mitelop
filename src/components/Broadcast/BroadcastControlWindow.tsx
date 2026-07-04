@@ -12,6 +12,7 @@ import { BROADCAST_RATIOS } from '../../types'
 import { isTauri } from '../../utils/platform'
 import { denseTheme } from '../../utils/theme'
 import { tokens } from '../../utils/tokens'
+import ColorField from '../forms/ColorField'
 import BroadcastPanel from './BroadcastPanel'
 import { useBroadcast } from './useBroadcast'
 import { useGadgetWindow } from './useGadgetWindow'
@@ -32,9 +33,11 @@ function BroadcastControlWindow() {
     frame,
     setRatio,
     toggleLock,
+    setBg,
     addGadget,
     removeItem,
   } = useBroadcast()
+  const bgTransparent = frame.bg === 'transparent'
   const { openConfigWindow, isConfigOpen } = useGadgetWindow()
   const [overlay, setOverlay] = useOverlayConfig()
 
@@ -88,6 +91,25 @@ function BroadcastControlWindow() {
               <LockOpen fontSize="small" />
             )}
           </IconButton>
+        </FrameBar>
+        <FrameBar>
+          <Typography variant="caption" color="textSecondary">
+            背景
+          </Typography>
+          <ColorField
+            label="色"
+            value={bgTransparent ? '#ffffff' : frame.bg}
+            onChange={setBg}
+          />
+          <Button
+            size="small"
+            disableElevation
+            variant={bgTransparent ? 'contained' : 'outlined'}
+            color={bgTransparent ? 'primary' : 'default'}
+            onClick={() => setBg(bgTransparent ? '#ffffff' : 'transparent')}
+          >
+            透明
+          </Button>
         </FrameBar>
         {isTauri() && (
           <FrameBar>

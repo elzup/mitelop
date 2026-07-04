@@ -158,6 +158,8 @@ export type BroadcastFrameConfig = {
   ratio: BroadcastRatio
   /** 比率の誤操作防止ロック */
   locked: boolean
+  /** ボード背景色。既定は白。'transparent' でオーバーレイ用に背後を透かす */
+  bg: string
 }
 
 export type FrameRatio =

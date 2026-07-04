@@ -65,6 +65,7 @@ function BroadcastTool() {
             width: dims.w,
             height: dims.h,
             transform: `scale(${scale})`,
+            background: frame.bg ?? '#ffffff',
           }}
         >
           <Canvas

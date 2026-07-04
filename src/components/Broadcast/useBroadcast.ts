@@ -9,7 +9,11 @@ import { gadgetDefaultSize, gadgetMap } from '../gadgets'
 import { createSlot } from '../hooks/useSlots'
 
 const initialConfig: BroadcastConfig = { items: [] }
-const initialFrame: BroadcastFrameConfig = { ratio: '16:9', locked: false }
+const initialFrame: BroadcastFrameConfig = {
+  ratio: '16:9',
+  locked: false,
+  bg: '#ffffff',
+}
 
 const genId = () =>
   `bc-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`
@@ -91,6 +95,7 @@ export function useBroadcast() {
 
   const setRatio = (ratio: BroadcastRatio) => setFrame((v) => ({ ...v, ratio }))
   const toggleLock = () => setFrame((v) => ({ ...v, locked: !v.locked }))
+  const setBg = (bg: string) => setFrame((v) => ({ ...v, bg }))
 
   return {
     config,
@@ -101,6 +106,7 @@ export function useBroadcast() {
     frame,
     setRatio,
     toggleLock,
+    setBg,
     addGadget,
     updateItem,
     removeItem,
