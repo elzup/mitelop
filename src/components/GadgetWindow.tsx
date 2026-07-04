@@ -1,10 +1,9 @@
 import { IconButton } from '@material-ui/core'
-import { Close, Settings } from '@material-ui/icons'
+import { Close } from '@material-ui/icons'
 import { useParams } from '@tanstack/react-router'
 import styled from 'styled-components'
 import { isTauri } from '../utils/platform'
 import { tokens } from '../utils/tokens'
-import { useGadgetWindow } from './Broadcast/useGadgetWindow'
 import { useTransparentBody } from './Broadcast/useTauriOverlay'
 import { gadgetMap } from './gadgets'
 import { ResizeGrip } from './ResizeGrip'
@@ -23,11 +22,11 @@ async function closeSelf() {
 
 /**
  * ネイティブのランチャーから開く「ガジェット単体の枠なし透過窓」。
- * OS のヘッダーは無し。上部の細いバー (ホバーで濃くなる) がドラッグ + 設定/閉じる。
+ * OS のヘッダーは無し。上部の細いバー (ホバーで濃くなる) がドラッグ + 閉じる。
+ * 設定は中の Tool 自身の ⚙ (OpenConfigButton) に任せる (二重表示を避ける)。
  */
 function GadgetWindow() {
   const { gadgetKey } = useParams({ strict: false })
-  const { openConfigWindow } = useGadgetWindow()
   const def = gadgetKey ? gadgetMap[gadgetKey] : undefined
   const transparentWin = Boolean(def?.transparentWindow)
 
@@ -42,11 +41,6 @@ function GadgetWindow() {
       <Bar>
         <DragZone data-tauri-drag-region>{def.title}</DragZone>
         <Actions>
-          {def.config && (
-            <IconButton size="small" onClick={() => openConfigWindow(def.key)}>
-              <Settings fontSize="small" />
-            </IconButton>
-          )}
           <IconButton size="small" onClick={() => void closeSelf()}>
             <Close fontSize="small" />
           </IconButton>
