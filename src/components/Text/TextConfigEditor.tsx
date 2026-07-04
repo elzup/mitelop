@@ -17,7 +17,9 @@ import {
   TextScroll,
   TextVAlign,
 } from '../../types'
+import { THEME_BG, THEME_FG } from '../../utils/themes'
 import ColorField from '../forms/ColorField'
+import { useAppTheme } from '../hooks/useAppTheme'
 import { activePreset, genPresetId } from './textConfig'
 
 type Props = {
@@ -31,6 +33,7 @@ const resizeCells = (cells: string[], count: number): string[] =>
 const GRID_OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8]
 
 function TextConfigEditor({ config, setConfig }: Props) {
+  const { resolve } = useAppTheme()
   const patch = (p: Partial<TextGadgetConfig>) =>
     setConfig((v) => ({ ...v, ...p }))
 
@@ -259,11 +262,15 @@ function TextConfigEditor({ config, setConfig }: Props) {
         <ColorField
           label="背景"
           value={config.bgColor}
+          themeSentinel={THEME_BG}
+          resolve={resolve}
           onChange={(bgColor) => patch({ bgColor })}
         />
         <ColorField
           label="文字"
           value={config.fontColor}
+          themeSentinel={THEME_FG}
+          resolve={resolve}
           onChange={(fontColor) => patch({ fontColor })}
         />
       </div>

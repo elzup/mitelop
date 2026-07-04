@@ -1,14 +1,17 @@
 import styled from 'styled-components'
 import { ColorConfig } from '../../types'
+import { useAppTheme } from '../hooks/useAppTheme'
 
 type Props = { config: ColorConfig }
 
 /** 単色ブロック。shape で clip-path を切り替え、外側は透過。 */
 function ColorAtom({ config }: Props) {
+  const { resolve } = useAppTheme()
+
   return (
     <Box
       data-shape={config.shape ?? 'fill'}
-      style={{ background: config.color }}
+      style={{ background: resolve(config.color) }}
     />
   )
 }

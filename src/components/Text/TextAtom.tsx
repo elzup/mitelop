@@ -6,6 +6,7 @@ import {
   TextScroll,
   TextVAlign,
 } from '../../types'
+import { useAppTheme } from '../hooks/useAppTheme'
 import { activePreset } from './textConfig'
 
 type Props = { config: TextGadgetConfig }
@@ -79,8 +80,11 @@ function useScrollStyle(scroll: TextScroll) {
 }
 
 function TextAtom({ config }: Props) {
+  const { resolve } = useAppTheme()
   const { rows, cols, fontSize, align, blockAlign, vAlign, scroll } = config
-  const { border, fullWidth, bgColor, fontColor } = config
+  const { border, fullWidth } = config
+  const bgColor = resolve(config.bgColor)
+  const fontColor = resolve(config.fontColor)
   const cells = activePreset(config)?.cells ?? []
   const count = Math.max(1, rows * cols)
   const { containerRef, trackRef, style: scrollStyle } = useScrollStyle(scroll)

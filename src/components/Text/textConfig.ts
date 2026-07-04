@@ -1,4 +1,5 @@
 import { TextGadgetConfig } from '../../types'
+import { THEME_BG, THEME_FG } from '../../utils/themes'
 
 export const genPresetId = () =>
   `p-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`
@@ -15,8 +16,8 @@ export const textDefaultConfig: TextGadgetConfig = {
   border: false,
   fullWidth: false,
   scroll: 'none',
-  bgColor: '#222222',
-  fontColor: '#ffffff',
+  bgColor: THEME_BG,
+  fontColor: THEME_FG,
 }
 
 export const activePreset = (config: TextGadgetConfig) => {
