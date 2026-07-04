@@ -155,6 +155,8 @@ const Style = styled.div`
 
   /* ヘッダーは編集時のみ body の上にオーバーレイ (body は常に枠フルサイズ=表示と一致)。
      普段は隠してガジェット自身の操作を邪魔せず、hover/選択時だけ出す。 */
+  /* 単体ガジェット窓 (GadgetWindow) のバーと見た目を揃える。
+     ダーク半透明 + 白アイコンで、どのガジェット背景でも視認できる。 */
   .header {
     position: absolute;
     top: 0;
@@ -166,14 +168,17 @@ const Style = styled.div`
     justify-content: space-between;
     height: 24px;
     padding: 0 ${tokens.space.xs};
-    background: ${tokens.color.surface};
-    border-bottom: 1px solid ${tokens.color.border};
-    color: ${tokens.color.textWeak};
+    background: rgba(0, 0, 0, 0.35);
+    color: #fff;
     cursor: move;
     user-select: none;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.12s;
+  }
+  .header .MuiIconButton-root {
+    color: #fff;
+    padding: 2px;
   }
   &[data-edit='true']:hover .header,
   &[data-selected='true'] .header {

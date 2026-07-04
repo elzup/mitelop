@@ -1,6 +1,7 @@
 import { LinearProgress } from '@material-ui/core'
 import styled from 'styled-components'
 import { DummyMs } from '../DummyMs'
+import { useAppTheme } from '../hooks/useAppTheme'
 import SizeDef from '../SizeDef'
 import { TimerStatus } from './useTimer'
 
@@ -23,9 +24,15 @@ function TimerAtom({
   status,
   layout = 'bar',
 }: Props) {
+  const { theme } = useAppTheme()
+
   return (
     <SizeDef>
-      <Style data-status={status} data-layout={layout}>
+      <Style
+        data-status={status}
+        data-layout={layout}
+        style={{ background: theme.bg, color: theme.fg }}
+      >
         <div className="frame">
           <span className="time">
             {timeStr}.

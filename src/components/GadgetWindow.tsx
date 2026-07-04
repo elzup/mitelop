@@ -47,20 +47,23 @@ function GadgetWindow() {
     <Root>
       <Bar data-mac={isMac()}>
         <DragZone data-tauri-drag-region>{def.title}</DragZone>
-        <Actions>
-          {hasConfig && (
-            <IconButton
-              size="small"
-              title="設定を別窓で開く"
-              onClick={() => openConfigWindow(def.key)}
-            >
-              <Settings fontSize="small" />
-            </IconButton>
-          )}
-          <IconButton size="small" onClick={() => void closeSelf()}>
-            <Close fontSize="small" />
+        {hasConfig && (
+          <IconButton
+            className="config"
+            size="small"
+            title="設定を別窓で開く"
+            onClick={() => openConfigWindow(def.key)}
+          >
+            <Settings fontSize="small" />
           </IconButton>
-        </Actions>
+        )}
+        <IconButton
+          className="close"
+          size="small"
+          onClick={() => void closeSelf()}
+        >
+          <Close fontSize="small" />
+        </IconButton>
       </Bar>
       <Body style={{ opacity } as CSSProperties}>
         <GadgetWindowContext.Provider value>
@@ -95,8 +98,16 @@ const Bar = styled.div`
   ${Root}:hover & {
     opacity: 1;
   }
-  /* macOS はウィンドウ操作ボタンを左上に置く慣習に合わせる */
-  &[data-mac='true'] .actions {
+  .MuiIconButton-root {
+    color: #fff;
+    padding: 4px;
+  }
+  .MuiSvgIcon-root {
+    font-size: 18px;
+  }
+  /* macOS は閉じるボタンだけを左上へ (⚙ は右のまま)。
+     Windows/Linux は DOM 順のまま close が右端になる (order を触らない) */
+  &[data-mac='true'] .close {
     order: -1;
   }
 `
@@ -109,17 +120,6 @@ const DragZone = styled.div`
   font-size: 11px;
   cursor: grab;
   user-select: none;
-`
-const Actions = styled.div.attrs({ className: 'actions' })`
-  display: flex;
-  align-items: center;
-  .MuiIconButton-root {
-    color: #fff;
-    padding: 4px;
-  }
-  .MuiSvgIcon-root {
-    font-size: 18px;
-  }
 `
 const Body = styled.div`
   width: 100%;
