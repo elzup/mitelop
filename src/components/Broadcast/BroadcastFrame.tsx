@@ -1,10 +1,9 @@
-import { Icon, IconButton } from '@material-ui/core'
-import { Close } from '@material-ui/icons'
 import { CSSProperties, useEffect } from 'react'
 import { Rnd } from 'react-rnd'
 import styled from 'styled-components'
 import { BroadcastItem } from '../../types'
 import { tokens } from '../../utils/tokens'
+import { GadgetChrome } from '../GadgetChrome'
 import { useSlots } from '../hooks/useSlots'
 import { gadgetMap } from '../gadgets'
 
@@ -87,15 +86,13 @@ function BroadcastFrame({
         style={{ '--font-scale': item.fontScale ?? 1 }}
       >
         {editMode && (
-          <div className="bc-drag header">
-            <span className="title">
-              <Icon fontSize="small">{gadget?.icon ?? 'widgets'}</Icon>
-              {gadget?.title ?? item.gadgetKey}
-            </span>
-            <IconButton size="small" onClick={onRemove}>
-              <Close fontSize="small" />
-            </IconButton>
-          </div>
+          <GadgetChrome
+            className="header"
+            title={gadget?.title ?? item.gadgetKey}
+            icon={gadget?.icon ?? 'widgets'}
+            onClose={onRemove}
+            dragProps={{ className: 'bc-drag' }}
+          />
         )}
         <div className="body" style={{ opacity: item.opacity ?? 1 }}>
           {spec ? (
@@ -155,41 +152,22 @@ const Style = styled.div`
 
   /* ヘッダーは編集時のみ body の上にオーバーレイ (body は常に枠フルサイズ=表示と一致)。
      普段は隠してガジェット自身の操作を邪魔せず、hover/選択時だけ出す。 */
-  /* 単体ガジェット窓 (GadgetWindow) のバーと見た目を揃える。
-     ダーク半透明 + 白アイコンで、どのガジェット背景でも視認できる。 */
+  /* header の視覚は共通 GadgetChrome が担う。ここは位置と表示トリガのみ。
+     普段は隠し、編集時の hover / 選択時だけ出す。 */
   .header {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     z-index: 2;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 24px;
-    padding: 0 ${tokens.space.xs};
-    background: rgba(0, 0, 0, 0.35);
-    color: #fff;
-    cursor: move;
-    user-select: none;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.12s;
-  }
-  .header .MuiIconButton-root {
-    color: #fff;
-    padding: 2px;
   }
   &[data-edit='true']:hover .header,
   &[data-selected='true'] .header {
     opacity: 1;
     pointer-events: auto;
-  }
-  .title {
-    display: flex;
-    align-items: center;
-    gap: ${tokens.space.xs};
-    font-size: 12px;
   }
   .body {
     width: 100%;
