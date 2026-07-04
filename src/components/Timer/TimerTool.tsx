@@ -59,7 +59,7 @@ function TimerTool() {
         />
       )}
 
-      <ConfigModal mode={mode}>
+      <ConfigModal mode={mode} miniOver>
         <div className="over">
           <OpenConfigButton gadgetKey="gad-timer" />
           <div className="controls">

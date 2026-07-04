@@ -35,7 +35,7 @@ function IntervalTool() {
         layout={config.layout}
       />
 
-      <ConfigModal mode={mode}>
+      <ConfigModal mode={mode} miniOver>
         <div className="over">
           <OpenConfigButton gadgetKey="gad-interval" />
           <div className="controls">
