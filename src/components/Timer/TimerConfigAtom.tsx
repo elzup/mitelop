@@ -33,6 +33,7 @@ function TimerConfigAtom({ config }: Props) {
         progress={0}
         startTime={0}
         status={target.active ? 'pause' : 'init'}
+        layout={config.layout}
       />
     )
   }
@@ -45,6 +46,7 @@ function TimerConfigAtom({ config }: Props) {
       progress={sw.progress}
       startTime={sw.startTime}
       status={sw.status}
+      layout={config.layout}
     />
   )
 }

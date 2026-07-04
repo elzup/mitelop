@@ -11,6 +11,8 @@ type Props = {
   progress: number
   startTime: number
   status: TimerStatus
+  /** 表示レイアウト (TIMER_LAYOUTS の id) */
+  layout?: string
 }
 
 function TimerAtom({
@@ -19,10 +21,11 @@ function TimerAtom({
   startTime,
   progress,
   status,
+  layout = 'bar',
 }: Props) {
   return (
     <SizeDef>
-      <Style data-status={status}>
+      <Style data-status={status} data-layout={layout}>
         <div className="frame">
           <span className="time">
             {timeStr}.
@@ -30,7 +33,9 @@ function TimerAtom({
               {status === 'run' ? <DummyMs inv ms={startTime} /> : timeMilliStr}
             </span>
           </span>
-          <LinearProgress variant="determinate" value={progress} />
+          {layout !== 'plain' && (
+            <LinearProgress variant="determinate" value={progress} />
+          )}
         </div>
       </Style>
     </SizeDef>
@@ -65,6 +70,29 @@ const Style = styled.div`
     align-items: center;
     justify-content: center;
     /* border: solid 0.5px gray; */
+  }
+
+  /* 時刻のみ: バーを消し、時刻を大きく中央に */
+  &[data-layout='plain'] {
+    .frame {
+      grid-template-columns: 1fr;
+    }
+    .time {
+      width: 100%;
+      font-size: calc(var(--w) / 6);
+    }
+  }
+
+  /* 時刻+バー(縦): 時刻を上、バーを下段に積む */
+  &[data-layout='stack'] {
+    .frame {
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr max-content;
+    }
+    .time {
+      width: 100%;
+      font-size: calc(var(--w) / 6);
+    }
   }
   &[data-status='end'] {
     animation: blinkAnimeS2 0.5s infinite alternate;

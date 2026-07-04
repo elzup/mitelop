@@ -45,6 +45,7 @@ function TimerTool() {
           progress={0}
           startTime={0}
           status={target.active ? 'pause' : 'init'}
+          layout={config.layout}
         />
       ) : (
         <TimerAtom
@@ -54,6 +55,7 @@ function TimerTool() {
           progress={sw.progress}
           startTime={sw.startTime}
           status={sw.status}
+          layout={config.layout}
         />
       )}
 

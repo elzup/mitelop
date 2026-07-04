@@ -58,7 +58,7 @@ import StopwatchTool from './Stopwatch/StopwatchTool'
 import ThumbnailTool from './Thumbnail/ThumbnailTool'
 import TimerConfigAtom from './Timer/TimerConfigAtom'
 import TimerConfigEditor from './Timer/TimerConfigEditor'
-import { timerDefaultConfig } from './Timer/timerConfig'
+import { TIMER_LAYOUTS, timerDefaultConfig } from './Timer/timerConfig'
 import TimerTool from './Timer/TimerTool'
 
 /** すべての gadget Tool が受けられる共通 props。windowMode 非対応の Tool は無視する。 */
@@ -163,6 +163,7 @@ export const gadgets: GadgetDef[] = [
       defaultConfig: timerDefaultConfig,
       Atom: TimerConfigAtom,
       ConfigEditor: TimerConfigEditor,
+      layouts: TIMER_LAYOUTS,
     },
   },
   {

@@ -37,6 +37,8 @@ export type TimerConfig = {
   total: number
   /** target モードの目標時刻 'HH:MM' (端末ローカル) */
   targetTime: string
+  /** 表示レイアウト (TIMER_LAYOUTS の id) */
+  layout: string
 }
 
 export type IntervalStepBase = { name: string; sec: number }
