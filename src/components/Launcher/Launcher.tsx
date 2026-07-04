@@ -1,7 +1,7 @@
 import { Icon, IconButton, ThemeProvider } from '@material-ui/core'
 import { Close, Dashboard } from '@material-ui/icons'
 import styled from 'styled-components'
-import { isTauri } from '../../utils/platform'
+import { isMac, isTauri } from '../../utils/platform'
 import { denseTheme } from '../../utils/theme'
 import { tokens } from '../../utils/tokens'
 import { useGadgetWindow } from '../Broadcast/useGadgetWindow'
@@ -47,9 +47,13 @@ function Launcher() {
   return (
     <ThemeProvider theme={denseTheme}>
       <Root>
-        <Bar>
+        <Bar data-mac={isMac()}>
           <DragZone data-tauri-drag-region>Mitelop</DragZone>
-          <IconButton size="small" onClick={() => void closeSelf()}>
+          <IconButton
+            className="close"
+            size="small"
+            onClick={() => void closeSelf()}
+          >
             <Close fontSize="small" />
           </IconButton>
         </Bar>
@@ -115,6 +119,14 @@ const Bar = styled.div`
   height: 28px;
   background: ${tokens.color.primary};
   color: #fff;
+
+  .MuiIconButton-root {
+    color: #fff;
+  }
+  /* macOS は閉じるボタンを左上に */
+  &[data-mac='true'] .close {
+    order: -1;
+  }
 `
 const DragZone = styled.div`
   flex-grow: 1;

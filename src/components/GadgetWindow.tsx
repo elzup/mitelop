@@ -3,7 +3,7 @@ import { Close } from '@material-ui/icons'
 import { useParams } from '@tanstack/react-router'
 import { CSSProperties } from 'react'
 import styled from 'styled-components'
-import { isTauri } from '../utils/platform'
+import { isMac, isTauri } from '../utils/platform'
 import { tokens } from '../utils/tokens'
 import { useLocalStorage } from '../utils/useLocalStorage'
 import { useTransparentBody } from './Broadcast/useTauriOverlay'
@@ -41,7 +41,7 @@ function GadgetWindow() {
 
   return (
     <Root>
-      <Bar>
+      <Bar data-mac={isMac()}>
         <DragZone data-tauri-drag-region>{def.title}</DragZone>
         <Actions>
           <IconButton size="small" onClick={() => void closeSelf()}>
@@ -80,6 +80,10 @@ const Bar = styled.div`
   ${Root}:hover & {
     opacity: 1;
   }
+  /* macOS はウィンドウ操作ボタンを左上に置く慣習に合わせる */
+  &[data-mac='true'] .actions {
+    order: -1;
+  }
 `
 const DragZone = styled.div`
   flex-grow: 1;
@@ -91,7 +95,7 @@ const DragZone = styled.div`
   cursor: grab;
   user-select: none;
 `
-const Actions = styled.div`
+const Actions = styled.div.attrs({ className: 'actions' })`
   display: flex;
   align-items: center;
   .MuiIconButton-root {
