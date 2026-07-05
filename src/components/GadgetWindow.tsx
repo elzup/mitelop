@@ -52,7 +52,18 @@ function GadgetWindow() {
   // Cmd/Ctrl+W から最新の onClose を呼ぶための ref (early return の前に登録が要る)
   const closeRef = useRef<() => void>(() => {})
 
+  const fixedSize = Boolean(def?.fixedSize)
+
   useTransparentBody(true)
+
+  // アス比が要のガジェット (Frame 等) は窓を非リサイズにして比率を守る
+  useEffect(() => {
+    if (!isTauri() || !fixedSize) return
+
+    void import('@tauri-apps/api/window').then(({ getCurrentWindow }) =>
+      getCurrentWindow().setResizable(false)
+    )
+  }, [fixedSize])
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -109,7 +120,7 @@ function GadgetWindow() {
           </GadgetWindowContext.Provider>
         )}
       </Body>
-      <ResizeGrip />
+      {!fixedSize && <ResizeGrip />}
     </Root>
   )
 }

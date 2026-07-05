@@ -102,6 +102,8 @@ export type GadgetDef = {
   windowMode?: boolean
   /** Broadcast に配置したときの初期サイズ */
   defaultSize?: Size
+  /** アス比が要のガジェット。単体窓を非リサイズ (サイズ固定) にして比率を守る */
+  fixedSize?: boolean
   /** 設定を Atom/ConfigEditor に分離した gadget のみ持つ */
   config?: GadgetConfigSpec
   /**
@@ -322,6 +324,7 @@ export const gadgets: GadgetDef[] = [
     path: '/frame',
     Component: FrameTool,
     defaultSize: { width: 480, height: 270 },
+    fixedSize: true,
     config: {
       defaultConfig: frameDefaultConfig,
       Atom: FrameAtom,
