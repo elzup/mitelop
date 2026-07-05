@@ -83,6 +83,29 @@ export const createSlot = <T>(
 }
 
 /**
+ * hook 外からスロットを 1 つ削除する (単体インスタンス窓を閉じたときの後始末)。
+ * 最後の 1 つは履歴として残す。
+ */
+export const deleteSlot = (key: string, id: string): void => {
+  const store = readStore(key)
+
+  if (!store || store.order.length <= 1 || !store.slots[id]) return
+  const next = {
+    order: store.order.filter((x) => x !== id),
+    slots: Object.fromEntries(
+      Object.entries(store.slots).filter(([x]) => x !== id)
+    ),
+  }
+
+  try {
+    window.localStorage.setItem(storageKey(key), JSON.stringify(next))
+    window.dispatchEvent(new Event(`local-storage:${storageKey(key)}`))
+  } catch {
+    // localStorage 不可環境では黙って諦める
+  }
+}
+
+/**
  * ガジェット種別ごとの設定スロット (プリセット) ライブラリ。
  * standalone / broadcast 双方が同じ `config-slots-<key>` を参照し、slotId で 1 つを指す。
  * 複数インスタンスが別スロットを持てば設定は独立し、削除しても履歴として残る。

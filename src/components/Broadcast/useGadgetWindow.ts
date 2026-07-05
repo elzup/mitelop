@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { isTauri } from '../../utils/platform'
-import { gadgetDefaultSize } from '../gadgets'
+import { gadgetDefaultSize, gadgetMap } from '../gadgets'
+import { createSlot } from '../hooks/useSlots'
 
 const CONFIG_SIZE = { w: 360, h: 680 }
 const CONTROL_SIZE = { w: 380, h: 720 }
@@ -84,6 +85,10 @@ const configWindowName = (key: string, instanceId?: string, boardId = 'main') =>
 
 const configWindowUrl = (key: string, instanceId?: string, boardId = 'main') =>
   withParams(`/config/${key}`, { instanceId, board: boardParam(boardId) })
+
+/** 単体インスタンス窓 (slotId 束縛) の設定窓名。ボード instanceId 系とは別空間 */
+const instanceConfigName = (key: string, slotId: string) =>
+  `mitelop-config-${key}-slot-${slotId}`
 
 /**
  * ガジェット設定窓 / コントロール窓を開く。
@@ -192,21 +197,78 @@ export function useGadgetWindow() {
 
   /**
    * ガジェット単体を枠なし透過窓で浮かべる (ネイティブのランチャーから)。
-   * 透過度は各ガジェット共通のスライダーで調整する。
+   * 設定を持つガジェットは開くたびに専用スロットを作り、独立したインスタンス窓にする
+   * (窓名/設定/透過度/close がすべて slotId 単位)。設定なしガジェットはキー単位 1 枚。
    */
-  const openGadgetWindow = useCallback(
-    (key: string) => {
-      const size = gadgetDefaultSize(key)
+  const openGadgetWindow = useCallback((key: string) => {
+    const size = gadgetDefaultSize(key)
+    const winSize = { w: size.width, h: size.height }
+    const opts = { transparent: true, decorations: false }
+    const def = gadgetMap[key]
+    const spec = def?.config
 
+    if (!spec) {
       return openWindow(
         `/gadget/${key}`,
         `mitelop-gadget-${key}`,
-        { w: size.width, h: size.height },
-        { transparent: true, decorations: false }
+        winSize,
+        opts
       )
-    },
+    }
+
+    const slotId = createSlot(
+      key,
+      spec.defaultConfig,
+      undefined,
+      def.title,
+      def.configId
+    )
+
+    return openWindow(
+      withParams(`/gadget/${key}`, { slot: slotId }),
+      `mitelop-gadget-${key}-${slotId}`,
+      winSize,
+      opts
+    )
+    // openWindow は安定参照
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  /** 単体インスタンス窓 (slotId) の設定窓を開く */
+  const openInstanceConfig = useCallback(
+    (key: string, slotId: string) =>
+      openWindow(
+        withParams(`/config/${key}`, { slot: slotId }),
+        instanceConfigName(key, slotId),
+        CONFIG_SIZE,
+        { beside: true }
+      ),
     [openWindow]
   )
+
+  /** 単体インスタンス窓の設定窓が開いていれば閉じる */
+  const closeInstanceConfig = useCallback((key: string, slotId: string) => {
+    const name = instanceConfigName(key, slotId)
+
+    if (isTauri()) {
+      void (async () => {
+        const { WebviewWindow } = await import('@tauri-apps/api/webviewWindow')
+        const win = await WebviewWindow.getByLabel(name)
+
+        await win?.close()
+      })()
+
+      return
+    }
+
+    const win = wins.current.get(name)
+
+    if (win) {
+      win.close()
+      wins.current.delete(name)
+      setOpenNames([...wins.current.keys()])
+    }
+  }, [])
 
   /** 他ガジェットを載せるボード (broadcast stage) を開く。枠 (window border) は残す */
   const openBoardWindow = useCallback(
@@ -229,6 +291,8 @@ export function useGadgetWindow() {
   return {
     openConfigWindow,
     closeConfigWindow,
+    openInstanceConfig,
+    closeInstanceConfig,
     openControlWindow,
     openGadgetWindow,
     openBoardWindow,

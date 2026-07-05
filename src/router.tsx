@@ -37,6 +37,9 @@ const launcherRoute = createRoute({
 const gadgetWindowRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/gadget/$gadgetKey',
+  validateSearch: (search: Record<string, unknown>) => ({
+    slot: typeof search.slot === 'string' ? search.slot : undefined,
+  }),
   component: () => <GadgetWindow />,
 })
 
@@ -79,6 +82,7 @@ const configRoute = createRoute({
     instanceId:
       typeof search.instanceId === 'string' ? search.instanceId : undefined,
     board: typeof search.board === 'string' ? search.board : undefined,
+    slot: typeof search.slot === 'string' ? search.slot : undefined,
   }),
   component: () => (
     <GadgetLayout title="Gadget Config">

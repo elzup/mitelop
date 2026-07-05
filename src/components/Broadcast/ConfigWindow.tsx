@@ -141,10 +141,12 @@ function ConfigWindowInner({
   def,
   instanceId,
   boardId,
+  slotId,
 }: {
   def: GadgetDef
   instanceId?: string
   boardId: string
+  slotId?: string
 }) {
   const spec = def.config
   const slots = useSlots(def.key, spec?.defaultConfig ?? {}, def.configId)
@@ -156,18 +158,22 @@ function ConfigWindowInner({
   const [activeStandalone, setActiveStandalone] = useLocalStorage<
     string | null
   >(`config-active-${def.key}`, null)
-  // 全ガジェット共通の透過度。配置インスタンスは item、単独窓は gadget キーで保持
+  // 透過度: 配置インスタンスは item、単体インスタンス窓は slot 単位、通常単独窓はキー単位
   const [standaloneOpacity, setStandaloneOpacity] = useLocalStorage<number>(
-    `config-opacity-${def.key}`,
+    slotId
+      ? `config-opacity-${def.key}-${slotId}`
+      : `config-opacity-${def.key}`,
     1
   )
   const opacity = item ? item.opacity ?? 1 : standaloneOpacity
   const setOpacity = (v: number) =>
     item ? updateItem(item.id, { opacity: v }) : setStandaloneOpacity(v)
 
-  const referenced = instanceId
-    ? item?.slotId ?? slots.firstId
-    : activeStandalone ?? slots.firstId
+  // slot 束縛 (単体インスタンス窓) > board item > standalone active の順で参照先を決める
+  const referenced =
+    slotId ??
+    (instanceId ? item?.slotId ?? slots.firstId : activeStandalone) ??
+    slots.firstId
   // 参照先スロットが削除済みなら先頭にフォールバック (Select の不正値を防ぐ)
   const currentId = slots.slots[referenced] ? referenced : slots.firstId
   const selectSlot = (id: string) =>
@@ -182,7 +188,7 @@ function ConfigWindowInner({
     <ThemeProvider theme={denseTheme}>
       <Body>
         <Typography variant="subtitle2">{def.title} 設定</Typography>
-        {spec && (
+        {spec && !slotId && (
           <SlotBar
             slots={slots}
             currentId={currentId}
@@ -253,6 +259,11 @@ function ConfigWindow() {
     'board' in search && typeof search.board === 'string'
       ? search.board
       : 'main'
+  // 単体インスタンス窓 (slotId 束縛) からの設定窓
+  const slot =
+    'slot' in search && typeof search.slot === 'string'
+      ? search.slot
+      : undefined
   const def = gadgetKey ? gadgetMap[gadgetKey] : undefined
 
   if (!def) {
@@ -264,7 +275,12 @@ function ConfigWindow() {
   }
 
   return (
-    <ConfigWindowInner def={def} instanceId={instanceId} boardId={boardId} />
+    <ConfigWindowInner
+      def={def}
+      instanceId={instanceId}
+      boardId={boardId}
+      slotId={slot}
+    />
   )
 }
 

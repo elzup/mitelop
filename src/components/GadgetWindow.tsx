@@ -1,4 +1,4 @@
-import { useParams } from '@tanstack/react-router'
+import { useParams, useSearch } from '@tanstack/react-router'
 import { CSSProperties } from 'react'
 import styled from 'styled-components'
 import { isMac, isTauri } from '../utils/platform'
@@ -9,6 +9,8 @@ import { useTransparentBody } from './Broadcast/useTauriOverlay'
 import { GadgetChrome } from './GadgetChrome'
 import { gadgetMap } from './gadgets'
 import { GadgetWindowContext } from './gadgetWindowContext'
+import { SlotOverrideContext } from './hooks/slotOverride'
+import { deleteSlot } from './hooks/useSlots'
 import { ResizeGrip } from './ResizeGrip'
 
 /** 自ウィンドウを閉じる (Tauri / web 両対応) */
@@ -30,10 +32,21 @@ async function closeSelf() {
  */
 function GadgetWindow() {
   const { gadgetKey } = useParams({ strict: false })
+  const search = useSearch({ strict: false })
+  const slot =
+    'slot' in search && typeof search.slot === 'string' ? search.slot : null
   const def = gadgetKey ? gadgetMap[gadgetKey] : undefined
-  const { openConfigWindow, closeConfigWindow } = useGadgetWindow()
-  // 全ガジェット共通の透過度 (設定窓のスライダーと同じキー)
-  const [opacity] = useLocalStorage<number>(`config-opacity-${gadgetKey}`, 1)
+  const {
+    openConfigWindow,
+    closeConfigWindow,
+    openInstanceConfig,
+    closeInstanceConfig,
+  } = useGadgetWindow()
+  // 透過度はインスタンス (slot) 単位。slot 無し (設定なしガジェット) はキー単位
+  const opacityKey = slot
+    ? `config-opacity-${gadgetKey}-${slot}`
+    : `config-opacity-${gadgetKey}`
+  const [opacity] = useLocalStorage<number>(opacityKey, 1)
 
   useTransparentBody(true)
 
@@ -42,23 +55,36 @@ function GadgetWindow() {
   const Component = def.Component
   const hasConfig = Boolean(def.config)
 
+  const onClose = () => {
+    // 本体を閉じるとき、このインスタンスの設定窓も閉じ、専用スロットを片付ける
+    if (slot) {
+      closeInstanceConfig(def.key, slot)
+      deleteSlot(def.key, slot)
+    } else if (hasConfig) {
+      closeConfigWindow(def.key)
+    }
+    void closeSelf()
+  }
+  const onConfig = hasConfig
+    ? () =>
+        slot ? openInstanceConfig(def.key, slot) : openConfigWindow(def.key)
+    : undefined
+
   return (
     <Root>
       <Bar
         title={def.title}
         icon={def.icon}
         mac={isMac()}
-        onClose={() => {
-          // 本体を閉じるとき、開いている関連設定窓も一緒に閉じる
-          if (hasConfig) closeConfigWindow(def.key)
-          void closeSelf()
-        }}
-        onConfig={hasConfig ? () => openConfigWindow(def.key) : undefined}
+        onClose={onClose}
+        onConfig={onConfig}
         dragProps={{ 'data-tauri-drag-region': true }}
       />
       <Body style={{ opacity } as CSSProperties}>
         <GadgetWindowContext.Provider value>
-          <Component windowMode={def.windowMode} />
+          <SlotOverrideContext.Provider value={slot}>
+            <Component windowMode={def.windowMode} />
+          </SlotOverrideContext.Provider>
         </GadgetWindowContext.Provider>
       </Body>
       <ResizeGrip />

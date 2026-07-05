@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useState } from 'react'
 import { GadgetMode } from '../../types'
 import { useLocalStorage } from '../../utils/useLocalStorage'
+import { useSlotOverride } from './slotOverride'
 import { useSlots } from './useSlots'
 
 /**
@@ -16,11 +17,18 @@ export function useActiveSlot<T extends object>(
 ) {
   const [mode, setMode] = useState<GadgetMode>('main')
   const slots = useSlots<T>(key, defaultConfig, legacyId)
+  const override = useSlotOverride()
   const [activeId] = useLocalStorage<string | null>(
     `config-active-${key}`,
     null
   )
-  const id = activeId && slots.slots[activeId] ? activeId : slots.firstId
+  // 単体インスタンス窓は override スロットに束縛。無ければ従来の active スロット
+  const id =
+    override && slots.slots[override]
+      ? override
+      : activeId && slots.slots[activeId]
+      ? activeId
+      : slots.firstId
   const config = slots.getSlot(id).config
   const setConfig: Dispatch<SetStateAction<T>> = (u) =>
     slots.setSlotConfig(id, u)
