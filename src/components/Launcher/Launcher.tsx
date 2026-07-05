@@ -61,9 +61,10 @@ function Launcher() {
         </Bar>
 
         <div className="boards">
+          <h4 className="boards-head">配信ボード（配信ガジェットを載せる）</h4>
           <BoardButton onClick={() => openBoardWindow('main')}>
             <Dashboard fontSize="small" />
-            <span>メインボード</span>
+            <span>配信ボード</span>
           </BoardButton>
           {boards.map((b) => (
             <div className="board-row" key={b.id}>
@@ -85,7 +86,7 @@ function Launcher() {
             className="board-new"
             onClick={() => openBoardWindow(addBoard())}
           >
-            ＋ 新規ボード
+            ＋ 配信ボードを追加
           </button>
         </div>
 
@@ -143,6 +144,12 @@ const Root = styled.div`
     flex-direction: column;
     gap: 4px;
     padding: 8px 8px 0;
+  }
+  .boards-head {
+    margin: 0;
+    font-size: 11px;
+    font-weight: 600;
+    color: ${tokens.color.textWeak};
   }
   .board-row {
     display: flex;

@@ -38,7 +38,7 @@ function BroadcastPanel({
     <ThemeProvider theme={denseTheme}>
       <Style>
         <Section>
-          <Typography variant="subtitle2">ガジェット追加</Typography>
+          <Typography variant="subtitle2">配信ガジェットを追加</Typography>
           <div className="add-grid">
             {gadgets.map((g) => {
               const disabled = Boolean(g.nativeOnly) && !isTauri()
@@ -66,11 +66,11 @@ function BroadcastPanel({
 
         <Section>
           <Typography variant="subtitle2">
-            配置済み ({config.items.length})
+            配信ガジェット ({config.items.length})
           </Typography>
           {config.items.length === 0 && (
             <Typography variant="caption" color="textSecondary">
-              上のアイコンから追加してください
+              上のアイコンから、このボードに所属する配信ガジェットを追加
             </Typography>
           )}
           {config.items.map((item) => {
