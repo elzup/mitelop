@@ -1,5 +1,5 @@
 import { useParams, useSearch } from '@tanstack/react-router'
-import { CSSProperties } from 'react'
+import { CSSProperties, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { isMac, isTauri } from '../utils/platform'
 import { tokens } from '../utils/tokens'
@@ -47,8 +47,25 @@ function GadgetWindow() {
     ? `config-opacity-${gadgetKey}-${slot}`
     : `config-opacity-${gadgetKey}`
   const [opacity] = useLocalStorage<number>(opacityKey, 1)
+  // close 時に中身を隠して、slot 片付けによるフォールバック再描画のチラつきを防ぐ
+  const [closing, setClosing] = useState(false)
+  // Cmd/Ctrl+W から最新の onClose を呼ぶための ref (early return の前に登録が要る)
+  const closeRef = useRef<() => void>(() => {})
 
   useTransparentBody(true)
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'w') {
+        e.preventDefault()
+        closeRef.current()
+      }
+    }
+
+    window.addEventListener('keydown', onKey)
+
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
 
   if (!def) return <Unknown>unknown gadget: {String(gadgetKey)}</Unknown>
 
@@ -56,7 +73,8 @@ function GadgetWindow() {
   const hasConfig = Boolean(def.config)
 
   const onClose = () => {
-    // 本体を閉じるとき、このインスタンスの設定窓も閉じ、専用スロットを片付ける
+    // 中身を先に隠してから後始末 (フォールバック slot のチラつきを出さない)
+    setClosing(true)
     if (slot) {
       closeInstanceConfig(def.key, slot)
       deleteSlot(def.key, slot)
@@ -65,6 +83,8 @@ function GadgetWindow() {
     }
     void closeSelf()
   }
+
+  closeRef.current = onClose
   const onConfig = hasConfig
     ? () =>
         slot ? openInstanceConfig(def.key, slot) : openConfigWindow(def.key)
@@ -81,11 +101,13 @@ function GadgetWindow() {
         dragProps={{ 'data-tauri-drag-region': true }}
       />
       <Body style={{ opacity } as CSSProperties}>
-        <GadgetWindowContext.Provider value>
-          <SlotOverrideContext.Provider value={slot}>
-            <Component windowMode={def.windowMode} />
-          </SlotOverrideContext.Provider>
-        </GadgetWindowContext.Provider>
+        {!closing && (
+          <GadgetWindowContext.Provider value>
+            <SlotOverrideContext.Provider value={slot}>
+              <Component windowMode={def.windowMode} />
+            </SlotOverrideContext.Provider>
+          </GadgetWindowContext.Provider>
+        )}
       </Body>
       <ResizeGrip />
     </Root>

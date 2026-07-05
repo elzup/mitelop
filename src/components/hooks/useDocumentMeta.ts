@@ -1,10 +1,17 @@
 import { useEffect } from 'react'
+import { isTauri } from '../../utils/platform'
 
 export const useDocumentTitle = (title: string | undefined) => {
   useEffect(() => {
     if (!title) return
 
     document.title = title
+    // Tauri の装飾窓はネイティブタイトルが document.title に自動追従しないので明示同期
+    if (isTauri()) {
+      void import('@tauri-apps/api/window').then(({ getCurrentWindow }) =>
+        getCurrentWindow().setTitle(`Mitelop — ${title}`)
+      )
+    }
   }, [title])
 }
 
