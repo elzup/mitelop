@@ -12,7 +12,7 @@
     "dev": "portless run --name mitelop --app-port 5173 vite",
     "dev:vite": "vite --port 5173 --strictPort",
     "tauri": "tauri",
-    "dev:native": "tauri dev",
+    "dev:native": "tauri dev --config src-tauri/tauri.dev.conf.json",
     "build:native": "tauri build",
     "test": "jest --watchman=false",
     "storybook": "start-storybook -p 6006",
